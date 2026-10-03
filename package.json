@@ -10,7 +10,8 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "convert": "node scripts/convert-follie.mjs"
+    "convert": "node scripts/convert-follie.mjs",
+    "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
