@@ -1,5 +1,5 @@
-/* The player screen. Plain for now: big type on black, sized to be read from a
-   sofa. The staging phase adds the show. */
+/* The player screen: big type on black, sized to be read from a sofa. The motion
+   is driven from Display.tsx; this file holds the stage it plays on. */
 
 :root {
   --bg: #0c0807;
@@ -7,7 +7,7 @@
   --gold-light: #e6c87d;
   --ivory: #e8dcc4;
   --ivory-soft: #b8ad95;
-  --crimson: #b83838;
+  --crimson: #c23b3b;
   color-scheme: dark;
 }
 
@@ -31,6 +31,7 @@ body {
 }
 
 .screen {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,68 +40,141 @@ body {
   height: 100%;
   padding: 6vh 8vw;
   text-align: center;
-  background: radial-gradient(ellipse at center, #1a0f0d 0%, var(--bg) 60%, #000 100%);
-  animation: screen-in 600ms ease-out;
+  background: radial-gradient(ellipse at center, #1c100d 0%, var(--bg) 62%, #000 100%);
+  overflow: hidden;
 }
 
-.screen > * {
-  margin: 0;
-  max-width: 34ch;
-}
-
-.screen[aria-hidden] {
+.screen.dark {
   background: #000;
-  animation: none;
 }
 
-.set-name,
-.eyebrow {
+.screen.quiet {
+  animation: screen-in 900ms ease-out;
+}
+
+.screen p,
+.screen h1 {
+  margin: 0;
+}
+
+.camera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2vh;
+  will-change: transform;
+}
+
+.eyebrow,
+.kind {
   color: var(--gold);
-  font-size: clamp(1rem, 2.4vw, 2rem);
-  letter-spacing: 0.24em;
+  font-size: clamp(1rem, 2.2vw, 2rem);
+  letter-spacing: 0.26em;
   text-transform: uppercase;
 }
 
 .blurb,
 .description {
   color: var(--ivory-soft);
-  font-size: clamp(1.2rem, 2.8vw, 2.6rem);
+  font-size: clamp(1.2rem, 2.6vw, 2.5rem);
   font-style: italic;
   max-width: 28ch;
 }
 
 .number {
   color: var(--gold-light);
-  font-size: clamp(5rem, 18vw, 16rem);
-  line-height: 1;
+  font-size: clamp(5rem, 19vw, 17rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.95;
+  min-height: 0.95em;
+  will-change: transform, opacity;
+  transition: text-shadow 500ms;
+}
+
+.number.landed {
+  text-shadow: 0 0 0.25em rgba(230, 200, 125, 0.45);
 }
 
 h1 {
   color: var(--gold-light);
-  font-size: clamp(2rem, 6vw, 6rem);
+  font-size: clamp(2rem, 5.6vw, 5.6rem);
   font-weight: normal;
   line-height: 1.1;
-  max-width: 16ch;
+  max-width: 17ch;
+  min-height: 1.1em;
+}
+
+/* While the title is still noise it flickers like a bad signal. */
+h1.forming {
+  color: var(--ivory);
+  letter-spacing: 0.04em;
+  animation: flicker 180ms steps(2) infinite;
 }
 
 .effect {
-  font-size: clamp(1.2rem, 2.8vw, 2.6rem);
+  font-size: clamp(1.2rem, 2.6vw, 2.5rem);
   line-height: 1.4;
+  max-width: 32ch;
 }
 
 .effect strong {
   color: var(--gold-light);
 }
 
-.screen.boon h1,
+.description,
+.effect,
+.kind {
+  will-change: opacity, transform;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, var(--ivory-soft), transparent 70%);
+  mix-blend-mode: screen;
+}
+
+.screen.boon .wash {
+  background: radial-gradient(ellipse at center, var(--gold), transparent 72%);
+}
+
+.screen.bane .wash {
+  background: radial-gradient(ellipse at center, #a01818, transparent 72%);
+}
+
+.screen.boon .kind,
 .screen.boon .effect strong {
-  color: var(--gold);
+  color: var(--gold-light);
 }
 
 .screen.bane h1,
-.screen.bane .effect strong,
-.screen.bane .eyebrow {
+.screen.bane .kind,
+.screen.bane .effect strong {
   color: var(--crimson);
+}
+
+.screen.bane .number {
+  color: #e9b7a8;
+}
+
+/* Film grain: fractal noise from an inline SVG, shifted eight times a second. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  opacity: 0.13;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 800ms steps(8) infinite;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.72) 100%);
 }
 
 .waiting {
@@ -117,15 +191,16 @@ h1 {
   bottom: 2vh;
   left: 0;
   right: 0;
-  max-width: none;
+  margin: 0;
+  text-align: center;
   color: var(--ivory-soft);
   font-size: 0.85rem;
   opacity: 0;
   transition: opacity 300ms;
 }
 
-.screen:hover .hint {
-  opacity: 0.7;
+body:hover .hint {
+  opacity: 0.6;
 }
 
 :fullscreen .hint {
@@ -138,8 +213,34 @@ h1 {
   }
 }
 
+@keyframes flicker {
+  50% {
+    opacity: 0.78;
+  }
+}
+
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-4%, 3%);
+  }
+  50% {
+    transform: translate(3%, -5%);
+  }
+  75% {
+    transform: translate(-2%, -3%);
+  }
+  100% {
+    transform: translate(4%, 4%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .screen {
+  .screen.quiet,
+  .grain,
+  h1.forming {
     animation: none;
   }
 }
