@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { DisplayState } from '../shared/display'
+import { urlFor } from '../state/media'
 import { listen } from '../state/sync'
 import { SPEED_FACTOR } from '../shared/settings'
 import { clamp, faceAt, firstRollBeats, glitchValue, jolt, revealText, secondRollBeats, smooth } from './show'
@@ -73,13 +74,15 @@ interface Els {
   text: HTMLParagraphElement | null
   kind: HTMLParagraphElement | null
   wash: HTMLDivElement | null
+  media: HTMLDivElement | null
 }
 
 /** Draws one frame at `t` ms into the step. Returns true once nothing will move any more. */
 function draw(t: number, s: DisplayState, e: Els): boolean {
   const seed = s.stepAt
   const second = s.step === 'verdict' && s.second !== null
-  const { rollStyle, verdictStyle, shake } = s.settings
+  const { verdictStyle, shake } = s.settings
+  const rollStyle = s.rollStyle
   const speed = SPEED_FACTOR[s.settings.speed]
   const plain = rollStyle === 'plain'
   const beats = second ? secondRollBeats(speed, plain) : firstRollBeats(speed, plain)
@@ -133,11 +136,39 @@ function draw(t: number, s: DisplayState, e: Els): boolean {
     e.wash.style.opacity = second && since >= 0 ? (0.1 * smooth(0, 0.5, since) + peak * Math.exp(-3.2 * since)).toFixed(3) : '0'
   }
 
+  // This result's own image or video comes up from black as the die stops, and plays under the text.
+  if (e.media) {
+    e.media.style.opacity = smooth(beats.drum.landed + 100, beats.drum.landed + 1500, t).toFixed(3)
+    const video = e.media.querySelector('video')
+    if (video && landed && video.paused && !video.ended) void video.play().catch(() => {})
+  }
+
   return t >= beats.done + 2500
 }
 
+/** The image or the video of a verdict, filling the screen behind the text. Always muted: sound is the DM window's. */
+function Media({ media, hold }: { media: NonNullable<DisplayState['media']>; hold: (el: HTMLDivElement | null) => void }) {
+  const [urls, setUrls] = useState<{ image?: string; video?: string }>({})
+  useEffect(() => {
+    let live = true
+    const get = (id?: string) => (id ? urlFor(id).catch(() => undefined) : Promise.resolve(undefined))
+    void Promise.all([get(media.image), get(media.video)]).then(([image, video]) => {
+      if (live) setUrls({ image, video })
+    })
+    return () => {
+      live = false
+    }
+  }, [media.image, media.video])
+
+  return (
+    <div className="media" ref={hold}>
+      {urls.video ? <video src={urls.video} muted playsInline preload="auto" /> : urls.image && <img src={urls.image} alt="" />}
+    </div>
+  )
+}
+
 function Roll({ state }: { state: DisplayState }) {
-  const els = useRef<Els>({ camera: null, number: null, title: null, text: null, kind: null, wash: null })
+  const els = useRef<Els>({ camera: null, number: null, title: null, text: null, kind: null, wash: null, media: null })
   const verdict = state.step === 'verdict' ? state.verdict : null
   const second = state.step === 'verdict' && state.second !== null
 
@@ -157,9 +188,10 @@ function Roll({ state }: { state: DisplayState }) {
   const e = els.current
   return (
     <main
-      className={`screen roll ${verdict?.kind ?? ''} ${state.settings.animations ? '' : 'still'}`}
+      className={`screen roll ${verdict?.kind ?? ''} ${state.settings.animations ? '' : 'still'} ${state.media ? 'has-media' : ''}`}
       key={state.settings.animations ? 'show' : `still-${state.stepAt}`}
     >
+      {state.media && <Media media={state.media} hold={(el) => void (e.media = el)} />}
       <div className="wash" ref={(el) => void (e.wash = el)} />
       <div className="camera" ref={(el) => void (e.camera = el)}>
         <p className="eyebrow">

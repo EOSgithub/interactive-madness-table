@@ -9,7 +9,7 @@ import { useStore } from './store'
 
 const CHANNEL = 'interactive-madness-table'
 
-type Message = { type: 'state'; state: DisplayState } | { type: 'hello' } | { type: 'bye' }
+type Message = { type: 'state'; state: DisplayState } | { type: 'hello' } | { type: 'bye' } | { type: 'who' }
 
 // ----------------------------------------------------------------- DM side
 
@@ -31,7 +31,10 @@ export function startBroadcast(): () => void {
   }
 
   const unsubscribe = useStore.subscribe(send)
-  send() // a player screen that was already open picks up where the DM is
+  // A player screen that was already open (the DM window was reloaded) picks up
+  // where the DM is, and says hello again so this window knows it is there.
+  send()
+  channel.postMessage({ type: 'who' } satisfies Message)
   return () => {
     unsubscribe()
     channel.close()
@@ -45,6 +48,7 @@ export function listen(onState: (state: DisplayState) => void): () => void {
   const channel = new BroadcastChannel(CHANNEL)
   channel.onmessage = (e: MessageEvent<Message>) => {
     if (e.data.type === 'state') onState(e.data.state)
+    else if (e.data.type === 'who') channel.postMessage({ type: 'hello' } satisfies Message)
   }
   channel.postMessage({ type: 'hello' } satisfies Message)
 

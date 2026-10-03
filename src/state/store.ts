@@ -4,8 +4,9 @@ import source from '../../source/follie.it.json'
 import type { Preview } from '../shared/display'
 import { fairRoll } from '../shared/dice'
 import { DEFAULT_SETTINGS, parseSettings, type Settings } from '../shared/settings'
+import { resolveStaging } from '../shared/staging'
 import { checkCategory, findEntry, findOutcome } from '../shared/tables'
-import type { Category, Entry, Outcome, TableSet } from '../shared/types'
+import type { Category, Entry, Outcome, Staging, TableSet } from '../shared/types'
 
 // The DM window owns everything: the tables, the roll in progress and the log of
 // the session. Only the tables and the log are saved; a roll in progress is not
@@ -26,6 +27,8 @@ export interface Verdict {
   text: string
   /** The line that says how long it lasts, already rolled. */
   duration: string
+  /** The image, video, sound and animation this result plays, if it has its own. */
+  staging?: Staging
 }
 
 /** The dice effect playing in the DM window over a roll that is already committed. */
@@ -64,7 +67,7 @@ interface State extends Play {
   resetSettings: () => void
   /** A preview playing on the player screen, asked for from Settings. */
   preview: Preview | null
-  startPreview: (part: Preview['part']) => void
+  startPreview: (part: Preview['part'], target?: Pick<Preview, 'categoryId' | 'entryId' | 'outcomeId'>) => void
   stopPreview: () => void
   chooseCategory: (id: string) => void
   /** Sets the first roll; pass nothing to roll it here. */
@@ -103,7 +106,8 @@ function verdictOf(category: Category, entry: Entry, first: number, second: numb
     description: entry.description,
     kind: outcome?.kind ?? null,
     text: outcome?.text ?? entry.text ?? '',
-    duration: durationLine(category)
+    duration: durationLine(category),
+    staging: resolveStaging(entry.staging, outcome?.staging)
   }
 }
 
@@ -124,7 +128,7 @@ export const useStore = create<State>()(
       setSettings: (patch) => set(({ settings }) => ({ settings: { ...settings, ...patch } })),
       resetSettings: () => set({ settings: DEFAULT_SETTINGS }),
       preview: null,
-      startPreview: (part) => set({ preview: { part, at: Date.now() } }),
+      startPreview: (part, target) => set({ preview: { ...target, part, at: Date.now() } }),
       stopPreview: () => set(({ preview }) => (preview ? { preview: null } : {})),
 
       chooseCategory: (id) => {

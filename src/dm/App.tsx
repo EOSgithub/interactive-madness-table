@@ -6,12 +6,13 @@ import { currentCategory, useStore, type Hold, type Verdict } from '../state/sto
 import { Editor } from './Editor'
 import { ScreenControl } from './ScreenControl'
 import { Settings } from './Settings'
+import { Stage } from './Stage'
 
 // The DM window, play screen. Editor, stage and settings come in later phases.
 
 const KIND_LABEL = { boon: 'Boon', neutral: 'Manifestation', bane: 'Bane' } as const
 
-type Tab = 'play' | 'edit' | 'settings'
+type Tab = 'play' | 'edit' | 'stage' | 'settings'
 
 export function App() {
   const step = useStore((s) => s.step)
@@ -33,6 +34,9 @@ export function App() {
           </button>
           <button className={tab === 'edit' ? 'current' : ''} onClick={() => setTab('edit')}>
             Edit
+          </button>
+          <button className={tab === 'stage' ? 'current' : ''} onClick={() => setTab('stage')}>
+            Stage
           </button>
           <button className={tab === 'settings' ? 'current' : ''} onClick={() => setTab('settings')}>
             Settings
@@ -59,6 +63,8 @@ export function App() {
         </div>
       ) : tab === 'edit' ? (
         <Editor />
+      ) : tab === 'stage' ? (
+        <Stage />
       ) : (
         <Settings />
       )}
