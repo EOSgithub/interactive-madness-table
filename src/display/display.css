@@ -71,6 +71,8 @@
      phone held sideways still fits the whole verdict. */
   .eyebrow,
   .kind {
+    font-family: 'Cinzel Variable', Georgia, serif;
+    font-weight: 500;
     color: var(--gold);
     font-size: clamp(0.85rem, min(2.2vw, 3.6vh), 2rem);
     letter-spacing: 0.26em;
@@ -126,10 +128,12 @@
     animation: pv-flicker 180ms steps(2) infinite;
   }
 
+  /* --fit is set by Display.tsx when a long text has to shrink to fit the screen:
+     the type gets smaller and the line gets longer by the same amount. */
   .effect {
-    font-size: clamp(1.05rem, min(2.6vw, 4.4vh), 2.5rem);
+    font-size: calc(clamp(1.05rem, min(2.6vw, 4.4vh), 2.5rem) * var(--fit, 1));
     line-height: 1.4;
-    max-width: 32ch;
+    max-width: min(100%, calc(32ch / var(--fit, 1) / var(--fit, 1)));
   }
 
   .effect strong {

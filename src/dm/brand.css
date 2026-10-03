@@ -1,0 +1,73 @@
+/* The ToolsmithDev touches in the DM window: the display font, the list of
+   keys and the footer. Cinzel ships with the site (see main.tsx), so nothing is
+   fetched from a font service. */
+
+.top h1,
+.card-title,
+.history h2 {
+  font-family: 'Cinzel Variable', Georgia, serif;
+  font-weight: 600;
+}
+
+/* The keys only help where there is a keyboard. */
+.keys {
+  margin: 40px 0 0;
+  color: var(--ivory-soft);
+  font-size: 0.85rem;
+}
+
+.keys kbd {
+  display: inline-block;
+  min-width: 1.7em;
+  padding: 1px 6px;
+  border: 1px solid var(--edge);
+  border-radius: 5px;
+  background: var(--bg-soft);
+  color: var(--ivory);
+  font: inherit;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (pointer: coarse) {
+  .keys {
+    display: none;
+  }
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 56px;
+  padding-top: 18px;
+  border-top: 1px solid var(--edge);
+  color: var(--ivory-soft);
+  font-size: 0.85rem;
+}
+
+.foot img {
+  width: 28px;
+  height: 28px;
+}
+
+.foot p {
+  margin: 0;
+}
+
+.foot a {
+  color: var(--gold);
+}
+
+.foot a:hover,
+.foot a:focus-visible {
+  color: var(--gold-light);
+}
+
+.foot .legal {
+  flex: 1 1 100%;
+  max-width: 90ch;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}

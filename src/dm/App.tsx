@@ -6,10 +6,13 @@ import { currentCategory, useStore, type Hold, type Verdict } from '../state/sto
 import { Editor } from './Editor'
 import { ScreenControl } from './ScreenControl'
 import { Settings } from './Settings'
+import { useKeys } from './shortcuts'
 import { Stage } from './Stage'
 import { TableMode } from './TableMode'
 
-// The DM window, play screen. Editor, stage and settings come in later phases.
+// The DM window: the tabs, the play screen and the footer.
+
+const PATREON = 'https://www.patreon.com/ToolsmithDev'
 
 const KIND_LABEL = { boon: 'Boon', neutral: 'Manifestation', bane: 'Bane' } as const
 
@@ -20,8 +23,11 @@ export function App() {
   const name = useStore((s) => s.tables.name)
   const hold = useStore((s) => s.hold)
   const clearHold = useStore((s) => s.clearHold)
+  const toggleBlackout = useStore((s) => s.toggleBlackout)
+  const shortcuts = useStore((s) => s.settings.shortcuts)
   const [tab, setTabState] = useState<Tab>('play')
   const [tableMode, setTableMode] = useState(false)
+  useKeys({ b: toggleBlackout, t: () => setTableMode((open) => !open) }, tab === 'play' || tableMode)
   const setTab = (t: Tab) => {
     clearHold() // leaving the play screen ends the effect
     setTabState(t)
@@ -61,6 +67,12 @@ export function App() {
                 {step === 'verdict' && <VerdictStep />}
               </>
             )}
+            {shortcuts && (
+              <p className="keys">
+                Keys: <kbd>1</kbd> to <kbd>9</kbd> pick a table, <kbd>Space</kbd> or <kbd>R</kbd> rolls, <kbd>Esc</kbd> goes back, <kbd>B</kbd> blacks
+                out the player screen, <kbd>T</kbd> opens table mode. You can turn them off in Settings.
+              </p>
+            )}
           </main>
           <History />
         </div>
@@ -71,6 +83,21 @@ export function App() {
       ) : (
         <Settings />
       )}
+      <footer className="foot">
+        <img src={`${import.meta.env.BASE_URL}icon-192.png`} alt="" />
+        <p>
+          A ToolsmithDev tool. New tools and early builds are on{' '}
+          <a href={PATREON} target="_blank" rel="noreferrer">
+            Patreon
+          </a>
+          .
+        </p>
+        <p className="legal">
+          This work includes material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC, available at
+          https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0
+          International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
+        </p>
+      </footer>
     </div>
   )
 }
@@ -79,6 +106,8 @@ function ChooseCategory() {
   const categories = useStore((s) => s.tables.categories)
   const choose = useStore((s) => s.chooseCategory)
   const toggle = useStore((s) => s.toggleSubRoll)
+  // 1 to 9 pick a table, in the order shown.
+  useKeys(Object.fromEntries(categories.slice(0, 9).map((c, i) => [String(i + 1), checkCategory(c).length === 0 ? () => choose(c.id) : undefined])))
   return (
     <section>
       <h2>Which madness takes hold?</h2>
@@ -128,6 +157,8 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
     if (diceEffect) setHold({ label: category.label, sides, result, spin })
     roll(result)
   }
+  const rollNow = () => commit(fairRoll(sides), true)
+  useKeys({ space: rollNow, r: rollNow, escape: back })
 
   return (
     <section>
@@ -145,7 +176,7 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
       )}
       {diceEffect && <div className="dice-display">--</div>}
       <div className="roll">
-        <button className="primary" onClick={() => commit(fairRoll(sides), true)}>
+        <button className="primary" onClick={rollNow}>
           Roll d{sides}
         </button>
         <form
@@ -224,6 +255,7 @@ function DiceHold({ hold }: { hold: Hold }) {
 function VerdictStep() {
   const verdict = useStore((s) => s.verdict) as Verdict
   const restart = useStore((s) => s.restart)
+  useKeys({ space: restart, r: restart })
   return (
     <section>
       <VerdictCard verdict={verdict} />

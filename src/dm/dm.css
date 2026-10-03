@@ -1,5 +1,4 @@
-/* The DM window. Working styles for phase 2: the palette is Follie's (black, gold,
-   crimson); type, motion and the full visual pass come with the staging phase. */
+/* The DM window. The palette is Follie's: black, gold and crimson. */
 
 :root {
   --bg: #0c0807;

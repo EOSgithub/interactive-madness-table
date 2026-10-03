@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { DisplayState } from '../shared/display'
 import { urlFor } from '../state/media'
 import { listen } from '../state/sync'
@@ -221,6 +221,31 @@ function Roll({ state }: { state: DisplayState }) {
     frame()
     return () => cancelAnimationFrame(raf)
   }, [state])
+
+  // Nobody can scroll a TV, so a long outcome is set smaller, on a wider line,
+  // until the whole verdict fits. Below half size it stops, and the screen scrolls.
+  const text = verdict?.text ?? state.entry?.description
+  useLayoutEffect(() => {
+    const { camera, title } = els.current
+    const screen = camera?.parentElement
+    if (!camera || !screen) return
+    const fit = () => {
+      // Measure with the real title and no camera move; the next frame puts both back.
+      if (title && state.entry) title.textContent = state.entry.title
+      const moved = camera.style.transform
+      camera.style.transform = 'none'
+      let k = 1
+      camera.style.setProperty('--fit', '1')
+      while (screen.scrollHeight > screen.clientHeight + 1 && k > 0.5) {
+        k -= 0.05
+        camera.style.setProperty('--fit', k.toFixed(2))
+      }
+      camera.style.transform = moved
+    }
+    fit()
+    window.addEventListener('resize', fit)
+    return () => window.removeEventListener('resize', fit)
+  }, [state.entry, state.step, state.stepAt, state.settings.animations, text])
 
   const e = els.current
   return (

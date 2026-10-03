@@ -67,6 +67,12 @@ export function Settings() {
           checked={settings.respectReducedMotion}
           onChange={(respectReducedMotion) => set({ respectReducedMotion })}
         />
+        <Switch
+          label="Keyboard shortcuts"
+          hint="Single keys on the Play screen: Space to roll, B for blackout and so on."
+          checked={settings.shortcuts}
+          onChange={(shortcuts) => set({ shortcuts })}
+        />
       </section>
 
       <section>

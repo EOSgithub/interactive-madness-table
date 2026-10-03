@@ -17,6 +17,8 @@ export interface Settings {
   shake: boolean
   /** Skip the show when the system asks for reduced motion. */
   respectReducedMotion: boolean
+  /** Single-key shortcuts in the DM window. */
+  shortcuts: boolean
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -27,7 +29,8 @@ export const DEFAULT_SETTINGS: Settings = {
   grain: true,
   vignette: true,
   shake: true,
-  respectReducedMotion: true
+  respectReducedMotion: true,
+  shortcuts: true
 }
 
 /** How much longer or shorter every beat of the show gets. */
@@ -68,6 +71,7 @@ export function parseSettings(value: unknown): Settings {
     grain: bool(o.grain, d.grain),
     vignette: bool(o.vignette, d.vignette),
     shake: bool(o.shake, d.shake),
-    respectReducedMotion: bool(o.respectReducedMotion, d.respectReducedMotion)
+    respectReducedMotion: bool(o.respectReducedMotion, d.respectReducedMotion),
+    shortcuts: bool(o.shortcuts, d.shortcuts)
   }
 }
