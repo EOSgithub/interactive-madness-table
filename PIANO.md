@@ -155,9 +155,28 @@ Nel progetto il testo italiano di partenza sta in `source/follie.it.json`, già 
 | 6 | Settings: interruttori, scelta degli stili, anteprime | Ogni combinazione provata sullo schermo giocatori |
 | 7 | Stage: file caricati (IndexedDB), messa in scena per voce ed esito | Audio, immagine e video su un tiro vero |
 | 8 | Contenuti di default in inglese | Lettura completa, humanizer |
-| 9 | Marchio, rifiniture, README, pubblicazione | Sito aperto da un altro dispositivo |
+| 9 | Uso da cellulare: finestra del DM, editor e schermo giocatori su schermi piccoli | Prova su telefono vero, in verticale e in orizzontale |
+| 10 | Marchio, rifiniture, README | Sito aperto da un altro dispositivo |
 
 Le fasi 1-4 danno un tool funzionante. La 5 lo rende riconoscibile, ed è la più lunga. La 6 e la 7 sono le richieste aggiunte il 2026-10-03.
+
+## Uso da cellulare
+
+Richiesto il 2026-10-03. Il tool deve funzionare bene anche su telefono, non solo adattarsi.
+
+- Finestra del DM: bersagli da toccare di almeno 44 px, tiro raggiungibile con il pollice, storico in fondo o in un pannello a scomparsa, tastiera numerica per i tiri inseriti a mano.
+- Editor: una colonna, voci ed esiti impilati, campi degli intervalli comodi da toccare, niente griglie a più colonne sotto i 600 px.
+- Schermo giocatori: su un telefono in mano ai giocatori il testo deve stare nello schermo senza tagli, in verticale e in orizzontale. Niente "premi F": un tocco per lo schermo intero.
+- Caso d'uso da decidere: su telefono non c'è un secondo monitor. O il telefono fa solo da finestra del DM, o serve il collegamento remoto tra dispositivi, che oggi è fuori dalla prima versione.
+- Prestazioni: grana e animazioni provate su un telefono di fascia media; se scattano, si alleggeriscono in automatico.
+
+## Effetto del dado nella finestra del DM
+
+Aggiunto il 2026-10-03, ripreso da Follie: al clic su Roll i numeri girano e tremano in cremisi, poi il risultato si illumina e resta un attimo prima di passare oltre. È un'opzione ("Dice effect in this window"), accesa di default e salvata. In Settings (fase 6) andrà insieme alle altre scelte.
+
+## Pubblicazione di prova
+
+Il sito è su GitHub Pages dal ramo `gh-pages`, aggiornato con `npm run deploy`. La repo è pubblica dal 2026-10-03.
 
 ## Fuori dalla prima versione
 

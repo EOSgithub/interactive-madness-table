@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { fairRoll } from '../shared/dice'
 import { checkCategory, findEntry } from '../shared/tables'
 import type { Category } from '../shared/types'
 import { currentCategory, useStore, type Verdict } from '../state/store'
@@ -91,6 +92,37 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
   const typed = Number(manual)
   const valid = manual !== '' && Number.isInteger(typed) && typed >= 1 && typed <= sides
 
+  // The dice effect from the original Follie: the numbers spin and shake, then the
+  // result lights up and holds for a moment before the roll is committed.
+  const diceEffect = useStore((s) => s.diceEffect)
+  const toggleDiceEffect = useStore((s) => s.toggleDiceEffect)
+  const [phase, setPhase] = useState<'idle' | 'rolling' | 'landed'>('idle')
+  const [shown, setShown] = useState('--')
+  const timers = useRef<number[]>([])
+  useEffect(() => () => timers.current.forEach((id) => window.clearTimeout(id)), [])
+  const pad = (n: number) => String(n).padStart(String(sides).length - 1, '0')
+  const busy = phase !== 'idle'
+
+  function land(result: number) {
+    setShown(pad(result))
+    setPhase('landed')
+    timers.current.push(window.setTimeout(() => roll(result), 700))
+  }
+
+  function commit(result: number, spin: boolean) {
+    if (!diceEffect) return roll(result)
+    if (!spin || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return land(result)
+    setPhase('rolling')
+    let flashes = 0
+    const tick = () => {
+      flashes++
+      if (flashes >= 14) return land(result)
+      setShown(pad(fairRoll(sides)))
+      timers.current.push(window.setTimeout(tick, 70))
+    }
+    tick()
+  }
+
   return (
     <section>
       <p className="crumb">{category.label}</p>
@@ -105,15 +137,20 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
       ) : (
         <h2>Roll the d{sides}</h2>
       )}
+      {diceEffect && (
+        <div className={`dice-display ${phase}`} aria-live="polite">
+          {shown}
+        </div>
+      )}
       <div className="roll">
-        <button className="primary" onClick={() => roll()}>
+        <button className="primary" disabled={busy} onClick={() => commit(fairRoll(sides), true)}>
           Roll d{sides}
         </button>
         <form
           className="manual"
           onSubmit={(e) => {
             e.preventDefault()
-            if (valid) roll(typed)
+            if (valid && !busy) commit(typed, false)
           }}
         >
           <label htmlFor="manual">or enter the table's roll (1-{sides})</label>
@@ -126,12 +163,16 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
             value={manual}
             onChange={(e) => setManual(e.target.value)}
           />
-          <button type="submit" disabled={!valid}>
+          <button type="submit" disabled={!valid || busy}>
             Use it
           </button>
         </form>
       </div>
-      <button className="link" onClick={back}>
+      <label className="switch">
+        <input type="checkbox" checked={diceEffect} onChange={toggleDiceEffect} disabled={busy} />
+        Dice effect in this window
+      </label>
+      <button className="link" onClick={back} disabled={busy}>
         Back
       </button>
     </section>

@@ -165,6 +165,72 @@ h2 {
   height: 16px;
 }
 
+/* The dice effect from the original Follie: spin and shake, then light up. */
+.dice-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.2em;
+  margin-top: 16px;
+  color: var(--gold-light);
+  font-size: clamp(3.5rem, 9vw, 5.5rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 4px;
+  text-shadow:
+    0 0 18px rgba(201, 161, 74, 0.5),
+    0 0 30px rgba(139, 26, 26, 0.3);
+}
+
+.dice-display.rolling {
+  color: var(--crimson);
+  animation: dice-shake 0.6s ease infinite;
+}
+
+.dice-display.landed {
+  animation: dice-light 700ms ease-out;
+}
+
+@keyframes dice-shake {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  25% {
+    transform: translate(-3px, 2px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(3px, -2px) rotate(2deg);
+  }
+  75% {
+    transform: translate(-2px, 1px) rotate(-1deg);
+  }
+}
+
+@keyframes dice-light {
+  0% {
+    transform: scale(1.25);
+    color: #fff3cf;
+    text-shadow:
+      0 0 28px rgba(255, 226, 150, 0.95),
+      0 0 60px rgba(201, 161, 74, 0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dice-display.rolling,
+  .dice-display.landed {
+    animation: none;
+  }
+}
+
+.primary:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 .roll {
   display: flex;
   flex-wrap: wrap;

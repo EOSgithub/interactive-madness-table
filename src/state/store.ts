@@ -42,6 +42,9 @@ interface State extends Play {
   /** The DM has hidden the player screen. */
   blackout: boolean
   toggleBlackout: () => void
+  /** Spin, shake and light up the number in the DM window when a die is rolled. */
+  diceEffect: boolean
+  toggleDiceEffect: () => void
   chooseCategory: (id: string) => void
   /** Sets the first roll; pass nothing to roll it here. */
   rollFirst: (value?: number) => void
@@ -91,6 +94,8 @@ export const useStore = create<State>()(
       history: [],
       blackout: false,
       toggleBlackout: () => set(({ blackout }) => ({ blackout: !blackout })),
+      diceEffect: true,
+      toggleDiceEffect: () => set(({ diceEffect }) => ({ diceEffect: !diceEffect })),
 
       chooseCategory: (id) => {
         const category = get().tables.categories.find((c) => c.id === id)
@@ -153,7 +158,7 @@ export const useStore = create<State>()(
       version: 1,
       storage: createJSONStorage(() => localStorage),
       // Only data is saved. Actions and the roll in progress are rebuilt on load.
-      partialize: ({ tables, history }) => ({ tables, history })
+      partialize: ({ tables, history, diceEffect }) => ({ tables, history, diceEffect })
     }
   )
 )
