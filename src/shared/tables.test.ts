@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import source from '../../source/follie.it.json'
+import defaults from '../content/defaults.en.json'
 import { checkCategory, checkCoverage, checkTableSet, findEntry, findOutcome, rollDie } from './tables'
 import type { Category, TableSet } from './types'
 
@@ -106,5 +107,30 @@ describe('the tables converted from Follie', () => {
 
   it('can be rolled on: every die is covered exactly once', () => {
     expect(checkTableSet(set)).toEqual([])
+  })
+})
+
+describe('the default tables the app ships with', () => {
+  const set = defaults as TableSet
+  const original = source as TableSet
+
+  it('can be rolled on', () => {
+    expect(checkTableSet(set)).toEqual([])
+  })
+
+  it('keeps the shape of the original: same entries, same ranges, same kinds', () => {
+    const shape = (t: TableSet) => t.categories.map((c) => c.entries.map((e) => [e.range, e.outcomes.map((o) => [o.range, o.kind])]))
+    expect(shape(set)).toEqual(shape(original))
+  })
+
+  it('has text everywhere and no long dashes', () => {
+    for (const c of set.categories) {
+      for (const e of c.entries) {
+        expect(e.title.length).toBeGreaterThan(3)
+        expect(e.description.length).toBeGreaterThan(10)
+        for (const o of e.outcomes) expect(o.text.length).toBeGreaterThan(10)
+      }
+    }
+    expect(JSON.stringify(set)).not.toMatch(/[\u2013\u2014]/)
   })
 })

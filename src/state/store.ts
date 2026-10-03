@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import source from '../../source/follie.it.json'
+import defaults from '../content/defaults.en.json'
 import type { Preview } from '../shared/display'
 import { fairRoll } from '../shared/dice'
 import { DEFAULT_SETTINGS, parseSettings, type Settings } from '../shared/settings'
@@ -83,14 +83,20 @@ interface State extends Play {
   clearHistory: () => void
 }
 
-const DEFAULTS = source as TableSet
+const DEFAULTS = defaults as TableSet
 
 const idle = (): Play => ({ step: 'category', stepAt: Date.now(), categoryId: null, first: null, second: null, verdict: null })
+
+/** "For the next 3 minutes:", or "For the next minute:" when the die shows 1. */
+export function durationText(amount: number, unit: string): string {
+  if (amount === 1) return `For the next ${unit.replace(/s$/, '')}:`
+  return `For the next ${amount} ${unit}:`
+}
 
 export function durationLine(category: Category): string {
   const d = category.duration
   if (d.kind === 'fixed') return d.text
-  return `For the next ${fairRoll(d.die)} ${d.unit}:`
+  return durationText(fairRoll(d.die), d.unit)
 }
 
 function verdictOf(category: Category, entry: Entry, first: number, second: number | null): Verdict {
@@ -189,7 +195,14 @@ export const useStore = create<State>()(
     }),
     {
       name: 'interactive-madness-table',
-      version: 1,
+      version: 2,
+      // Version 1 shipped the Italian source tables as defaults. Anyone still on
+      // them, untouched or not, moves to the English set; other saved tables stay.
+      migrate: (saved, version) => {
+        const s = (saved ?? {}) as Partial<State>
+        if (version < 2 && s.tables?.name === 'Follie') return { ...s, tables: DEFAULTS }
+        return s
+      },
       storage: createJSONStorage(() => localStorage),
       // Only data is saved. Actions and the roll in progress are rebuilt on load.
       partialize: ({ tables, history, diceEffect, settings }) => ({ tables, history, diceEffect, settings }),
