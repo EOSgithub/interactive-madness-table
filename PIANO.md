@@ -97,7 +97,7 @@ Ordine di precedenza: la messa in scena di un esito vince su quella della voce, 
 
 Regola presa dal Reveal di The Temple of Time: ogni animazione è una funzione del tempo trascorso dall'inizio, non una catena di transizioni. Uno schermo aperto in ritardo o ricaricato cade sul fotogramma giusto.
 
-I browser bloccano l'audio finché l'utente non ha interagito con la pagina: lo schermo giocatori mostra una volta "Click to enable sound".
+L'audio parte dalla finestra del DM, non dallo schermo giocatori: le casse sono collegate al computer che apre entrambe le finestre, e il DM ha già interagito con la sua pagina, quindi il browser non blocca la riproduzione. Lo schermo giocatori resta muto e mostra solo immagini e video (i video senza la loro traccia audio, che viene riprodotta dalla finestra del DM).
 
 ## Messa in scena
 
