@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { DisplayState } from '../shared/display'
 import { listen } from '../state/sync'
-import { clamp, faceAt, firstRollBeats, jolt, revealText, secondRollBeats, smooth } from './show'
+import { SPEED_FACTOR } from '../shared/settings'
+import { clamp, faceAt, firstRollBeats, glitchValue, jolt, revealText, secondRollBeats, smooth } from './show'
 
 // The player screen. It shows the roll in progress and nothing else: no controls,
 // no tables. Each frame is drawn from the time since the step began (see show.ts)
@@ -57,8 +58,9 @@ export function Display() {
           )}
         </main>
       )}
-      <div className="grain" aria-hidden />
-      <div className="vignette" aria-hidden />
+      {state.settings.grain && <div className="grain" aria-hidden />}
+      {state.settings.vignette && <div className="vignette" aria-hidden />}
+      {state.preview && <p className="preview-tag">Preview</p>}
       <p className="hint">Press F or double-click for full screen</p>
     </>
   )
@@ -77,10 +79,17 @@ interface Els {
 function draw(t: number, s: DisplayState, e: Els): boolean {
   const seed = s.stepAt
   const second = s.step === 'verdict' && s.second !== null
-  const beats = second ? secondRollBeats() : firstRollBeats()
+  const { rollStyle, verdictStyle, shake } = s.settings
+  const speed = SPEED_FACTOR[s.settings.speed]
+  const plain = rollStyle === 'plain'
+  const beats = second ? secondRollBeats(speed, plain) : firstRollBeats(speed, plain)
   const sides = second ? (s.category?.subDie ?? 10) : (s.category?.die ?? 100)
   const result = (second ? s.second : s.first) ?? 1
-  const face = faceAt(t, beats.drum, result, sides, seed)
+  const landed = t >= beats.drum.landed
+  const face =
+    rollStyle === 'ratchet'
+      ? faceAt(t, beats.drum, result, sides, seed)
+      : { value: rollStyle === 'glitch' ? glitchValue(t, beats.drum.landed, result, sides, seed) : result, offset: 0, landed }
   const since = (t - beats.drum.landed) / 1000 // seconds since the drum stopped
 
   if (e.number) {
@@ -88,12 +97,15 @@ function draw(t: number, s: DisplayState, e: Els): boolean {
     // Each face drops in from above and settles; on landing the number swells once.
     const swell = face.landed ? 1 + 0.16 * Math.exp(-5 * Math.max(0, since)) : 1
     e.number.style.transform = `translateY(${(-face.offset * 0.22).toFixed(3)}em) scale(${swell.toFixed(4)})`
-    e.number.style.opacity = (face.landed ? 1 : 0.55 + 0.45 * (1 - clamp(face.offset))).toFixed(3)
+    e.number.style.opacity = plain
+      ? smooth(0, beats.drum.landed, t).toFixed(3)
+      : (face.landed ? 1 : 0.55 + 0.45 * (1 - clamp(face.offset))).toFixed(3)
     e.number.classList.toggle('landed', face.landed)
+    e.number.classList.toggle('scrambling', rollStyle === 'glitch' && !face.landed)
   }
 
   if (e.camera) {
-    const [x, y] = jolt(t, beats.drum.landed, seed)
+    const [x, y] = shake && !plain ? jolt(t, beats.drum.landed, seed) : [0, 0]
     const push = 1 + 0.045 * clamp(t / beats.done)
     e.camera.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${push.toFixed(4)})`
   }
@@ -108,12 +120,18 @@ function draw(t: number, s: DisplayState, e: Els): boolean {
     const u = smooth(beats.textStart, beats.textEnd, t)
     e.text.style.opacity = u.toFixed(3)
     e.text.style.transform = `translateY(${((1 - u) * 14).toFixed(1)}px)`
+    // Burn: the text arrives overexposed and cools down to its own colour.
+    const heat = verdictStyle === 'burn' && second ? Math.exp(-2.4 * Math.max(0, (t - beats.textStart) / 1000)) : 0
+    e.text.style.filter = heat > 0.02 ? `brightness(${(1 + 2.6 * heat).toFixed(2)}) blur(${(3 * heat).toFixed(1)}px)` : ''
   }
 
   if (e.kind) e.kind.style.opacity = smooth(beats.drum.landed + 250, beats.drum.landed + 800, t).toFixed(3)
 
   // The verdict's colour hits the whole screen as the second die stops, then fades to a tint.
-  if (e.wash) e.wash.style.opacity = second && since >= 0 ? (0.1 + 0.5 * Math.exp(-3.2 * since)).toFixed(3) : '0'
+  if (e.wash) {
+    const peak = verdictStyle === 'flash' ? 0.5 : verdictStyle === 'burn' ? 0.28 : 0
+    e.wash.style.opacity = second && since >= 0 ? (0.1 * smooth(0, 0.5, since) + peak * Math.exp(-3.2 * since)).toFixed(3) : '0'
+  }
 
   return t >= beats.done + 2500
 }
@@ -124,10 +142,11 @@ function Roll({ state }: { state: DisplayState }) {
   const second = state.step === 'verdict' && state.second !== null
 
   useEffect(() => {
-    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const { animations, respectReducedMotion } = state.settings
+    const calm = !animations || (respectReducedMotion && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
     let raf = 0
     const frame = () => {
-      // With reduced motion the show is skipped: draw its last frame once.
+      // With animations off, or reduced motion, the show is skipped: draw its last frame once.
       const t = calm ? 1e9 : Date.now() - state.stepAt
       if (!draw(t, state, els.current)) raf = requestAnimationFrame(frame)
     }
@@ -137,7 +156,10 @@ function Roll({ state }: { state: DisplayState }) {
 
   const e = els.current
   return (
-    <main className={`screen roll ${verdict?.kind ?? ''}`}>
+    <main
+      className={`screen roll ${verdict?.kind ?? ''} ${state.settings.animations ? '' : 'still'}`}
+      key={state.settings.animations ? 'show' : `still-${state.stepAt}`}
+    >
       <div className="wash" ref={(el) => void (e.wash = el)} />
       <div className="camera" ref={(el) => void (e.camera = el)}>
         <p className="eyebrow">

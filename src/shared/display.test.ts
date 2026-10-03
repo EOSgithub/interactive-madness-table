@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import source from '../../source/follie.it.json'
 import { toDisplayState, type DisplaySource } from './display'
+import { DEFAULT_SETTINGS, parseSettings } from './settings'
 import type { TableSet } from './types'
 
 const tables = source as TableSet
 const idle: DisplaySource = {
   tables,
+  settings: DEFAULT_SETTINGS,
+  preview: null,
   blackout: false,
   step: 'category',
   stepAt: 1000,
@@ -38,6 +41,37 @@ describe('toDisplayState', () => {
   it('never includes the tables themselves', () => {
     const s = toDisplayState({ ...idle, step: 'second', categoryId: 'short-term', first: 15 })
     expect(JSON.stringify(s)).not.toContain('outcomes')
-    expect(JSON.stringify(s).length).toBeLessThan(600)
+    expect(JSON.stringify(s).length).toBeLessThan(900)
+  })
+})
+
+describe('previews from Settings', () => {
+  it('plays a made-up first roll without touching the real one', () => {
+    const s = toDisplayState({ ...idle, preview: { part: 'roll', at: 5000 } })
+    expect(s).toMatchObject({ preview: true, step: 'second', stepAt: 5000, second: null, verdict: null })
+    expect(s.entry?.title).toBe(tables.categories[0].entries[0].title)
+  })
+
+  it('plays a made-up verdict, a bane when the entry has one', () => {
+    const s = toDisplayState({ ...idle, preview: { part: 'verdict', at: 5000 } })
+    expect(s).toMatchObject({ preview: true, step: 'verdict' })
+    expect(s.verdict?.kind).toBe('bane')
+    expect(s.second).not.toBeNull()
+  })
+
+  it('shows through a blackout, so the DM can see what was chosen', () => {
+    expect(toDisplayState({ ...idle, blackout: true, preview: { part: 'roll', at: 1 } }).blackout).toBe(false)
+  })
+})
+
+describe('parseSettings', () => {
+  it('returns the defaults for nothing, or for rubbish', () => {
+    expect(parseSettings(undefined)).toEqual(DEFAULT_SETTINGS)
+    expect(parseSettings('x')).toEqual(DEFAULT_SETTINGS)
+  })
+
+  it('keeps what is valid and replaces what is not', () => {
+    const s = parseSettings({ rollStyle: 'glitch', speed: 'warp', grain: false, shake: 'yes' })
+    expect(s).toMatchObject({ rollStyle: 'glitch', speed: 'normal', grain: false, shake: true })
   })
 })

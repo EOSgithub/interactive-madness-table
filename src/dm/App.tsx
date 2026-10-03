@@ -1,21 +1,28 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fairRoll } from '../shared/dice'
 import { checkCategory, findEntry } from '../shared/tables'
 import type { Category } from '../shared/types'
-import { currentCategory, useStore, type Verdict } from '../state/store'
+import { currentCategory, useStore, type Hold, type Verdict } from '../state/store'
 import { Editor } from './Editor'
 import { ScreenControl } from './ScreenControl'
+import { Settings } from './Settings'
 
 // The DM window, play screen. Editor, stage and settings come in later phases.
 
 const KIND_LABEL = { boon: 'Boon', neutral: 'Manifestation', bane: 'Bane' } as const
 
-type Tab = 'play' | 'edit'
+type Tab = 'play' | 'edit' | 'settings'
 
 export function App() {
   const step = useStore((s) => s.step)
   const name = useStore((s) => s.tables.name)
-  const [tab, setTab] = useState<Tab>('play')
+  const hold = useStore((s) => s.hold)
+  const clearHold = useStore((s) => s.clearHold)
+  const [tab, setTabState] = useState<Tab>('play')
+  const setTab = (t: Tab) => {
+    clearHold() // leaving the play screen ends the effect
+    setTabState(t)
+  }
   return (
     <div className="shell">
       <header className="top">
@@ -27,6 +34,9 @@ export function App() {
           <button className={tab === 'edit' ? 'current' : ''} onClick={() => setTab('edit')}>
             Edit
           </button>
+          <button className={tab === 'settings' ? 'current' : ''} onClick={() => setTab('settings')}>
+            Settings
+          </button>
         </nav>
         <span className="top-note">{name}</span>
       </header>
@@ -34,15 +44,23 @@ export function App() {
       {tab === 'play' ? (
         <div className="layout">
           <main className="stage" aria-live="polite">
-            {step === 'category' && <ChooseCategory />}
-            {step === 'first' && <RollStep which="first" />}
-            {step === 'second' && <RollStep which="second" />}
-            {step === 'verdict' && <VerdictStep />}
+            {hold ? (
+              <DiceHold hold={hold} />
+            ) : (
+              <>
+                {step === 'category' && <ChooseCategory />}
+                {step === 'first' && <RollStep which="first" />}
+                {step === 'second' && <RollStep which="second" />}
+                {step === 'verdict' && <VerdictStep />}
+              </>
+            )}
           </main>
           <History />
         </div>
-      ) : (
+      ) : tab === 'edit' ? (
         <Editor />
+      ) : (
+        <Settings />
       )}
     </div>
   )
@@ -92,35 +110,14 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
   const typed = Number(manual)
   const valid = manual !== '' && Number.isInteger(typed) && typed >= 1 && typed <= sides
 
-  // The dice effect from the original Follie: the numbers spin and shake, then the
-  // result lights up and holds for a moment before the roll is committed.
+  // With the dice effect on, the roll is committed at once, so the player screen
+  // starts at the same moment, and this window plays the effect over it (DiceHold).
   const diceEffect = useStore((s) => s.diceEffect)
-  const toggleDiceEffect = useStore((s) => s.toggleDiceEffect)
-  const [phase, setPhase] = useState<'idle' | 'rolling' | 'landed'>('idle')
-  const [shown, setShown] = useState('--')
-  const timers = useRef<number[]>([])
-  useEffect(() => () => timers.current.forEach((id) => window.clearTimeout(id)), [])
-  const pad = (n: number) => String(n).padStart(String(sides).length - 1, '0')
-  const busy = phase !== 'idle'
-
-  function land(result: number) {
-    setShown(pad(result))
-    setPhase('landed')
-    timers.current.push(window.setTimeout(() => roll(result), 700))
-  }
+  const setHold = useStore((s) => s.setHold)
 
   function commit(result: number, spin: boolean) {
-    if (!diceEffect) return roll(result)
-    if (!spin || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return land(result)
-    setPhase('rolling')
-    let flashes = 0
-    const tick = () => {
-      flashes++
-      if (flashes >= 14) return land(result)
-      setShown(pad(fairRoll(sides)))
-      timers.current.push(window.setTimeout(tick, 70))
-    }
-    tick()
+    if (diceEffect) setHold({ label: category.label, sides, result, spin })
+    roll(result)
   }
 
   return (
@@ -137,20 +134,16 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
       ) : (
         <h2>Roll the d{sides}</h2>
       )}
-      {diceEffect && (
-        <div className={`dice-display ${phase}`} aria-live="polite">
-          {shown}
-        </div>
-      )}
+      {diceEffect && <div className="dice-display">--</div>}
       <div className="roll">
-        <button className="primary" disabled={busy} onClick={() => commit(fairRoll(sides), true)}>
+        <button className="primary" onClick={() => commit(fairRoll(sides), true)}>
           Roll d{sides}
         </button>
         <form
           className="manual"
           onSubmit={(e) => {
             e.preventDefault()
-            if (valid && !busy) commit(typed, false)
+            if (valid) commit(typed, false)
           }}
         >
           <label htmlFor="manual">or enter the table's roll (1-{sides})</label>
@@ -163,18 +156,58 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
             value={manual}
             onChange={(e) => setManual(e.target.value)}
           />
-          <button type="submit" disabled={!valid || busy}>
+          <button type="submit" disabled={!valid}>
             Use it
           </button>
         </form>
       </div>
-      <label className="switch">
-        <input type="checkbox" checked={diceEffect} onChange={toggleDiceEffect} disabled={busy} />
-        Dice effect in this window
-      </label>
-      <button className="link" onClick={back} disabled={busy}>
+      <button className="link" onClick={back}>
         Back
       </button>
+    </section>
+  )
+}
+
+/**
+ * The dice effect from the original Follie: the numbers spin and shake, then the
+ * result lights up and holds for a moment. The roll is already committed; this
+ * only keeps the DM window on the die until the effect is over.
+ */
+function DiceHold({ hold }: { hold: Hold }) {
+  const clearHold = useStore((s) => s.clearHold)
+  const [phase, setPhase] = useState<'rolling' | 'landed'>('rolling')
+  const [shown, setShown] = useState('--')
+
+  useEffect(() => {
+    const ids: number[] = []
+    const pad = (n: number) => String(n).padStart(String(hold.sides).length - 1, '0')
+    const land = () => {
+      setShown(pad(hold.result))
+      setPhase('landed')
+      ids.push(window.setTimeout(clearHold, 700))
+    }
+    if (!hold.spin || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      land()
+    } else {
+      let flashes = 0
+      const tick = () => {
+        flashes++
+        if (flashes >= 14) return land()
+        setShown(pad(fairRoll(hold.sides)))
+        ids.push(window.setTimeout(tick, 70))
+      }
+      tick()
+    }
+    return () => ids.forEach((id) => window.clearTimeout(id))
+  }, [hold, clearHold])
+
+  return (
+    <section>
+      <p className="crumb">{hold.label}</p>
+      <h2>The d{hold.sides} is rolling</h2>
+      <div className={`dice-display ${phase}`} aria-live="polite">
+        {shown}
+      </div>
     </section>
   )
 }

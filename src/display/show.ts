@@ -139,16 +139,25 @@ export interface Beats {
   done: number
 }
 
+/** With the plain style there is no spin: the number is simply there after a short fade. */
+const still = (at: number): Drum => ({ ticks: [at], landed: at })
+
+/** A number that scrambles on film frames until the drum's landing time, then is the result. */
+export function glitchValue(t: number, landed: number, result: number, sides: number, seed: number): number {
+  if (t >= landed) return result
+  return 1 + Math.floor(rand(seed, Math.floor(t / FRAME)) * sides)
+}
+
 /** The first roll: a long drum, then the title. */
-export function firstRollBeats(speed = 1): Beats {
-  const drum = makeDrum(2500 * speed)
+export function firstRollBeats(speed = 1, plain = false): Beats {
+  const drum = plain ? still(350 * speed) : makeDrum(2500 * speed)
   const titleStart = drum.landed + 450 * speed
   const titleEnd = titleStart + 1500 * speed
   return { drum, titleStart, titleEnd, textStart: titleEnd + 250 * speed, textEnd: titleEnd + 1150 * speed, done: titleEnd + 1400 * speed }
 }
 
 /** The second roll: a short drum, then the verdict. The title is already known. */
-export function secondRollBeats(speed = 1): Beats {
-  const drum = makeDrum(1400 * speed, 60, 1.2)
+export function secondRollBeats(speed = 1, plain = false): Beats {
+  const drum = plain ? still(350 * speed) : makeDrum(1400 * speed, 60, 1.2)
   return { drum, titleStart: 0, titleEnd: 0, textStart: drum.landed + 600 * speed, textEnd: drum.landed + 1500 * speed, done: drum.landed + 1800 * speed }
 }

@@ -48,8 +48,32 @@ body {
   background: #000;
 }
 
-.screen.quiet {
+.screen.quiet,
+.screen.still {
   animation: screen-in 900ms ease-out;
+}
+
+/* The glitch roll style: the digits scramble and tear sideways until they lock. */
+.number.scrambling {
+  color: var(--ivory);
+  text-shadow:
+    0.04em 0 0 rgba(194, 59, 59, 0.75),
+    -0.04em 0 0 rgba(120, 190, 200, 0.55);
+  animation: tear 140ms steps(2) infinite;
+}
+
+.preview-tag {
+  position: fixed;
+  top: 2vh;
+  right: 2vw;
+  margin: 0;
+  padding: 4px 12px;
+  border: 1px solid var(--ivory-soft);
+  border-radius: 999px;
+  color: var(--ivory-soft);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .screen p,
@@ -213,6 +237,12 @@ body:hover .hint {
   }
 }
 
+@keyframes tear {
+  50% {
+    transform: translateX(0.03em) skewX(-6deg);
+  }
+}
+
 @keyframes flicker {
   50% {
     opacity: 0.78;
@@ -239,6 +269,8 @@ body:hover .hint {
 
 @media (prefers-reduced-motion: reduce) {
   .screen.quiet,
+  .screen.still,
+  .number.scrambling,
   .grain,
   h1.forming {
     animation: none;

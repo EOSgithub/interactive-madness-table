@@ -1,7 +1,9 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import source from '../../source/follie.it.json'
+import type { Preview } from '../shared/display'
 import { fairRoll } from '../shared/dice'
+import { DEFAULT_SETTINGS, parseSettings, type Settings } from '../shared/settings'
 import { checkCategory, findEntry, findOutcome } from '../shared/tables'
 import type { Category, Entry, Outcome, TableSet } from '../shared/types'
 
@@ -26,6 +28,15 @@ export interface Verdict {
   duration: string
 }
 
+/** The dice effect playing in the DM window over a roll that is already committed. */
+export interface Hold {
+  label: string
+  sides: number
+  result: number
+  /** Whether the numbers spin first; a roll typed by hand only lights up. */
+  spin: boolean
+}
+
 interface Play {
   step: Step
   /** When the current step began. The player screen times its show from this. */
@@ -45,6 +56,16 @@ interface State extends Play {
   /** Spin, shake and light up the number in the DM window when a die is rolled. */
   diceEffect: boolean
   toggleDiceEffect: () => void
+  hold: Hold | null
+  setHold: (hold: Hold) => void
+  clearHold: () => void
+  settings: Settings
+  setSettings: (patch: Partial<Settings>) => void
+  resetSettings: () => void
+  /** A preview playing on the player screen, asked for from Settings. */
+  preview: Preview | null
+  startPreview: (part: Preview['part']) => void
+  stopPreview: () => void
   chooseCategory: (id: string) => void
   /** Sets the first roll; pass nothing to roll it here. */
   rollFirst: (value?: number) => void
@@ -96,6 +117,15 @@ export const useStore = create<State>()(
       toggleBlackout: () => set(({ blackout }) => ({ blackout: !blackout })),
       diceEffect: true,
       toggleDiceEffect: () => set(({ diceEffect }) => ({ diceEffect: !diceEffect })),
+      hold: null,
+      setHold: (hold) => set({ hold }),
+      clearHold: () => set(({ hold }) => (hold ? { hold: null } : {})),
+      settings: DEFAULT_SETTINGS,
+      setSettings: (patch) => set(({ settings }) => ({ settings: { ...settings, ...patch } })),
+      resetSettings: () => set({ settings: DEFAULT_SETTINGS }),
+      preview: null,
+      startPreview: (part) => set({ preview: { part, at: Date.now() } }),
+      stopPreview: () => set(({ preview }) => (preview ? { preview: null } : {})),
 
       chooseCategory: (id) => {
         const category = get().tables.categories.find((c) => c.id === id)
@@ -158,7 +188,12 @@ export const useStore = create<State>()(
       version: 1,
       storage: createJSONStorage(() => localStorage),
       // Only data is saved. Actions and the roll in progress are rebuilt on load.
-      partialize: ({ tables, history, diceEffect }) => ({ tables, history, diceEffect })
+      partialize: ({ tables, history, diceEffect, settings }) => ({ tables, history, diceEffect, settings }),
+      // Settings saved by an older version may lack newer fields: fill them in.
+      merge: (saved, current) => {
+        const s = (saved ?? {}) as Partial<State>
+        return { ...current, ...s, settings: parseSettings(s.settings) }
+      }
     }
   )
 )

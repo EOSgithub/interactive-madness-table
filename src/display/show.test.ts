@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { faceAt, firstRollBeats, jolt, makeDrum, revealText, secondRollBeats, tickStep } from './show'
+import { faceAt, firstRollBeats, glitchValue, jolt, makeDrum, revealText, secondRollBeats, tickStep } from './show'
 
 describe('the drum', () => {
   const drum = makeDrum(2500)
@@ -85,5 +85,29 @@ describe('the beats', () => {
     const s = secondRollBeats()
     expect(s.drum.landed).toBeLessThan(s.textStart)
     expect(s.drum.landed).toBeLessThan(firstRollBeats().drum.landed)
+  })
+})
+
+describe('the other roll styles', () => {
+  it('plain: no spin, the number is there almost at once and the rest follows sooner', () => {
+    const plain = firstRollBeats(1, true)
+    expect(plain.drum.ticks).toHaveLength(1)
+    expect(plain.drum.landed).toBeLessThan(500)
+    expect(plain.done).toBeLessThan(firstRollBeats(1).done)
+  })
+
+  it('glitch: noise inside the die until it lands, then the result', () => {
+    for (let t = 0; t < 2000; t += 90) {
+      const v = glitchValue(t, 2000, 73, 100, 9)
+      expect(v).toBeGreaterThanOrEqual(1)
+      expect(v).toBeLessThanOrEqual(100)
+    }
+    expect(glitchValue(2000, 2000, 73, 100, 9)).toBe(73)
+    expect(glitchValue(500, 2000, 73, 100, 9)).toBe(glitchValue(500, 2000, 73, 100, 9))
+  })
+
+  it('speed stretches and shrinks every beat', () => {
+    expect(firstRollBeats(1.5).done).toBeGreaterThan(firstRollBeats(1).done)
+    expect(firstRollBeats(0.6).done).toBeLessThan(firstRollBeats(1).done)
   })
 })

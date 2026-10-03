@@ -1,0 +1,113 @@
+/* The Settings tab. Working styles, like the rest of the DM window. */
+
+.settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px 40px;
+  padding-top: 28px;
+}
+
+.settings section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.settings h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.setting {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.setting input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  accent-color: var(--gold);
+}
+
+.setting-label {
+  display: block;
+}
+
+.setting-hint {
+  display: block;
+  margin: 2px 0 0;
+  color: var(--ivory-soft);
+  font-size: 0.85rem;
+}
+
+.setting.disabled,
+.choice.disabled {
+  opacity: 0.45;
+}
+
+.choice {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.choice legend {
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.segments {
+  display: inline-flex;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.segments label {
+  padding: 8px 18px;
+  color: var(--ivory-soft);
+  cursor: pointer;
+}
+
+.segments label + label {
+  border-left: 1px solid var(--edge);
+}
+
+.segments label.current {
+  background: var(--gold);
+  color: #1a0f0d;
+}
+
+.segments label:focus-within {
+  outline: 2px solid var(--gold-light);
+  outline-offset: -2px;
+}
+
+/* The radio stays in the page for the keyboard and screen readers, but out of sight. */
+.segments input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preview-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ghost:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
