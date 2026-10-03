@@ -2,28 +2,45 @@ import { useState } from 'react'
 import { checkCategory, findEntry } from '../shared/tables'
 import type { Category } from '../shared/types'
 import { currentCategory, useStore, type Verdict } from '../state/store'
+import { Editor } from './Editor'
 
 // The DM window, play screen. Editor, stage and settings come in later phases.
 
 const KIND_LABEL = { boon: 'Boon', neutral: 'Manifestation', bane: 'Bane' } as const
 
+type Tab = 'play' | 'edit'
+
 export function App() {
   const step = useStore((s) => s.step)
+  const name = useStore((s) => s.tables.name)
+  const [tab, setTab] = useState<Tab>('play')
   return (
     <div className="shell">
       <header className="top">
         <h1>Interactive Madness Table</h1>
-        <span className="top-note">DM window</span>
+        <nav className="tabs" aria-label="Sections">
+          <button className={tab === 'play' ? 'current' : ''} onClick={() => setTab('play')}>
+            Play
+          </button>
+          <button className={tab === 'edit' ? 'current' : ''} onClick={() => setTab('edit')}>
+            Edit
+          </button>
+        </nav>
+        <span className="top-note">{name}</span>
       </header>
-      <div className="layout">
-        <main className="stage" aria-live="polite">
-          {step === 'category' && <ChooseCategory />}
-          {step === 'first' && <RollStep which="first" />}
-          {step === 'second' && <RollStep which="second" />}
-          {step === 'verdict' && <VerdictStep />}
-        </main>
-        <History />
-      </div>
+      {tab === 'play' ? (
+        <div className="layout">
+          <main className="stage" aria-live="polite">
+            {step === 'category' && <ChooseCategory />}
+            {step === 'first' && <RollStep which="first" />}
+            {step === 'second' && <RollStep which="second" />}
+            {step === 'verdict' && <VerdictStep />}
+          </main>
+          <History />
+        </div>
+      ) : (
+        <Editor />
+      )}
     </div>
   )
 }

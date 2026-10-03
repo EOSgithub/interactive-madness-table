@@ -42,10 +42,16 @@ interface State extends Play {
   rollFirst: (value?: number) => void
   rollSecond: (value?: number) => void
   toggleSubRoll: (categoryId: string) => void
+  /** Applies one editor change. Any roll in progress is dropped: its table may no longer exist. */
+  edit: (change: (tables: TableSet) => TableSet) => void
+  setTables: (tables: TableSet) => void
+  resetTables: () => void
   back: () => void
   restart: () => void
   clearHistory: () => void
 }
+
+const DEFAULTS = source as TableSet
 
 const IDLE: Play = { step: 'category', categoryId: null, first: null, second: null, verdict: null }
 
@@ -76,7 +82,7 @@ export const useStore = create<State>()(
   persist(
     (set, get) => ({
       ...IDLE,
-      tables: source as TableSet,
+      tables: DEFAULTS,
       history: [],
 
       chooseCategory: (id) => {
@@ -119,6 +125,10 @@ export const useStore = create<State>()(
             categories: tables.categories.map((c) => (c.id === categoryId ? { ...c, subRoll: !c.subRoll } : c))
           }
         })),
+
+      edit: (change) => set(({ tables }) => ({ ...IDLE, tables: change(tables) })),
+      setTables: (tables) => set({ ...IDLE, tables }),
+      resetTables: () => set({ ...IDLE, tables: DEFAULTS }),
 
       back: () => {
         const { step } = get()
