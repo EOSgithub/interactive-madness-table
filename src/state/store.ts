@@ -28,6 +28,8 @@ export interface Verdict {
 
 interface Play {
   step: Step
+  /** When the current step began. The player screen times its show from this. */
+  stepAt: number
   categoryId: string | null
   first: number | null
   second: number | null
@@ -37,6 +39,9 @@ interface Play {
 interface State extends Play {
   tables: TableSet
   history: Verdict[]
+  /** The DM has hidden the player screen. */
+  blackout: boolean
+  toggleBlackout: () => void
   chooseCategory: (id: string) => void
   /** Sets the first roll; pass nothing to roll it here. */
   rollFirst: (value?: number) => void
@@ -53,7 +58,7 @@ interface State extends Play {
 
 const DEFAULTS = source as TableSet
 
-const IDLE: Play = { step: 'category', categoryId: null, first: null, second: null, verdict: null }
+const idle = (): Play => ({ step: 'category', stepAt: Date.now(), categoryId: null, first: null, second: null, verdict: null })
 
 export function durationLine(category: Category): string {
   const d = category.duration
@@ -81,14 +86,16 @@ function verdictOf(category: Category, entry: Entry, first: number, second: numb
 export const useStore = create<State>()(
   persist(
     (set, get) => ({
-      ...IDLE,
+      ...idle(),
       tables: DEFAULTS,
       history: [],
+      blackout: false,
+      toggleBlackout: () => set(({ blackout }) => ({ blackout: !blackout })),
 
       chooseCategory: (id) => {
         const category = get().tables.categories.find((c) => c.id === id)
         if (!category || checkCategory(category).length > 0) return
-        set({ ...IDLE, step: 'first', categoryId: id })
+        set({ ...idle(), step: 'first', categoryId: id })
       },
 
       rollFirst: (value) => {
@@ -99,10 +106,10 @@ export const useStore = create<State>()(
         const entry = findEntry(category, first)
         if (!entry) return
         if (category.subRoll) {
-          set({ step: 'second', first, second: null, verdict: null })
+          set({ step: 'second', stepAt: Date.now(), first, second: null, verdict: null })
         } else {
           const verdict = verdictOf(category, entry, first, null)
-          set({ step: 'verdict', first, second: null, verdict, history: [verdict, ...history] })
+          set({ step: 'verdict', stepAt: Date.now(), first, second: null, verdict, history: [verdict, ...history] })
         }
       },
 
@@ -115,7 +122,7 @@ export const useStore = create<State>()(
         const second = value ?? fairRoll(category.subDie)
         if (!findOutcome(entry, second)) return
         const verdict = verdictOf(category, entry, first, second)
-        set({ step: 'verdict', second, verdict, history: [verdict, ...history] })
+        set({ step: 'verdict', stepAt: Date.now(), second, verdict, history: [verdict, ...history] })
       },
 
       toggleSubRoll: (categoryId) =>
@@ -126,17 +133,19 @@ export const useStore = create<State>()(
           }
         })),
 
-      edit: (change) => set(({ tables }) => ({ ...IDLE, tables: change(tables) })),
-      setTables: (tables) => set({ ...IDLE, tables }),
-      resetTables: () => set({ ...IDLE, tables: DEFAULTS }),
+      // While the DM is only choosing, an edit leaves the play state alone, so typing does not restart the player screen.
+      edit: (change) =>
+        set(({ tables, step }) => (step === 'category' ? { tables: change(tables) } : { ...idle(), tables: change(tables) })),
+      setTables: (tables) => set({ ...idle(), tables }),
+      resetTables: () => set({ ...idle(), tables: DEFAULTS }),
 
       back: () => {
         const { step } = get()
-        if (step === 'second') set({ step: 'first', first: null, second: null })
-        else set(IDLE)
+        if (step === 'second') set({ step: 'first', stepAt: Date.now(), first: null, second: null })
+        else set(idle())
       },
 
-      restart: () => set(IDLE),
+      restart: () => set(idle()),
       clearHistory: () => set({ history: [] })
     }),
     {

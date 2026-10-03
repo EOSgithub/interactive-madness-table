@@ -3,6 +3,7 @@ import { checkCategory, findEntry } from '../shared/tables'
 import type { Category } from '../shared/types'
 import { currentCategory, useStore, type Verdict } from '../state/store'
 import { Editor } from './Editor'
+import { ScreenControl } from './ScreenControl'
 
 // The DM window, play screen. Editor, stage and settings come in later phases.
 
@@ -28,6 +29,7 @@ export function App() {
         </nav>
         <span className="top-note">{name}</span>
       </header>
+      <ScreenControl />
       {tab === 'play' ? (
         <div className="layout">
           <main className="stage" aria-live="polite">

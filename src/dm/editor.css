@@ -25,6 +25,41 @@
   color: var(--gold-light);
 }
 
+.screen-control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--edge);
+}
+
+.presence {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  color: var(--ivory-soft);
+  font-size: 0.9rem;
+}
+
+.presence::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--edge);
+}
+
+.presence.on {
+  color: var(--ivory);
+}
+
+.presence.on::before {
+  background: #6fbf73;
+}
+
 .editor {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);

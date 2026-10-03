@@ -1,0 +1,145 @@
+/* The player screen. Plain for now: big type on black, sized to be read from a
+   sofa. The staging phase adds the show. */
+
+:root {
+  --bg: #0c0807;
+  --gold: #c9a14a;
+  --gold-light: #e6c87d;
+  --ivory: #e8dcc4;
+  --ivory-soft: #b8ad95;
+  --crimson: #b83838;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: var(--ivory);
+  font-family: Georgia, 'Times New Roman', serif;
+  overflow: hidden;
+  cursor: default;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4vh;
+  height: 100%;
+  padding: 6vh 8vw;
+  text-align: center;
+  background: radial-gradient(ellipse at center, #1a0f0d 0%, var(--bg) 60%, #000 100%);
+  animation: screen-in 600ms ease-out;
+}
+
+.screen > * {
+  margin: 0;
+  max-width: 34ch;
+}
+
+.screen[aria-hidden] {
+  background: #000;
+  animation: none;
+}
+
+.set-name,
+.eyebrow {
+  color: var(--gold);
+  font-size: clamp(1rem, 2.4vw, 2rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.blurb,
+.description {
+  color: var(--ivory-soft);
+  font-size: clamp(1.2rem, 2.8vw, 2.6rem);
+  font-style: italic;
+  max-width: 28ch;
+}
+
+.number {
+  color: var(--gold-light);
+  font-size: clamp(5rem, 18vw, 16rem);
+  line-height: 1;
+}
+
+h1 {
+  color: var(--gold-light);
+  font-size: clamp(2rem, 6vw, 6rem);
+  font-weight: normal;
+  line-height: 1.1;
+  max-width: 16ch;
+}
+
+.effect {
+  font-size: clamp(1.2rem, 2.8vw, 2.6rem);
+  line-height: 1.4;
+}
+
+.effect strong {
+  color: var(--gold-light);
+}
+
+.screen.boon h1,
+.screen.boon .effect strong {
+  color: var(--gold);
+}
+
+.screen.bane h1,
+.screen.bane .effect strong,
+.screen.bane .eyebrow {
+  color: var(--crimson);
+}
+
+.waiting {
+  color: var(--ivory-soft);
+  font-size: 1.4rem;
+}
+
+.small {
+  font-size: 1rem;
+}
+
+.hint {
+  position: fixed;
+  bottom: 2vh;
+  left: 0;
+  right: 0;
+  max-width: none;
+  color: var(--ivory-soft);
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.screen:hover .hint {
+  opacity: 0.7;
+}
+
+:fullscreen .hint {
+  display: none;
+}
+
+@keyframes screen-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen {
+    animation: none;
+  }
+}
