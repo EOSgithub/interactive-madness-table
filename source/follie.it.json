@@ -1,0 +1,1569 @@
+{
+  "name": "Follie",
+  "categories": [
+    {
+      "id": "short-term",
+      "label": "A Breve Termine",
+      "blurb": "Un'ombra passeggera che striscia nella mente.",
+      "duration": {
+        "kind": "dice",
+        "die": 4,
+        "unit": "minuti"
+      },
+      "die": 100,
+      "subRoll": true,
+      "subDie": 10,
+      "entries": [
+        {
+          "id": "short-term-1",
+          "range": [
+            1,
+            10
+          ],
+          "title": "La Dissoluzione del Sé",
+          "description": "La tua mente è liberata da ogni senso di identità che potresti possedere.",
+          "outcomes": [
+            {
+              "id": "short-term-1-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Senza un ego, sei immune alla condizione affascinato."
+            },
+            {
+              "id": "short-term-1-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Imiti i modi di fare, il comportamento e i pattern linguistici della creatura più vicina a te nel momento in cui hai acquisito questa follia."
+            },
+            {
+              "id": "short-term-1-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Disperato di ritrovare te stesso e disposto a credere a qualsiasi cosa, fallisci automaticamente i tiri salvezza contro l'essere affascinato."
+            }
+          ]
+        },
+        {
+          "id": "short-term-2",
+          "range": [
+            11,
+            20
+          ],
+          "title": "Il Suono del Cosmo",
+          "description": "La tua mente è invasa dal suono del cosmo.",
+          "outcomes": [
+            {
+              "id": "short-term-2-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "I suoni dolorosi sono nulla rispetto alla cacofonia nella tua testa: sei immune ai danni da tuono."
+            },
+            {
+              "id": "short-term-2-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Sussurri esoterici graffiano il tuo cervello; senti la dolce carezza di voci alle tue spalle."
+            },
+            {
+              "id": "short-term-2-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Il suono del cosmo soffoca ogni altro rumore, isolandoti dal mondo. Sei assordato e hai svantaggio ai tiri salvezza per mantenere la concentrazione."
+            }
+          ]
+        },
+        {
+          "id": "short-term-3",
+          "range": [
+            21,
+            30
+          ],
+          "title": "La Vista Spezzata",
+          "description": "Hai visto troppo; la tua mente non riesce a comprenderlo, e la tua vista diventa erratica e inaffidabile.",
+          "outcomes": [
+            {
+              "id": "short-term-3-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "La tua vista si espande come se fossi sotto l'effetto dell'incantesimo vedere invisibilità."
+            },
+            {
+              "id": "short-term-3-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Forme spettrali guizzano agli angoli dei tuoi occhi, svanendo non appena giri la testa."
+            },
+            {
+              "id": "short-term-3-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sei accecato e non puoi usare alcun senso speciale per vedere, come la vista cieca o la percezione tellurica."
+            }
+          ]
+        },
+        {
+          "id": "short-term-4",
+          "range": [
+            31,
+            40
+          ],
+          "title": "Le Urla Infestanti",
+          "description": "La follia dentro di te erompe sotto forma di urla infestanti.",
+          "outcomes": [
+            {
+              "id": "short-term-4-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il tuo urlo è così forte da poter causare danni. Come azione bonus in ognuno dei tuoi turni, puoi urlare contro una creatura che vedi entro 9 metri da te. Se il bersaglio può sentirti, deve effettuare un tiro salvezza su Costituzione (CD 13), subendo 1d12 danni da tuono in caso di fallimento o la metà in caso di successo."
+            },
+            {
+              "id": "short-term-4-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Non riesci a parlare normalmente; urlare è l'unico modo in cui puoi comunicare."
+            },
+            {
+              "id": "short-term-4-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Le tue urla sono così travolgenti che ogni creatura entro 90 metri da te può sentirti parlare. Inoltre non riesci a formare frasi coerenti né a pronunciare le componenti vocali degli incantesimi."
+            }
+          ]
+        },
+        {
+          "id": "short-term-5",
+          "range": [
+            41,
+            50
+          ],
+          "title": "Il Crollo della Postura",
+          "description": "La tua postura crolla mentre cerchi di dare un senso alla follia che hai davanti.",
+          "outcomes": [
+            {
+              "id": "short-term-5-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Diventi incredibilmente schivo. Quando sei bersaglio di un attacco o di un effetto che richiede un tiro salvezza su Destrezza, puoi usare la tua reazione per iniziare a muoverti in modo evasivo, ottenendo un bonus di +1 alla CA e vantaggio ai tiri salvezza su Destrezza fino all'inizio del tuo prossimo turno."
+            },
+            {
+              "id": "short-term-5-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Cerchi disperatamente una figura genitoriale che possa proteggerti. Una volta trovata, ti aggrappi a quella persona e ti rifiuti di lasciarne il fianco, qualunque cosa accada."
+            },
+            {
+              "id": "short-term-5-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Cadi proni e non puoi rialzarti, poiché le tue gambe rifiutano di obbedirti, e non puoi usare alcuna velocità di volo che possiedi."
+            }
+          ]
+        },
+        {
+          "id": "short-term-6",
+          "range": [
+            51,
+            60
+          ],
+          "title": "Le Mani Blasfeme",
+          "description": "Ti rendi conto che le tue mani sono strumenti blasfemi.",
+          "outcomes": [
+            {
+              "id": "short-term-6-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Questi strumenti possono spezzare la mente dei tuoi nemici. Una volta per turno, quando colpisci una creatura con un attacco con un'arma da mischia, puoi infliggerle 1d8 danni psichici aggiuntivi."
+            },
+            {
+              "id": "short-term-6-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Ti rifiuti di usare le mani per qualsiasi cosa, tenendole nascoste alla vista. Se qualcuno le fissa, ti senti estremamente a disagio e sulla difensiva."
+            },
+            {
+              "id": "short-term-6-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Non dovresti toccare nulla. Lasci cadere qualunque cosa stai impugnando e non puoi tenere oggetti né lottare contro creature."
+            }
+          ]
+        },
+        {
+          "id": "short-term-7",
+          "range": [
+            61,
+            70
+          ],
+          "title": "Il Corpo che Cede",
+          "description": "Il tuo corpo cede sotto il peso dell'insanità.",
+          "outcomes": [
+            {
+              "id": "short-term-7-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Sei immune alla condizione avvelenato."
+            },
+            {
+              "id": "short-term-7-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Cominci a emanare un odore nauseante che è sgradevole anche per te, e nessun lavaggio o magia può rimuoverlo."
+            },
+            {
+              "id": "short-term-7-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sei avvelenato, anche se sei immune alla condizione."
+            }
+          ]
+        },
+        {
+          "id": "short-term-8",
+          "range": [
+            71,
+            80
+          ],
+          "title": "Gli Orrori Esoterici Rivelati",
+          "description": "Gli Orrori Esoterici si rivelano a te, immergendoti nella paura.",
+          "outcomes": [
+            {
+              "id": "short-term-8-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Quando ottieni questa follia, ogni creatura entro 9 metri da te deve superare un tiro salvezza su Saggezza (CD 13) o diventare spaventata da te per 1 minuto. Una creatura spaventata può ripetere il tiro salvezza alla fine di ciascuno dei suoi turni, ponendo fine all'effetto in caso di successo."
+            },
+            {
+              "id": "short-term-8-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Diventi paranoico e impaurito da ogni movimento o suono."
+            },
+            {
+              "id": "short-term-8-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sei spaventato dai tuoi alleati. Devi compiere l'azione di Scatto e allontanarti da loro per la via più rapida disponibile in ognuno dei tuoi turni, a meno che non ci sia nessun posto dove andare. Se inizi il tuo turno in un punto in cui non vedi nessuno dei tuoi alleati, puoi usare la tua azione per porre fine alla follia."
+            }
+          ]
+        },
+        {
+          "id": "short-term-9",
+          "range": [
+            81,
+            90
+          ],
+          "title": "La Mente Spezzata",
+          "description": "La follia spezza la tua mente.",
+          "outcomes": [
+            {
+              "id": "short-term-9-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Ti rendi conto che la tua mente stava trattenendo il tuo corpo, e ora puoi agire liberamente. Hai un'azione aggiuntiva in ognuno dei tuoi turni. Quell'azione può essere usata solo per compiere le azioni Scatto, Disimpegno, Nascondersi o Usare un Oggetto."
+            },
+            {
+              "id": "short-term-9-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Scoppi in attacchi spontanei di risate, anche nei momenti più inappropriati."
+            },
+            {
+              "id": "short-term-9-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sei incapacitato. Questo effetto termina prima se subisci danni pari al doppio del tuo livello o se viene lanciato su di te l'incantesimo ripristino superiore."
+            }
+          ]
+        },
+        {
+          "id": "short-term-10",
+          "range": [
+            91,
+            95
+          ],
+          "title": "Le Rivelazioni dell'Aldilà",
+          "description": "Le rivelazioni provenienti dall'oltre ti affliggono.",
+          "outcomes": [
+            {
+              "id": "short-term-10-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il tuo corpo ignora ogni dolore; conta solo la Verità Esoterica. Sei immune alla condizione stordito."
+            },
+            {
+              "id": "short-term-10-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Parli agli altri della Verità Esoterica in un modo che a te sembra limpido, ma forse non lo è altrettanto per chi ti ascolta. Le tue frasi sono criptiche per le menti non ascese."
+            },
+            {
+              "id": "short-term-10-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sei stordito. Questo effetto termina prima se subisci danni pari al tuo livello o se viene lanciato su di te l'incantesimo ripristino superiore."
+            }
+          ]
+        },
+        {
+          "id": "short-term-11",
+          "range": [
+            96,
+            100
+          ],
+          "title": "Il Risveglio della Bestia",
+          "description": "La bestia dentro di te si risveglia e tenta di prendere il controllo.",
+          "outcomes": [
+            {
+              "id": "short-term-11-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il tuo corpo libera i suoi istinti animaleschi, senza l'influenza della tua mente a trattenerli. Sei sotto l'effetto dell'incantesimo velocità, anche se non richiede concentrazione. L'effetto termina quando finisce la follia."
+            },
+            {
+              "id": "short-term-11-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "La tua parlata è impastata, come se fossi ubriaco, e infili versi animali tra una frase e l'altra."
+            },
+            {
+              "id": "short-term-11-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Cadi privo di sensi, mentre la tua mente lotta con tutte le forze per non farti diventare una bestia. Questo effetto termina prima se subisci danni pari al tuo livello o se viene lanciato su di te l'incantesimo ripristino superiore."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "long-term",
+      "label": "A Lungo Termine",
+      "blurb": "Una macchia tenace che corrompe il corpo.",
+      "duration": {
+        "kind": "dice",
+        "die": 4,
+        "unit": "settimane"
+      },
+      "die": 100,
+      "subRoll": true,
+      "subDie": 10,
+      "entries": [
+        {
+          "id": "long-term-1",
+          "range": [
+            1,
+            10
+          ],
+          "title": "Il Corpo Indebolito",
+          "description": "La corruzione esoterica indebolisce profondamente il tuo corpo.",
+          "outcomes": [
+            {
+              "id": "long-term-1-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il tuo corpo fragile viene facilmente spinto via; ogni volta che subisci danni vieni respinto di 3 metri."
+            },
+            {
+              "id": "long-term-1-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Ti affatichi facilmente e lo sforzo fisico pesa molto sul tuo corpo. Hai bisogno di 4 ore in più del normale per completare un riposo lungo."
+            },
+            {
+              "id": "long-term-1-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Le tue gambe ti reggono a malapena; ogni volta che subisci danni cadi prono."
+            }
+          ]
+        },
+        {
+          "id": "long-term-2",
+          "range": [
+            11,
+            20
+          ],
+          "title": "Magia d'Oltretomba",
+          "description": "Una magia ultraterrena si risveglia dentro di te.",
+          "outcomes": [
+            {
+              "id": "long-term-2-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il tuo contatto con l'oltre risveglia poteri dentro di te. Impari un trucchetto casuale dalla lista degli incantesimi del warlock. Il Carisma è la tua caratteristica da incantatore per quel trucchetto."
+            },
+            {
+              "id": "long-term-2-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Diventi disgustato dalla magia di questo mondo. Ogni volta che lanci un incantesimo o sei soggetto ad uno, ti viene da vomitare e barcolli, perdendo la tua reazione fino all'inizio del tuo prossimo turno."
+            },
+            {
+              "id": "long-term-2-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Non riesci a gestire la nuova magia dentro di te, che trasuda sporadicamente quando vieni ferito. Ogni volta che subisci 15 o più danni da un singolo attacco, esplodi in una scarica di energia arcana. Tu e ogni creatura entro 3 metri da te dovete superare un tiro salvezza su Costituzione o subire 2d10 danni da forza. Questa esplosione non può essere innescata di nuovo per 1d6 round."
+            }
+          ]
+        },
+        {
+          "id": "long-term-3",
+          "range": [
+            21,
+            30
+          ],
+          "title": "L'Autostima Frantumata",
+          "description": "Il tuo senso di valore si frantuma.",
+          "outcomes": [
+            {
+              "id": "long-term-3-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Una paranoia intensa ti costringe a stare in allerta verso tutto e tutti, proteggendo quel poco che ti è rimasto. Ottieni un bonus di 1d4 a qualsiasi prova di Percezione o Intuizione che effettui."
+            },
+            {
+              "id": "long-term-3-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Sei imbronciato e cupo; questi pensieri negativi nella tua testa ti spingono a sminuirti durante qualsiasi conversazione."
+            },
+            {
+              "id": "long-term-3-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Il senso di inutilità penetra in ogni aspetto della tua vita, erodendo qualsiasi briciolo di competenza ti sia rimasto. Hai una penalità di 1d4 a qualsiasi prova di caratteristica."
+            }
+          ]
+        },
+        {
+          "id": "long-term-4",
+          "range": [
+            31,
+            40
+          ],
+          "title": "La Percezione del Potere",
+          "description": "Perdi la percezione del tuo stesso potere.",
+          "outcomes": [
+            {
+              "id": "long-term-4-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Non rendendoti conto dei tuoi limiti, ti spingi oltre ciò di cui sei capace. Ogni volta che infliggi danni, aggiungi danni pari a un tiro del dado di danno più basso utilizzato."
+            },
+            {
+              "id": "long-term-4-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Non ti rendi conto della tua forza; ogni volta che devi usare il corpo, applichi troppa forza o troppo poca. Le tue strette di mano possono essere come una morsa o come un pesce morto, gli abbracci subiscono lo stesso destino, e qualsiasi altra attività fisica diventa una scommessa."
+            },
+            {
+              "id": "long-term-4-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Per timore di mandare in pezzi il tuo corpo, trattieni involontariamente il tuo potere. Ogni volta che infliggi danni, sottrai danni pari a un tiro del dado di danno più basso utilizzato (minimo 0)."
+            }
+          ]
+        },
+        {
+          "id": "long-term-5",
+          "range": [
+            41,
+            50
+          ],
+          "title": "La Verità Esoterica Svelata",
+          "description": "La Verità Esoterica si rivela a te.",
+          "outcomes": [
+            {
+              "id": "long-term-5-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Capace di comprendere questa Verità, ottieni la competenza in un'abilità casuale legata all'Intelligenza (scelta dal GM) e puoi aggiungere il doppio del tuo bonus di competenza a qualsiasi prova effettuata con quell'abilità."
+            },
+            {
+              "id": "long-term-5-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Diventi affascinato da ciò che giace oltre. Ogni volta che noti o senti parlare di qualcosa di natura esoterica, lasci tutto ciò che stai facendo per indagare e tentare di avvicinarti, fisicamente o in altro modo."
+            },
+            {
+              "id": "long-term-5-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Le rivelazioni dall'oltre ti chiamano, spingendoti a sapere di più, a essere di più. Hai svantaggio ai tiri salvezza contro la follia."
+            }
+          ]
+        },
+        {
+          "id": "long-term-6",
+          "range": [
+            51,
+            60
+          ],
+          "title": "Il Sistema Nervoso che Brucia",
+          "description": "La follia incendia il tuo sistema nervoso, corrodendolo.",
+          "outcomes": [
+            {
+              "id": "long-term-6-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Qualsiasi dolore tu sentiresti scompare del tutto. Sei immune all'essere stordito e puoi cadere privo di sensi solo se raggiungi 0 punti ferita."
+            },
+            {
+              "id": "long-term-6-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "I tuoi nervi danneggiati trasmettono un costante senso di prurito. Questa sensazione svanisce quando la tua pelle è in contatto diretto con il metallo."
+            },
+            {
+              "id": "long-term-6-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sei in costante dolore per il danno ai nervi, il che ti impedisce di concentrarti o di dare il massimo in battaglia. Non puoi aggiungere il modificatore di Destrezza alla tua Classe Armatura e hai svantaggio a tutte le prove e i tiri salvezza su Destrezza."
+            }
+          ]
+        },
+        {
+          "id": "long-term-7",
+          "range": [
+            61,
+            70
+          ],
+          "title": "I Poteri dell'Oltre",
+          "description": "Poteri dall'oltre ti afferrano e si fondono col tuo corpo.",
+          "outcomes": [
+            {
+              "id": "long-term-7-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Riesci a portare questi poteri ultraterreni sotto il tuo controllo. Hai vantaggio ai tiri salvezza su Costituzione per mantenere la concentrazione. Inoltre, se fallisci un tiro salvezza, puoi scegliere di avere successo. In tal caso, devi tirare di nuovo sulla tabella delle follie a lungo termine, ottenendo un nuovo effetto."
+            },
+            {
+              "id": "long-term-7-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Tentando di capire cosa si sia fuso con te, inizi a sperimentare derealizzazione. Sei completamente alienato dall'ambiente circostante in ogni momento e ti sorprende qualsiasi contatto fisico."
+            },
+            {
+              "id": "long-term-7-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Questi nuovi poteri sono troppo per te, prosciugando la tua mente. Hai svantaggio alle prove di Intelligenza, Saggezza e Carisma, oltre che ai tiri salvezza su Costituzione per mantenere la concentrazione."
+            }
+          ]
+        },
+        {
+          "id": "long-term-8",
+          "range": [
+            71,
+            80
+          ],
+          "title": "Il Cuore che Vacilla",
+          "description": "Il tuo cuore comincia a vacillare; una simile realtà non può esistere.",
+          "outcomes": [
+            {
+              "id": "long-term-8-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il battito accelerato aumenta la tua consapevolezza. Ottieni un bonus di +3 al tuo punteggio passivo di Saggezza (Percezione) e ai tuoi tiri di iniziativa."
+            },
+            {
+              "id": "long-term-8-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "L'inaspettato è troppo per te. Ogni volta che vieni colto di sorpresa, urli a squarciagola. Se vieni colto di sorpresa in combattimento, cadi privo di sensi fino all'inizio del tuo prossimo turno."
+            },
+            {
+              "id": "long-term-8-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Il tuo cuore si indebolisce, letteralmente. Ottieni un livello di stanchezza che non può essere rimosso fino a quando la follia non termina. Ogni volta che diventi spaventato, ottieni un altro livello di stanchezza. A parte il primo, la stanchezza ottenuta da questa follia può essere rimossa normalmente."
+            }
+          ]
+        },
+        {
+          "id": "long-term-9",
+          "range": [
+            81,
+            90
+          ],
+          "title": "Le Cicatrici della Follia",
+          "description": "I tuoi futili tentativi di tenere a bada la follia hanno lasciato il tuo corpo segnato.",
+          "outcomes": [
+            {
+              "id": "long-term-9-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "Il tessuto cicatriziale ispessisce la tua pelle. Ottieni un bonus di +1 alla CA."
+            },
+            {
+              "id": "long-term-9-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Le cicatrici che ricoprono il tuo corpo sono oltre il ripugnante, e fanno provare paura alla maggior parte delle persone, soprattutto ai bambini. Hai un bonus di +2 alle prove di Intimidire e una penalità di -2 alle prove di Persuasione."
+            },
+            {
+              "id": "long-term-9-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Soffri di gravi cicatrici su una vasta porzione del tuo corpo. Ogni volta che subisci danni contundenti, perforanti o taglienti, subisci ulteriori 1d6 danni di quel tipo."
+            }
+          ]
+        },
+        {
+          "id": "long-term-10",
+          "range": [
+            91,
+            95
+          ],
+          "title": "La Carne che Marcisce",
+          "description": "La follia fa marcire il tuo corpo, incapace di resistere all'influenza esoterica.",
+          "outcomes": [
+            {
+              "id": "long-term-10-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "La tua mente accetta l'idea che il tuo corpo marcirà, e la accoglie; dopotutto, tutti appassiscono prima o poi. Hai immunità alla condizione avvelenato."
+            },
+            {
+              "id": "long-term-10-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "La putrefazione dentro di te è nauseante. Sperimenti un costante senso di disgusto, e ogni volta che senti un odore sgradevole, devi spendere la tua azione per avere conati di vomito."
+            },
+            {
+              "id": "long-term-10-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Ferite atroci di natura esoterica devastano la tua carne. Il tuo massimo di punti ferita è ridotto di 1 ogni 24 ore. Se il massimo di punti ferita scende a 0, muori. Tu o un'altra creatura potete curare le ferite durante un riposo lungo, effettuando una prova di Medicina (CD 16) ogni 24 ore. Dopo cinque successi, le ferite guariscono."
+            }
+          ]
+        },
+        {
+          "id": "long-term-11",
+          "range": [
+            96,
+            100
+          ],
+          "title": "La Bestia Liberata",
+          "description": "La bestia dentro di te si risveglia e prende il controllo.",
+          "outcomes": [
+            {
+              "id": "long-term-11-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "boon",
+              "text": "La maggior parte della tua umanità rimane, ma una parte sufficiente della bestia è liberata. Ottieni vantaggio ai tiri salvezza su Destrezza. Inoltre, ciascuna delle tue mani si trasforma in un artiglio, che puoi usare come arma se vuota. Infligge 1d6 danni taglienti se colpisce. Una volta per ciascuno dei tuoi turni, quando attacchi con un artiglio usando l'azione di Attacco, puoi compiere un attacco con artiglio aggiuntivo come parte della stessa azione."
+            },
+            {
+              "id": "long-term-11-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "neutral",
+              "text": "Il tuo corpo si trasforma, ma resta una traccia della tua umanità. La tua razza diventa flagellato, con una sotto-razza casuale. I flagellati e le razze costruite, come i manichini, sono immuni a questo effetto. Se sei già un flagellato, si applica invece il prossimo effetto della tabella."
+            },
+            {
+              "id": "long-term-11-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Il tuo corpo si trasforma in una bestia o mostruosità a scelta del GM con GS pari a metà del tuo livello (arrotondato per eccesso). Per il resto, la trasformazione segue le regole dell'incantesimo metamorfosi, con la differenza che, se cadi a 0 punti ferita, cadi privo di sensi invece di tornare alla forma originale."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "indefinite",
+      "label": "Permanente",
+      "blurb": "Un marchio scolpito nell'anima.",
+      "duration": {
+        "kind": "fixed",
+        "text": "D'ora in poi:"
+      },
+      "die": 100,
+      "subRoll": true,
+      "subDie": 10,
+      "entries": [
+        {
+          "id": "indefinite-1",
+          "range": [
+            1,
+            5
+          ],
+          "title": "La Schiavitù delle Sostanze",
+          "description": "Diventi gravemente dipendente da sostanze per affrontare l'insensatezza di questa esistenza dolorosa.",
+          "outcomes": [
+            {
+              "id": "indefinite-1-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Se hai una cattiva abitudine, come bere o droghe, prende il sopravvento e diventi dipendente. Se non ne hai, sviluppi alcolismo. Subisci una penalità di -3 a tutti i tiri di attacco, tiri salvezza e prove di caratteristica, ma se sei sotto l'effetto della sostanza, ottieni anche un bonus di +3 ai tiri salvezza contro la condizione spaventato o ulteriori follie."
+            },
+            {
+              "id": "indefinite-1-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Inizi a medicarti pesantemente per intorpidire il dolore della vita. Sviluppi uno dei seguenti vizi più in linea con la tua personalità: promiscuità, abuso di droghe, alcolismo o fumo. Se non pratichi il vizio almeno due volte ogni 24 ore, subisci una penalità di -1d6 ai tiri salvezza su Saggezza fino a quando non lo fai."
+            },
+            {
+              "id": "indefinite-1-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Droghe, alcol e altri vizi smettono di avere qualsiasi effetto su di te. Espelli immediatamente qualunque vizio consumato prima di poterlo metabolizzare e sei disgustato da ogni pensiero carnale."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-2",
+          "range": [
+            6,
+            10
+          ],
+          "title": "Il Peggioramento Eterno",
+          "description": "La vita è brutta e sta solo peggiorando.",
+          "outcomes": [
+            {
+              "id": "indefinite-2-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Ogni volta che fallisci una prova di caratteristica, un tiro di attacco o un tiro salvezza, hai svantaggio sulla successiva prova di caratteristica, tiro di attacco o tiro salvezza."
+            },
+            {
+              "id": "indefinite-2-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Senti che il mondo sta marcendo e diventi riluttante a provare qualsiasi cosa nuova, affidandoti solo a ciò che sai aver funzionato in passato. Rifiuti categoricamente di provare qualunque cosa nuova che non avessi sperimentato prima di acquisire questa follia, come un nuovo incantesimo, capacità o taverna."
+            },
+            {
+              "id": "indefinite-2-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "In passato potevi essere un individuo promettente, ma quei giorni sono ormai lontani. Non sei più competente in nessuna abilità e subisci invece una penalità pari al tuo bonus di competenza alle abilità in cui eri competente. Se una capacità ti permette di ottenere un bonus a una prova (come Talento o Tuttofare), non puoi più farlo."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-3",
+          "range": [
+            11,
+            15
+          ],
+          "title": "L'Odio del Proprio Corpo",
+          "description": "Sviluppi un odio per il tuo stesso corpo.",
+          "outcomes": [
+            {
+              "id": "indefinite-3-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Quando sviluppi questa follia, non si manifesta finché non rimani solo per 10 secondi o più con una lama. Ti amputi un arto in un raptus di rabbia e distruggi l'appendice di carne rimossa."
+            },
+            {
+              "id": "indefinite-3-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Inizi a indossare montagne di vestiti che nascondono il più possibile il tuo corpo e ti rifiuti di mostrare anche solo un centimetro di pelle a chiunque. Se ti accorgi che la tua pelle è esposta, hai svantaggio a tutte le prove e i tiri di attacco fino a quando non la nascondi di nuovo."
+            },
+            {
+              "id": "indefinite-3-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Forse sarebbe meglio se la tua anima abbandonasse questo corpo miserabile. Quando vieni ridotto a 0 punti ferita, ottieni due tiri salvezza contro la morte falliti, e fallisci automaticamente qualsiasi ulteriore tiro salvezza contro la morte."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-4",
+          "range": [
+            16,
+            20
+          ],
+          "title": "La Gestione dello Stress",
+          "description": "Perdi la capacità di gestire correttamente lo stress.",
+          "outcomes": [
+            {
+              "id": "indefinite-4-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Ogni volta che vieni esposto a una situazione stressante, ti scateni in un'ira furiosa, attaccando l'origine del tuo stress senza riguardo finché non muore o tu non vieni reso privo di sensi. Il GM determina quando ti trovi in una situazione stressante."
+            },
+            {
+              "id": "indefinite-4-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Fallisci automaticamente i tiri salvezza contro la condizione spaventato e non puoi beneficiare di effetti che ti renderebbero altrimenti immune alla paura."
+            },
+            {
+              "id": "indefinite-4-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Ogni volta che sei esposto a una situazione stressante o sociale, ti chiudi in te stesso. Hai svantaggio a tutte le prove di Carisma e Destrezza e perdi qualsiasi spavalderia il tuo personaggio possa avere."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-5",
+          "range": [
+            21,
+            25
+          ],
+          "title": "Gli Occhi Vesciche",
+          "description": "I tuoi occhi iniziano a coprirsi di vesciche mentre la Verità Esoterica si rivela a te.",
+          "outcomes": [
+            {
+              "id": "indefinite-5-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Diventi cieco e non puoi recuperare la vista finché sei afflitto da questa follia."
+            },
+            {
+              "id": "indefinite-5-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Ottieni la capacità di vedere nel Piano Etereo ma perdi la capacità di vedere il Piano Materiale. Sei accecato per le creature e gli oggetti del Piano Materiale."
+            },
+            {
+              "id": "indefinite-5-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "I tuoi occhi diventano scuri e detesti la luce. Mentre sei alla luce solare o lunare intensa, hai svantaggio ai tiri di attacco, così come alle prove di Percezione che si basano sulla vista."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-6",
+          "range": [
+            26,
+            30
+          ],
+          "title": "Il Richiamo del Dolore",
+          "description": "La follia incendia il tuo sistema nervoso, e la tua mente inizia a invocare il dolore.",
+          "outcomes": [
+            {
+              "id": "indefinite-6-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Il tuo subconscio ti grida, spronandoti a soffrire il dolore. Hai svantaggio ai tiri salvezza contro effetti che ti infliggono danni e i tiri di attacco contro di te hanno vantaggio. In cambio, hai vantaggio ai tiri salvezza contro effetti non dannosi, poiché la tua mente li considera al di sotto di te."
+            },
+            {
+              "id": "indefinite-6-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Ogni volta che subisci più di 20 danni in un turno, il tuo corpo detona psichicamente. Tu e tutte le creature entro 9 metri da te dovete superare un tiro salvezza su Intelligenza o subire 3d10 danni psichici. Hai svantaggio a questo tiro salvezza."
+            },
+            {
+              "id": "indefinite-6-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Diventi affascinato dall'aldilà. Ogni volta che una creatura nel tuo raggio visivo è priva di sensi e a 0 punti ferita, senti l'impulso di darle il colpo di grazia, e devi usare il tuo turno per cercare di ucciderla."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-7",
+          "range": [
+            31,
+            35
+          ],
+          "title": "Il Coping della Mente",
+          "description": "Misteriosi poteri dall'oltre ti afferrano, e cerchi di farne fronte in vari modi.",
+          "outcomes": [
+            {
+              "id": "indefinite-7-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Diventi ossessionato da un oggetto in tuo possesso. Se quell'oggetto non è esattamente come deve essere in ogni momento, ti rosicchia la pace della mente. Mentre quell'oggetto non è in ordine, hai svantaggio a tutte le prove di caratteristica e tiri di attacco."
+            },
+            {
+              "id": "indefinite-7-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Inizialmente non accade nulla. [Solo il GM può conoscere quanto segue] La prossima volta che cadi privo di sensi in battaglia, sviluppi un grave trauma legato a quell'evento. Se incontri quel nemico in battaglia mentre sei sotto questa follia, vieni maledetto. Mentre sei maledetto in questo modo, quando completi un riposo lungo, devi effettuare un tiro salvezza su Saggezza (CD 12). In caso di fallimento, la tua mente lotta con i fallimenti passati e non ottieni i benefici del riposo lungo."
+            },
+            {
+              "id": "indefinite-7-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sviluppi una strana fobia. Potrebbe essere paura delle parole lunghe, del buio o di un altro aspetto della tua vita. Parlane con il GM per decidere quale si adatti al tuo personaggio."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-8",
+          "range": [
+            36,
+            40
+          ],
+          "title": "Il Cuore che Mente",
+          "description": "Il tuo cuore comincia a vacillare; una tale realtà non può davvero esistere.",
+          "outcomes": [
+            {
+              "id": "indefinite-8-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Perdi il contatto con la realtà. Inizi a vedere persone che non esistono e a sentire suoni che non ci sono. Questo effetto si applica anche in battaglia, dove vedi nemici inesistenti sul campo. Effettua un tiro salvezza su Saggezza (CD 18) all'inizio di ognuno dei tuoi turni. In caso di fallimento, devi usare la tua azione per attaccare un bersaglio a scelta del GM."
+            },
+            {
+              "id": "indefinite-8-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Diventi un bugiardo compulsivo. Devi effettuare un tiro salvezza su Saggezza (CD 18) ogni volta che cerchi di dire la verità. In caso di fallimento, menti, anche se è contro il tuo interesse."
+            },
+            {
+              "id": "indefinite-8-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Diventi ossessionato dal rubare piccoli oggetti di valore. Quando noti tali oggetti, devi effettuare un tiro salvezza su Saggezza (CD 18) per resistere all'impulso di rubare. In caso di fallimento, tenti di rubare qualcosa di vicino, qualunque siano le conseguenze."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-9",
+          "range": [
+            41,
+            45
+          ],
+          "title": "Nervi e Mente in Tilt",
+          "description": "Inizi a perdere il controllo dei tuoi nervi e della tua mente.",
+          "outcomes": [
+            {
+              "id": "indefinite-9-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "I tuoi sensi diventano dolorosamente acuti, causando disagio e confusione. Incapace di trovare lucidità nella cacofonia dei tuoi sensi, hai svantaggio a qualsiasi prova di caratteristica che si basa su vista, udito, olfatto, gusto o tatto, e svantaggio ai tiri salvezza su Saggezza."
+            },
+            {
+              "id": "indefinite-9-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Ti teletrasporti casualmente per brevi distanze (da 3 a 18 metri) nei momenti più inopportuni. Il GM determina il momento e la destinazione di questi teletrasporti."
+            },
+            {
+              "id": "indefinite-9-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Trasmetti i tuoi pensieri in via telepatica alle creature entro un raggio di 18 metri, perdendo la capacità di mantenere segreti o di sorprendere qualsiasi creatura entro tale raggio."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-10",
+          "range": [
+            46,
+            50
+          ],
+          "title": "Le Mutazioni del Corpo",
+          "description": "Il tuo corpo muta in modi disadattivi.",
+          "outcomes": [
+            {
+              "id": "indefinite-10-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Diventi estremamente sensibile a un elemento specifico (fuoco, freddo, fulmine, acido, veleno o tuono), provando dolore intenso anche con minima esposizione. Diventi vulnerabile a quel tipo di danno. Questo effetto rimuove qualsiasi resistenza o immunità tu possa avere a quel tipo di danno."
+            },
+            {
+              "id": "indefinite-10-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Diventi un parafulmine vivente. Qualsiasi fulmine o effetto che infligge danni da fulmine entro 36 metri da te si piega nella tua direzione, colpendo anche te. Inoltre, fallisci automaticamente i tiri salvezza contro effetti che infliggono danni da fulmine."
+            },
+            {
+              "id": "indefinite-10-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Perdi tutti i peli sul corpo, causando problemi di termoregolazione. I manichini sono immuni a questo effetto. Hai svantaggio ai tiri salvezza contro freddo e caldo estremi. Inoltre, hai svantaggio ai tiri salvezza contro malattie e veleno, e perdi qualsiasi resistenza ai danni da veleno."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-11",
+          "range": [
+            51,
+            55
+          ],
+          "title": "La Realtà Distorta",
+          "description": "Il tuo corpo percepisce la realtà in modi anormali.",
+          "outcomes": [
+            {
+              "id": "indefinite-11-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Il tuo corpo entra ed esce dalla realtà, causando il suo passaggio parziale attraverso oggetti e creature. Quando effettui un attacco o lanci un incantesimo, c'è una probabilità del 50% che esso passi nel Piano Etereo e attraversi i bersagli senza danneggiarli."
+            },
+            {
+              "id": "indefinite-11-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Percepisci le distanze in modo inaccurato, con gli oggetti che appaiono più vicini o più lontani di quanto siano in realtà. Hai svantaggio ai tiri di attacco a distanza e alle prove di Percezione che si basano sulla vista."
+            },
+            {
+              "id": "indefinite-11-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Sperimenti il tempo a un ritmo incoerente, con momenti che sembrano dilatarsi o comprimersi in modo imprevedibile. Hai svantaggio ai tiri di iniziativa e devi tirare un d6 all'inizio di ognuno dei tuoi turni per determinare quali azioni puoi compiere (1-2: una sola tra azione, azione bonus o movimento; 3-4: solo movimento e una tra azione o azione bonus; 5-6: nessun cambiamento)."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-12",
+          "range": [
+            56,
+            60
+          ],
+          "title": "Le Illusioni della Mente",
+          "description": "La tua mente comincia a giocarti brutti scherzi, alimentandoti di illusioni.",
+          "outcomes": [
+            {
+              "id": "indefinite-12-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Diventi eccessivamente sicuro di te e ti assumi rischi inutili. Devi effettuare un tiro salvezza su Saggezza (CD 18) prima di tentare qualsiasi azione cauta o ben ragionata. In caso di fallimento, agisci impulsivamente."
+            },
+            {
+              "id": "indefinite-12-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Credi di essere una divinità, un membro della famiglia reale o un'altra figura potente, e hai svantaggio a tutte le prove di Saggezza e Carisma quando interagisci con altri."
+            },
+            {
+              "id": "indefinite-12-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Credi di essere di un'altra razza. Puoi parlare solo nella lingua nativa di quella razza, e se quella lingua non è il Comune, perdi la capacità di parlare il Comune. Se non conosci già la lingua di quella razza, produci suoni che sembrano avvicinarsi a quella lingua, ma in realtà sono completo nonsense."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-13",
+          "range": [
+            61,
+            65
+          ],
+          "title": "Il Caos Antisociale",
+          "description": "Sviluppi tratti di personalità antisociale, diventando l'incarnazione del caos e della follia.",
+          "outcomes": [
+            {
+              "id": "indefinite-13-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Ogni volta che tiri l'iniziativa, inizi a danzare. All'inizio di ognuno dei tuoi turni, devi effettuare un tiro salvezza su Costituzione (CD 18) per smettere di ballare per quel turno. In caso di fallimento, continui a ballare, come per l'incantesimo danza irresistibile."
+            },
+            {
+              "id": "indefinite-13-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Vieni travolto da attacchi di risate incontrollabili nei momenti meno appropriati, rendendo difficile comunicare o concentrarsi. Se ti stai concentrando su un incantesimo, devi superare un tiro salvezza su Saggezza (CD 15) all'inizio di ognuno dei tuoi turni o perdi la concentrazione. Inoltre, hai svantaggio alle prove di Furtività."
+            },
+            {
+              "id": "indefinite-13-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Diventi famelico e devi superare un tiro salvezza su Saggezza (CD 15) o sentirsi costretto a consumare qualunque cibo, compreso quello sgradevole, rancido o francamente abominevole, in cui ti imbatti."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-14",
+          "range": [
+            66,
+            70
+          ],
+          "title": "L'Odio Trascendente",
+          "description": "Vieni afflitto da un odio trascendente.",
+          "outcomes": [
+            {
+              "id": "indefinite-14-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Sviluppi una personalità alternativa che tenta di distruggere tutto ciò a cui tieni e di nutrire qualsiasi cosa tu detesti."
+            },
+            {
+              "id": "indefinite-14-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Sviluppi un odio irrazionale per una creatura, oggetto o situazione specifica scelta dal GM. Devi superare un tiro salvezza su Saggezza (CD 15) quando incontri il soggetto odiato o diventi ostile verso di esso per 1 ora, o finché il bersaglio non viene rimosso dalla tua vista o distrutto."
+            },
+            {
+              "id": "indefinite-14-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Ti diverti all'idea del tradimento. Ogni volta che più creature sono nel raggio di un attacco che stai per effettuare, tira un d20. Con un risultato di 10 o inferiore, prendi di mira casualmente un'altra creatura invece del bersaglio originale."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-15",
+          "range": [
+            71,
+            75
+          ],
+          "title": "Il Corpo Bizzarro",
+          "description": "Il tuo corpo inizia a comportarsi in modi strani.",
+          "outcomes": [
+            {
+              "id": "indefinite-15-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "I tuoi punteggi di Forza e Destrezza vengono invertiti."
+            },
+            {
+              "id": "indefinite-15-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Sei convinto di soffrire di una grave malattia, che potrebbe essere reale o meno, e hai svantaggio a tutti i tiri salvezza e prove di Costituzione."
+            },
+            {
+              "id": "indefinite-15-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Il tuo tipo di creatura diventa non morto. I manichini perdono qualsiasi traccia di umanità avessero e diventano costrutti. Le cure magiche non hanno alcun effetto su di te."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-16",
+          "range": [
+            76,
+            80
+          ],
+          "title": "Il Trauma nella Mente",
+          "description": "Il trauma penetra nella tua mente.",
+          "outcomes": [
+            {
+              "id": "indefinite-16-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "Vieni perseguitato da incubi, lasciandoti perennemente esausto. Se hai meno di 2 livelli di stanchezza quando completi un riposo lungo, ti svegli con 2 livelli di stanchezza."
+            },
+            {
+              "id": "indefinite-16-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Sviluppi un'intensa paura di un certo tipo di creatura (a scelta del GM). Se ti trovi entro 3 metri da quel tipo di creatura, devi usare il tuo movimento e la tua azione per Scattare via da loro nel tuo turno. Inoltre, le creature di quel tipo hanno vantaggio agli attacchi di opportunità contro di te."
+            },
+            {
+              "id": "indefinite-16-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Gli orrori che hai visto ti legano la lingua e la gola. Perdi la capacità di parlare e di emettere suoni, comprese le componenti vocali degli incantesimi."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-17",
+          "range": [
+            81,
+            85
+          ],
+          "title": "Il Richiamo dell'Esoterico",
+          "description": "L'Esoterico ti richiama.",
+          "outcomes": [
+            {
+              "id": "indefinite-17-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "La luna, e tutte le sue forme esoteriche, ti chiamano. Hai svantaggio a qualsiasi tiro salvezza causato da effetti lunari (diretti o indiretti), e hai vantaggio a tutte le prove di caratteristica riguardanti la conoscenza della luna."
+            },
+            {
+              "id": "indefinite-17-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "La tua Ascensione Esoterica fallisce. La tua velocità è dimezzata, e perdi la capacità di teletrasportarti. Se vieni teletrasportato contro la tua volontà, ad esempio con l'incantesimo bandire, subisci 3d10 danni da forza mentre il cosmo prende il suo pegno dalla tua carne come punizione."
+            },
+            {
+              "id": "indefinite-17-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "La tua Ascensione Esoterica riesce parzialmente. Il tuo tipo di creatura cambia in aberrazione. Ottieni resistenza ai danni psichici, hai vantaggio ai tiri salvezza contro la telepatia, ma perdi tutta l'empatia, ottenendo svantaggio alle prove di Intuizione e Persuasione. Inoltre, capisci la lingua Profonda e hai svantaggio ai tiri salvezza contro effetti di ammaliamento provenienti da aberrazioni."
+            }
+          ]
+        },
+        {
+          "id": "indefinite-18",
+          "range": [
+            86,
+            100
+          ],
+          "title": "Il Trionfo della Bestia",
+          "description": "La bestia dentro di te si risveglia e prende il controllo.",
+          "outcomes": [
+            {
+              "id": "indefinite-18-1",
+              "range": [
+                1,
+                2
+              ],
+              "kind": "bane",
+              "text": "La bestia inizia a rosicchiare la tua mente, costringendoti a restare vigile per tenerla a bada. Ogni volta che cadi privo di sensi, tira 1d2. Con un 1, la tua mente perde il controllo e la prossima volta che ti svegli, la bestia dentro di te ha il controllo del tuo corpo. Finché non cadi nuovamente privo di sensi, sei sotto il controllo del GM mentre la bestia caotica malvagia dentro di te cerca di unirsi ad altre bestie e di esiliarti dal tuo corpo. Con un 2, mantieni o riconquisti la tua sanità mentale al risveglio."
+            },
+            {
+              "id": "indefinite-18-2",
+              "range": [
+                3,
+                7
+              ],
+              "kind": "bane",
+              "text": "Il tuo corpo si trasforma, ma resta una traccia della tua umanità. La tua razza diventa 'Bestia della Piaga'. Parla con il GM per determinare la sotto-razza più appropriata per il tuo personaggio. Niente di meno di un incantesimo desiderio può annullare questa trasformazione. Se sei già un flagellato, considera questo risultato come un 10 e applica gli effetti di follia indicati di seguito."
+            },
+            {
+              "id": "indefinite-18-3",
+              "range": [
+                8,
+                10
+              ],
+              "kind": "bane",
+              "text": "Diventi una bestia o mostruosità a scelta del GM con un GS pari a metà del tuo livello (arrotondato per eccesso), e perdi la mente. Diventi una creatura sotto il controllo del GM."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

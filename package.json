@@ -1,0 +1,29 @@
+{
+  "name": "interactive-madness-table",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A dramatic roller for any madness table, with a DM editor and a player screen. A ToolsmithDev tool.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite --open /index.html",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "convert": "node scripts/convert-follie.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.8"
+  }
+}
