@@ -1,282 +1,293 @@
-/* The player screen: big type on black, sized to be read from a sofa. The motion
-   is driven from Display.tsx; this file holds the stage it plays on. */
+/* What players see: big type on black, sized to be read from a sofa or from a
+   phone held at arm's length. The motion is driven from Display.tsx; this file
+   holds the stage it plays on.
 
-:root {
+   Everything is scoped to .player, because the same view is used twice: as the
+   whole page in display.html, and as table mode inside the DM window, where
+   these rules must not touch the DM's own styles. */
+
+.player {
   --bg: #0c0807;
   --gold: #c9a14a;
   --gold-light: #e6c87d;
   --ivory: #e8dcc4;
   --ivory-soft: #b8ad95;
   --crimson: #c23b3b;
-  color-scheme: dark;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
+  position: relative;
   height: 100%;
-}
-
-body {
-  margin: 0;
   background: #000;
   color: var(--ivory);
   font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.5;
   overflow: hidden;
   cursor: default;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .screen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* "safe" keeps the top reachable when a long text is taller than the screen. */
+    justify-content: safe center;
+    gap: 2.4vh;
+    height: 100%;
+    padding: max(5vh, env(safe-area-inset-top)) max(7vw, env(safe-area-inset-right)) max(5vh, env(safe-area-inset-bottom))
+      max(7vw, env(safe-area-inset-left));
+    text-align: center;
+    background: radial-gradient(ellipse at center, #1c100d 0%, var(--bg) 62%, #000 100%);
+    overflow: hidden auto;
+    scrollbar-width: none;
+  }
+
+  .screen.dark {
+    background: #000;
+  }
+
+  .screen.quiet,
+  .screen.still {
+    animation: pv-screen-in 900ms ease-out;
+  }
+
+  .screen p,
+  .screen h1 {
+    margin: 0;
+  }
+
+  .camera {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.2vh;
+    max-width: 100%;
+    will-change: transform;
+  }
+
+  /* Sizes follow the width on a wide screen and the height on a short one, so a
+     phone held sideways still fits the whole verdict. */
+  .eyebrow,
+  .kind {
+    color: var(--gold);
+    font-size: clamp(0.85rem, min(2.2vw, 3.6vh), 2rem);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  .blurb,
+  .description {
+    color: var(--ivory-soft);
+    font-size: clamp(1.05rem, min(2.6vw, 4.4vh), 2.5rem);
+    font-style: italic;
+    max-width: 28ch;
+  }
+
+  .number {
+    color: var(--gold-light);
+    font-size: clamp(4rem, min(19vw, 30vh), 17rem);
+    font-variant-numeric: tabular-nums;
+    line-height: 0.95;
+    min-height: 0.95em;
+    will-change: transform, opacity;
+    transition: text-shadow 500ms;
+  }
+
+  .number.landed {
+    text-shadow: 0 0 0.25em rgba(230, 200, 125, 0.45);
+  }
+
+  /* The glitch roll style: the digits scramble and tear sideways until they lock. */
+  .number.scrambling {
+    color: var(--ivory);
+    text-shadow:
+      0.04em 0 0 rgba(194, 59, 59, 0.75),
+      -0.04em 0 0 rgba(120, 190, 200, 0.55);
+    animation: pv-tear 140ms steps(2) infinite;
+  }
+
+  h1 {
+    color: var(--gold-light);
+    font-size: clamp(1.6rem, min(5.6vw, 9vh), 5.6rem);
+    font-weight: normal;
+    line-height: 1.1;
+    max-width: 17ch;
+    min-height: 1.1em;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  /* While the title is still noise it flickers like a bad signal. */
+  h1.forming {
+    color: var(--ivory);
+    letter-spacing: 0.04em;
+    animation: pv-flicker 180ms steps(2) infinite;
+  }
+
+  .effect {
+    font-size: clamp(1.05rem, min(2.6vw, 4.4vh), 2.5rem);
+    line-height: 1.4;
+    max-width: 32ch;
+  }
+
+  .effect strong {
+    color: var(--gold-light);
+  }
+
+  .description,
+  .effect,
+  .kind {
+    will-change: opacity, transform;
+  }
+
+  /* A result's own image or video: full screen, under the text, darkened so the text stays readable. */
+  .media {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  .media img,
+  .media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(8, 5, 4, 0.62) 0%, rgba(8, 5, 4, 0.82) 70%, rgba(0, 0, 0, 0.94) 100%);
+  }
+
+  .screen.has-media .camera {
+    position: relative;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
+  }
+
+  .wash {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, var(--ivory-soft), transparent 70%);
+    mix-blend-mode: screen;
+  }
+
+  .screen.boon .wash {
+    background: radial-gradient(ellipse at center, var(--gold), transparent 72%);
+  }
+
+  .screen.bane .wash {
+    background: radial-gradient(ellipse at center, #a01818, transparent 72%);
+  }
+
+  .screen.boon .kind,
+  .screen.boon .effect strong {
+    color: var(--gold-light);
+  }
+
+  .screen.bane h1,
+  .screen.bane .kind,
+  .screen.bane .effect strong {
+    color: var(--crimson);
+  }
+
+  .screen.bane .number {
+    color: #e9b7a8;
+  }
+
+  /* Film grain: fractal noise from an inline SVG, shifted eight times a second. */
+  .grain {
+    position: absolute;
+    inset: -50%;
+    opacity: 0.13;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: pv-grain 800ms steps(8) infinite;
+  }
+
+  .vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.72) 100%);
+  }
+
+  .preview-tag {
+    position: absolute;
+    top: max(2vh, env(safe-area-inset-top));
+    right: max(2vw, env(safe-area-inset-right));
+    margin: 0;
+    padding: 4px 12px;
+    border: 1px solid var(--ivory-soft);
+    border-radius: 999px;
+    color: var(--ivory-soft);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .waiting {
+    color: var(--ivory-soft);
+    font-size: 1.3rem;
+  }
+
+  .small {
+    font-size: 1rem;
+  }
+
+  .hint {
+    position: absolute;
+    bottom: max(2vh, env(safe-area-inset-bottom));
+    left: 0;
+    right: 0;
+    margin: 0;
+    text-align: center;
+    color: var(--ivory-soft);
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+
+  &:hover .hint {
+    opacity: 0.6;
+  }
 }
 
-.screen {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.4vh;
-  height: 100%;
-  padding: 6vh 8vw;
-  text-align: center;
-  background: radial-gradient(ellipse at center, #1c100d 0%, var(--bg) 62%, #000 100%);
-  overflow: hidden;
+/* A device that cannot keep up drops the moving grain and keeps the rest. */
+.player.lite .grain {
+  animation: none;
 }
 
-.screen.dark {
-  background: #000;
-}
-
-.screen.quiet,
-.screen.still {
-  animation: screen-in 900ms ease-out;
-}
-
-/* The glitch roll style: the digits scramble and tear sideways until they lock. */
-.number.scrambling {
-  color: var(--ivory);
-  text-shadow:
-    0.04em 0 0 rgba(194, 59, 59, 0.75),
-    -0.04em 0 0 rgba(120, 190, 200, 0.55);
-  animation: tear 140ms steps(2) infinite;
-}
-
-.preview-tag {
-  position: fixed;
-  top: 2vh;
-  right: 2vw;
-  margin: 0;
-  padding: 4px 12px;
-  border: 1px solid var(--ivory-soft);
-  border-radius: 999px;
-  color: var(--ivory-soft);
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.screen p,
-.screen h1 {
-  margin: 0;
-}
-
-.camera {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2.2vh;
-  will-change: transform;
-}
-
-.eyebrow,
-.kind {
-  color: var(--gold);
-  font-size: clamp(1rem, 2.2vw, 2rem);
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-}
-
-.blurb,
-.description {
-  color: var(--ivory-soft);
-  font-size: clamp(1.2rem, 2.6vw, 2.5rem);
-  font-style: italic;
-  max-width: 28ch;
-}
-
-.number {
-  color: var(--gold-light);
-  font-size: clamp(5rem, 19vw, 17rem);
-  font-variant-numeric: tabular-nums;
-  line-height: 0.95;
-  min-height: 0.95em;
-  will-change: transform, opacity;
-  transition: text-shadow 500ms;
-}
-
-.number.landed {
-  text-shadow: 0 0 0.25em rgba(230, 200, 125, 0.45);
-}
-
-h1 {
-  color: var(--gold-light);
-  font-size: clamp(2rem, 5.6vw, 5.6rem);
-  font-weight: normal;
-  line-height: 1.1;
-  max-width: 17ch;
-  min-height: 1.1em;
-}
-
-/* While the title is still noise it flickers like a bad signal. */
-h1.forming {
-  color: var(--ivory);
-  letter-spacing: 0.04em;
-  animation: flicker 180ms steps(2) infinite;
-}
-
-.effect {
-  font-size: clamp(1.2rem, 2.6vw, 2.5rem);
-  line-height: 1.4;
-  max-width: 32ch;
-}
-
-.effect strong {
-  color: var(--gold-light);
-}
-
-.description,
-.effect,
-.kind {
-  will-change: opacity, transform;
-}
-
-/* A result's own image or video: full screen, under the text, darkened so the text stays readable. */
-.media {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  will-change: opacity;
-}
-
-.media img,
-.media video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(8, 5, 4, 0.62) 0%, rgba(8, 5, 4, 0.82) 70%, rgba(0, 0, 0, 0.94) 100%);
-}
-
-.screen.has-media .camera {
-  position: relative;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
-}
-
-.wash {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, var(--ivory-soft), transparent 70%);
-  mix-blend-mode: screen;
-}
-
-.screen.boon .wash {
-  background: radial-gradient(ellipse at center, var(--gold), transparent 72%);
-}
-
-.screen.bane .wash {
-  background: radial-gradient(ellipse at center, #a01818, transparent 72%);
-}
-
-.screen.boon .kind,
-.screen.boon .effect strong {
-  color: var(--gold-light);
-}
-
-.screen.bane h1,
-.screen.bane .kind,
-.screen.bane .effect strong {
-  color: var(--crimson);
-}
-
-.screen.bane .number {
-  color: #e9b7a8;
-}
-
-/* Film grain: fractal noise from an inline SVG, shifted eight times a second. */
-.grain {
-  position: fixed;
-  inset: -50%;
-  opacity: 0.13;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 800ms steps(8) infinite;
-}
-
-.vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.72) 100%);
-}
-
-.waiting {
-  color: var(--ivory-soft);
-  font-size: 1.4rem;
-}
-
-.small {
-  font-size: 1rem;
-}
-
-.hint {
-  position: fixed;
-  bottom: 2vh;
-  left: 0;
-  right: 0;
-  margin: 0;
-  text-align: center;
-  color: var(--ivory-soft);
-  font-size: 0.85rem;
-  opacity: 0;
-  transition: opacity 300ms;
-}
-
-body:hover .hint {
-  opacity: 0.6;
-}
-
-:fullscreen .hint {
+:fullscreen .player .hint {
   display: none;
 }
 
-@keyframes screen-in {
+@keyframes pv-screen-in {
   from {
     opacity: 0;
   }
 }
 
-@keyframes tear {
+@keyframes pv-tear {
   50% {
     transform: translateX(0.03em) skewX(-6deg);
   }
 }
 
-@keyframes flicker {
+@keyframes pv-flicker {
   50% {
     opacity: 0.78;
   }
 }
 
-@keyframes grain {
+@keyframes pv-grain {
   0% {
     transform: translate(0, 0);
   }
@@ -295,11 +306,11 @@ body:hover .hint {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .screen.quiet,
-  .screen.still,
-  .number.scrambling,
-  .grain,
-  h1.forming {
+  .player .screen.quiet,
+  .player .screen.still,
+  .player .number.scrambling,
+  .player .grain,
+  .player h1.forming {
     animation: none;
   }
 }

@@ -7,6 +7,7 @@ import { Editor } from './Editor'
 import { ScreenControl } from './ScreenControl'
 import { Settings } from './Settings'
 import { Stage } from './Stage'
+import { TableMode } from './TableMode'
 
 // The DM window, play screen. Editor, stage and settings come in later phases.
 
@@ -20,6 +21,7 @@ export function App() {
   const hold = useStore((s) => s.hold)
   const clearHold = useStore((s) => s.clearHold)
   const [tab, setTabState] = useState<Tab>('play')
+  const [tableMode, setTableMode] = useState(false)
   const setTab = (t: Tab) => {
     clearHold() // leaving the play screen ends the effect
     setTabState(t)
@@ -44,7 +46,8 @@ export function App() {
         </nav>
         <span className="top-note">{name}</span>
       </header>
-      <ScreenControl />
+      <ScreenControl onTableMode={() => setTableMode(true)} />
+      {tableMode && <TableMode onClose={() => setTableMode(false)} />}
       {tab === 'play' ? (
         <div className="layout">
           <main className="stage" aria-live="polite">

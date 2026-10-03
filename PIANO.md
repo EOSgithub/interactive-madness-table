@@ -167,7 +167,7 @@ Richiesto il 2026-10-03. Il tool deve funzionare bene anche su telefono, non sol
 - Finestra del DM: bersagli da toccare di almeno 44 px, tiro raggiungibile con il pollice, storico in fondo o in un pannello a scomparsa, tastiera numerica per i tiri inseriti a mano.
 - Editor: una colonna, voci ed esiti impilati, campi degli intervalli comodi da toccare, niente griglie a più colonne sotto i 600 px.
 - Schermo giocatori: su un telefono in mano ai giocatori il testo deve stare nello schermo senza tagli, in verticale e in orizzontale. Niente "premi F": un tocco per lo schermo intero.
-- Caso d'uso da decidere: su telefono non c'è un secondo monitor. O il telefono fa solo da finestra del DM, o serve il collegamento remoto tra dispositivi, che oggi è fuori dalla prima versione.
+- Un solo schermo: su telefono non c'è un secondo monitor, quindi la finestra del DM ha la "Table mode", che mostra la vista dei giocatori sullo stesso schermo con una barra di comandi sotto. Va bene per un telefono o tablet appoggiato al tavolo, o duplicato su una TV. Il collegamento remoto tra dispositivi diversi resta fuori dalla prima versione.
 - Prestazioni: grana e animazioni provate su un telefono di fascia media; se scattano, si alleggeriscono in automatico.
 
 ## Effetto del dado nella finestra del DM

@@ -4,7 +4,7 @@ import { useStore } from '../state/store'
 // What the DM needs to run the player screen: open it, see whether it is
 // listening, and black it out.
 
-export function ScreenControl() {
+export function ScreenControl({ onTableMode }: { onTableMode: () => void }) {
   const open = usePresence((s) => s.open)
   const blackout = useStore((s) => s.blackout)
   const toggleBlackout = useStore((s) => s.toggleBlackout)
@@ -21,6 +21,9 @@ export function ScreenControl() {
       </span>
       <button className="ghost" onClick={openScreen}>
         {open ? 'Show player screen' : 'Open player screen'}
+      </button>
+      <button className="ghost" onClick={onTableMode} title="Show the player view here, on this screen">
+        Table mode
       </button>
       <label className="switch">
         <input type="checkbox" checked={blackout} onChange={toggleBlackout} />

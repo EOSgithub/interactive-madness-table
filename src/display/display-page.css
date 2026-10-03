@@ -1,0 +1,22 @@
+/* Only for display.html, where the player view is the whole page. */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+/* A phone's address bar changes the height of the page; dvh follows it. */
+@supports (height: 100dvh) {
+  html,
+  body,
+  #root {
+    height: 100dvh;
+  }
+}

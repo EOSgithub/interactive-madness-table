@@ -5,9 +5,12 @@ import { listen } from '../state/sync'
 import { SPEED_FACTOR } from '../shared/settings'
 import { clamp, faceAt, firstRollBeats, glitchValue, jolt, revealText, secondRollBeats, smooth } from './show'
 
-// The player screen. It shows the roll in progress and nothing else: no controls,
+// What players see. It shows the roll in progress and nothing else: no controls,
 // no tables. Each frame is drawn from the time since the step began (see show.ts)
 // and written straight to the DOM, with no React render per frame.
+//
+// Display is the player page (display.html), fed by the DM window. PlayerView is
+// the view itself, also used by table mode inside the DM window.
 
 const KIND_LABEL = { boon: 'A boon', neutral: 'It shows itself', bane: 'A bane' } as const
 
@@ -15,35 +18,69 @@ export function Display() {
   const [state, setState] = useState<DisplayState | null>(null)
   useEffect(() => listen(setState), [])
 
+  // A finger has no F key and no double-click that feels natural: one tap is enough there.
+  const touch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
   useEffect(() => {
     const toggle = () => {
       if (document.fullscreenElement) void document.exitFullscreen()
-      else void document.documentElement.requestFullscreen().catch(() => {})
+      else void document.documentElement.requestFullscreen?.().catch(() => {})
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'f' || e.key === 'F') toggle()
     }
+    const gesture = touch ? 'click' : 'dblclick'
     window.addEventListener('keydown', onKey)
-    window.addEventListener('dblclick', toggle)
+    window.addEventListener(gesture, toggle)
     return () => {
       window.removeEventListener('keydown', onKey)
-      window.removeEventListener('dblclick', toggle)
+      window.removeEventListener(gesture, toggle)
     }
+  }, [touch])
+
+  return <PlayerView state={state} hint={touch ? 'Tap for full screen' : 'Press F or double-click for full screen'} />
+}
+
+/** How many frames to time before deciding whether the device keeps up. */
+const SAMPLE = 45
+
+export function PlayerView({ state, hint }: { state: DisplayState | null; hint?: string }) {
+  // Time a short run of frames once. A device that averages under about 30 frames
+  // a second gets the lighter look: the grain stops moving.
+  const [lite, setLite] = useState(false)
+  useEffect(() => {
+    let raf = 0
+    let count = 0
+    let first = 0
+    const tick = (now: number) => {
+      if (count === 0) first = now
+      if (++count <= SAMPLE) raf = requestAnimationFrame(tick)
+      else if ((now - first) / SAMPLE > 34) setLite(true)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
   }, [])
 
   if (!state) {
     return (
-      <main className="screen waiting">
-        <p>Waiting for the DM window.</p>
-        <p className="small">Open the Interactive Madness Table in another window of this browser.</p>
-      </main>
+      <div className="player">
+        <main className="screen waiting">
+          <p>Waiting for the DM window.</p>
+          <p className="small">Open the Interactive Madness Table in another window of this browser.</p>
+        </main>
+      </div>
     )
   }
-  if (state.blackout) return <main className="screen dark" aria-hidden />
+  if (state.blackout) {
+    return (
+      <div className="player">
+        <main className="screen dark" aria-hidden />
+      </div>
+    )
+  }
 
   const rolling = (state.step === 'second' || state.step === 'verdict') && state.entry !== null
   return (
-    <>
+    <div className={`player ${lite ? 'lite' : ''}`}>
       {rolling ? (
         <Roll state={state} />
       ) : (
@@ -62,8 +99,8 @@ export function Display() {
       {state.settings.grain && <div className="grain" aria-hidden />}
       {state.settings.vignette && <div className="vignette" aria-hidden />}
       {state.preview && <p className="preview-tag">Preview</p>}
-      <p className="hint">Press F or double-click for full screen</p>
-    </>
+      {hint && <p className="hint">{hint}</p>}
+    </div>
   )
 }
 
@@ -188,7 +225,7 @@ function Roll({ state }: { state: DisplayState }) {
   const e = els.current
   return (
     <main
-      className={`screen roll ${verdict?.kind ?? ''} ${state.settings.animations ? '' : 'still'} ${state.media ? 'has-media' : ''}`}
+      className={`screen ${verdict?.kind ?? ''} ${state.settings.animations ? '' : 'still'} ${state.media ? 'has-media' : ''}`}
       key={state.settings.animations ? 'show' : `still-${state.stepAt}`}
     >
       {state.media && <Media media={state.media} hold={(el) => void (e.media = el)} />}

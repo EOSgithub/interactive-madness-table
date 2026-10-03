@@ -1,0 +1,217 @@
+/* Small screens and fingers. Loaded last, so it adjusts the other DM styles. */
+
+/* Table mode: the player view over the whole DM window. The bar has a row of its
+   own under the view, so a long verdict can never end up underneath it. */
+.table-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  background: #000;
+}
+
+.table-mode .player {
+  height: auto;
+  min-height: 0;
+}
+
+.table-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px max(12px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background: #000;
+  /* Dim until touched, so it does not pull the players' eyes off the show. */
+  opacity: 0.45;
+  transition: opacity 200ms;
+}
+
+.table-bar:hover,
+.table-bar:focus-within,
+.table-bar:active {
+  opacity: 1;
+}
+
+.table-bar button {
+  min-height: 44px;
+  padding: 8px 16px;
+  background: rgba(31, 17, 14, 0.9);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  color: var(--ivory);
+  font: inherit;
+  cursor: pointer;
+}
+
+.table-bar button.main {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a0f0d;
+  font-weight: bold;
+}
+
+.table-bar-gap {
+  flex: 1;
+}
+
+/* Fingers need room: 44px is the smallest target that is comfortable to hit. */
+@media (pointer: coarse) {
+  .ghost,
+  .primary,
+  .link,
+  .manual button,
+  .tabs button,
+  .pills button,
+  .category-list button,
+  .row-title {
+    min-height: 44px;
+  }
+
+  .link {
+    padding: 0 6px;
+  }
+
+  .switch input,
+  .setting input {
+    width: 24px;
+    height: 24px;
+  }
+
+  .segments label {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .shell {
+    padding: 0 max(14px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  }
+
+  .top {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 14px 0 10px;
+  }
+
+  .top h1 {
+    flex: 1 1 100%;
+    font-size: 1rem;
+  }
+
+  /* The four tabs fit in one row that scrolls sideways if it must. */
+  .tabs {
+    flex: 1 1 100%;
+    margin: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs button {
+    flex: none;
+  }
+
+  .top-note {
+    display: none;
+  }
+
+  .screen-control {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .presence {
+    flex: 1 1 100%;
+  }
+
+  .layout,
+  .editor,
+  .stage-tab,
+  .settings {
+    padding-top: 18px;
+    gap: 24px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  /* The roll is the main action: full width, within reach of the thumb. */
+  .roll {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .roll .primary {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.1rem;
+  }
+
+  .manual {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card-main {
+    min-height: 0;
+  }
+
+  .verdict {
+    padding: 18px;
+  }
+
+  .form-grid .field,
+  .field.narrow {
+    flex: 1 1 100%;
+  }
+
+  .row-head {
+    flex-wrap: wrap;
+  }
+
+  .row-title {
+    flex: 1 1 100%;
+  }
+
+  .rows-head {
+    flex-wrap: wrap;
+  }
+
+  .rows-head h2,
+  .rows-head h3 {
+    flex: 1 1 100%;
+  }
+
+  .staging label:not(.switch) {
+    flex: 1 1 100%;
+  }
+
+  .segments {
+    display: flex;
+    width: 100%;
+  }
+
+  .segments label {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .file {
+    grid-template-columns: 48px minmax(0, 1fr);
+  }
+
+  .file .link {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
