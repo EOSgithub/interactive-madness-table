@@ -161,3 +161,43 @@ export function secondRollBeats(speed = 1, plain = false): Beats {
   const drum = plain ? still(350 * speed) : makeDrum(1400 * speed, 60, 1.2)
   return { drum, titleStart: 0, titleEnd: 0, textStart: drum.landed + 600 * speed, textEnd: drum.landed + 1500 * speed, done: drum.landed + 1800 * speed }
 }
+
+// ------------------------------------------------------------------ the verdict
+
+/** The banner that names the verdict: when it comes in, how long it holds, and when it is gone. */
+export interface Banner {
+  start: number
+  /** Fully in. */
+  held: number
+  /** Starts to leave. */
+  release: number
+  end: number
+}
+
+/**
+ * The beats of a verdict. The die stops (and, with no second roll, the title
+ * forms), then the banner crosses the screen, and the text only comes up as the
+ * banner leaves: the players learn what kind of fate it is before they read it.
+ */
+export function verdictBeats(second: boolean, speed = 1, plain = false): Beats & { banner: Banner } {
+  const base = second ? secondRollBeats(speed, plain) : firstRollBeats(speed, plain)
+  const start = (second ? base.drum.landed : base.titleEnd) + 380 * speed
+  const banner: Banner = { start, held: start + 700 * speed, release: start + 2300 * speed, end: start + 3100 * speed }
+  const textStart = banner.release + 250 * speed
+  return { ...base, banner, textStart, textEnd: textStart + 1000 * speed, done: textStart + 1300 * speed }
+}
+
+/** How much of the banner is there at `t`: 0 gone, 1 fully in. */
+export function bannerLevel(t: number, b: Banner): number {
+  return smooth(b.start, b.held, t) * (1 - smooth(b.release, b.end, t))
+}
+
+/**
+ * The clock of a show that only runs while someone can see it. A browser stops
+ * drawing a hidden window, and a show timed by the wall clock would be over by
+ * the time the window is back; this one stands still across any long gap between
+ * two frames and carries on from where it was.
+ */
+export function advance(t: number, sinceLastFrame: number, longest = 400): number {
+  return sinceLastFrame > longest ? t : t + Math.max(0, sinceLastFrame)
+}

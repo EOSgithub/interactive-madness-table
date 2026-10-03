@@ -1,80 +1,15 @@
-/* Tabs and the editor. Working styles, like dm.css: the visual pass comes later. */
-
-.top {
-  align-items: center;
-}
-
-.tabs {
-  display: flex;
-  gap: 4px;
-  margin-right: auto;
-  margin-left: 24px;
-}
-
-.tabs button {
-  padding: 6px 16px;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  color: var(--ivory-soft);
-  cursor: pointer;
-}
-
-.tabs button.current {
-  border-color: var(--gold);
-  color: var(--gold-light);
-}
-
-.screen-control {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--edge);
-}
-
-.presence {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: auto;
-  color: var(--ivory-soft);
-  font-size: 0.9rem;
-}
-
-.presence::before {
-  content: '';
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--edge);
-}
-
-.presence.on {
-  color: var(--ivory);
-}
-
-.presence.on::before {
-  background: #6fbf73;
-}
+/* The editor: the tables of the open set on the left, the one being edited on the right. */
 
 .editor {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 32px;
-  padding-top: 28px;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 44px;
 }
 
 .editor h2,
 .editor h3 {
   margin: 0;
-  font-size: 1rem;
-  font-weight: normal;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold);
+  font-size: 1.45rem;
 }
 
 .editor-side {
@@ -82,16 +17,18 @@
   flex-direction: column;
   align-self: start;
   gap: 12px;
+  position: sticky;
+  top: 16px;
 }
 
 /* In the side column a field must keep its own height; .field grows by default. */
 .editor-side .field {
   flex: none;
+  margin-bottom: 10px;
 }
 
 .category-list {
   display: grid;
-  gap: 4px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -101,112 +38,74 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   width: 100%;
   padding: 10px 12px;
-  text-align: left;
   background: none;
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  cursor: pointer;
+  border: 0;
+  border-left: 2px solid var(--edge);
+  color: var(--moon-dim);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  text-align: left;
+  transition:
+    color var(--quick),
+    border-color var(--quick),
+    background-color var(--quick);
+}
+
+.category-list button:hover {
+  color: var(--moon);
+  background: var(--night-2);
 }
 
 .category-list button.current {
-  border-color: var(--gold);
-  background: var(--bg-card);
-}
-
-.badge {
-  min-width: 22px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: var(--crimson);
-  color: #fff;
-  font-size: 0.8rem;
-  text-align: center;
+  border-left-color: var(--blood-bright);
+  background: var(--night-2);
+  color: var(--moon);
 }
 
 .files {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 18px;
+  padding-top: 18px;
   border-top: 1px solid var(--edge);
 }
 
-.ghost {
-  padding: 8px 14px;
-  background: none;
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  color: var(--ivory);
-  cursor: pointer;
-}
-
-.ghost:hover {
-  border-color: var(--gold);
-  color: var(--gold-light);
-}
-
-.ghost.danger:hover {
-  border-color: var(--crimson);
-  color: #e58a8a;
-}
-
-.note {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--gold-light);
-}
-
-.note.bad,
-.faults {
-  color: #e58a8a;
-}
-
 .faults {
   margin: 0;
-  padding-left: 18px;
-  font-size: 0.9rem;
+  padding: 10px 14px 10px 30px;
+  border-left: 2px solid var(--blood-bright);
+  background: rgba(156, 26, 44, 0.12);
+  color: var(--blood-bright);
+  font-size: 0.95rem;
 }
 
 .editor-main {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
+  display: grid;
+  gap: 22px;
   min-width: 0;
-}
-
-.editor-main > * {
-  max-width: 100%;
-}
-
-.form-grid,
-.rows,
-.rows-head {
-  width: 100%;
 }
 
 .form-grid {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 14px 18px;
+  gap: 16px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   flex: 1 1 220px;
-  margin: 0;
-  padding: 0;
-  border: 0;
+  gap: 6px;
+  min-width: 0;
 }
 
 .field.wide {
-  flex-basis: 100%;
+  flex: 2 1 340px;
 }
 
 .field.narrow {
@@ -214,45 +113,37 @@
 }
 
 .field.switch {
-  flex-direction: row;
   flex: 0 0 auto;
+  flex-direction: row;
+  align-items: center;
   padding-bottom: 10px;
 }
 
 .field > span,
-.field > legend {
-  padding: 0;
-  color: var(--ivory-soft);
-  font-size: 0.85rem;
+.field > legend,
+.staging label:not(.switch) > span {
+  color: var(--moon-dim);
+  font-size: 0.9rem;
 }
 
-.editor input:not([type="checkbox"]),
-.editor textarea,
-.editor select {
-  width: 100%;
-  padding: 9px 10px;
-  background: var(--bg-soft);
-  border: 1px solid var(--edge);
-  border-radius: 8px;
-  resize: vertical;
-}
-
-.editor input.number {
-  width: 76px;
+input.number {
+  width: 78px;
+  text-align: center;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .duration {
-  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .duration legend {
-  float: left;
-  width: 100%;
-  margin-bottom: 4px;
+  padding: 0;
+  margin-bottom: 6px;
 }
 
 .duration select {
@@ -268,6 +159,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-top: 10px;
 }
 
 .rows-head h2,
@@ -277,108 +169,141 @@
 
 .rows {
   display: grid;
-  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* One entry of a table. Closed, it is a line of the ledger; open, it lifts off the page. */
 .row {
-  border: 1px solid var(--edge);
-  border-radius: var(--radius);
-  background: var(--bg-card);
+  border-top: 1px solid var(--edge);
+  transition: background-color var(--quick);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--edge);
 }
 
 .row.open {
-  border-color: var(--gold);
+  background: var(--night-2);
 }
 
 .row-head {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 14px;
+  padding: 8px 10px;
 }
 
 .range {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: var(--ivory-soft);
-  font-size: 0.85rem;
   flex: none;
+  gap: 8px;
+  color: var(--moon-dim);
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .row-title {
   display: flex;
   align-items: center;
-  gap: 10px;
   flex: 1;
+  gap: 10px;
   min-width: 0;
-  padding: 6px 0;
+  padding: 8px 6px;
   background: none;
   border: 0;
   text-align: left;
-  cursor: pointer;
 }
 
 .row-title > span:first-child {
   flex: 1;
   overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .chevron {
-  color: var(--ivory-soft);
-  font-size: 0.85rem;
+  color: var(--moon-dim);
+  font-size: 0.9rem;
   text-decoration: underline;
+  text-decoration-color: var(--edge-strong);
+  text-underline-offset: 3px;
+}
+
+.row-title:hover .chevron {
+  color: var(--moon);
+  text-decoration-color: var(--blood-bright);
 }
 
 .row-body {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 14px;
-  border-top: 1px solid var(--edge);
+  display: grid;
+  gap: 16px;
+  padding: 8px 16px 20px;
+  animation: row-open 320ms var(--ease);
 }
 
 .row-body .field {
   flex: none;
-  width: 100%;
+}
+
+.row-body > .ghost {
+  justify-self: start;
 }
 
 .outcomes {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 10px;
-  width: 100%;
 }
 
 .outcome {
   display: grid;
-  grid-template-columns: auto 120px minmax(0, 1fr) auto;
+  grid-template-columns: auto 130px minmax(0, 1fr) auto;
   align-items: start;
   gap: 10px;
-  padding-left: 10px;
-  border-left: 3px solid var(--ivory-soft);
+  padding-left: 12px;
+  border-left: 2px solid var(--moon-faint);
 }
 
 .outcome.boon {
-  border-left-color: var(--gold);
+  border-left-color: var(--boon);
 }
 
 .outcome.bane {
-  border-left-color: var(--crimson);
+  border-left-color: var(--blood-bright);
 }
 
-@media (max-width: 860px) {
+@keyframes row-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row-body {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
   .editor {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .editor-side {
+    position: static;
   }
 
   .outcome {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .outcome textarea {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }

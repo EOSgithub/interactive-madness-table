@@ -1,30 +1,39 @@
-/* What players see: big type on black, sized to be read from a sofa or from a
-   phone held at arm's length. The motion is driven from Display.tsx; this file
-   holds the stage it plays on.
+/* What players see: a moon over a dark stage, sized to be read from a sofa or
+   from a phone held at arm's length. The motion is driven from Display.tsx; this
+   file holds the stage it plays on.
 
-   Everything is scoped to .player, because the same view is used twice: as the
-   whole page in display.html, and as table mode inside the DM window, where
-   these rules must not touch the DM's own styles. */
+   Everything is scoped to .player, because the same view is used three times:
+   as the whole page in display.html, and as the monitor and table mode inside
+   the DM window. Sizes are in container units (cqw, cqh), so the view looks the
+   same in a small monitor as on a television. */
 
 .player {
-  --bg: #0c0807;
-  --gold: #c9a14a;
-  --gold-light: #e6c87d;
-  --ivory: #e8dcc4;
-  --ivory-soft: #b8ad95;
-  --crimson: #c23b3b;
   position: relative;
+  container-type: size;
   height: 100%;
-  background: #000;
-  color: var(--ivory);
-  font-family: Georgia, 'Times New Roman', serif;
+  background: radial-gradient(ellipse 80% 70% at 50% 40%, #16202b 0%, var(--night-1) 55%, var(--night-0) 100%);
+  color: var(--moon);
+  font-family: var(--font-body);
   font-size: 16px;
+  font-variant-numeric: lining-nums;
   line-height: 1.5;
   overflow: hidden;
   cursor: default;
 
   * {
     box-sizing: border-box;
+  }
+
+  /* Fog: three soft banks of cold light that drift across each other. Only the transform moves. */
+  .fog {
+    position: absolute;
+    inset: -25%;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 28% at 24% 72%, rgba(126, 146, 168, 0.11), transparent 70%),
+      radial-gradient(44% 34% at 78% 30%, rgba(96, 116, 142, 0.1), transparent 70%),
+      radial-gradient(60% 36% at 50% 100%, rgba(146, 158, 172, 0.09), transparent 70%);
+    animation: pv-fog 46s ease-in-out infinite alternate;
   }
 
   .screen {
@@ -34,23 +43,22 @@
     align-items: center;
     /* "safe" keeps the top reachable when a long text is taller than the screen. */
     justify-content: safe center;
-    gap: 2.4vh;
+    gap: 2.4cqh;
     height: 100%;
-    padding: max(5vh, env(safe-area-inset-top)) max(7vw, env(safe-area-inset-right)) max(5vh, env(safe-area-inset-bottom))
-      max(7vw, env(safe-area-inset-left));
+    padding: max(5cqh, env(safe-area-inset-top)) max(7cqw, env(safe-area-inset-right)) max(5cqh, env(safe-area-inset-bottom))
+      max(7cqw, env(safe-area-inset-left));
     text-align: center;
-    background: radial-gradient(ellipse at center, #1c100d 0%, var(--bg) 62%, #000 100%);
     overflow: hidden auto;
     scrollbar-width: none;
   }
 
   .screen.dark {
-    background: #000;
+    background: var(--night-0);
   }
 
   .screen.quiet,
-  .screen.still {
-    animation: pv-screen-in 900ms ease-out;
+  .screen.waiting {
+    animation: pv-screen-in 1100ms var(--ease);
   }
 
   .screen p,
@@ -59,71 +67,137 @@
   }
 
   .camera {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.2vh;
+    gap: calc(2cqh * var(--fit, 1));
     max-width: 100%;
-    will-change: transform;
+    will-change: transform, opacity;
   }
 
   /* Sizes follow the width on a wide screen and the height on a short one, so a
      phone held sideways still fits the whole verdict. */
   .eyebrow,
   .kind {
-    font-family: 'Cinzel Variable', Georgia, serif;
-    font-weight: 500;
-    color: var(--gold);
-    font-size: clamp(0.85rem, min(2.2vw, 3.6vh), 2rem);
-    letter-spacing: 0.26em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--moon-dim);
+    font-size: clamp(0.7rem, min(1.9cqw, 3.2cqh), 1.8rem);
+    letter-spacing: 0.3em;
     text-transform: uppercase;
+  }
+
+  /* The first roll, kept beside the table's name once the second die is out. */
+  .eyebrow-roll {
+    margin-left: 1.2em;
+    padding-left: 1.2em;
+    border-left: 1px solid var(--edge-strong);
+    font-variant-numeric: lining-nums;
   }
 
   .blurb,
   .description {
-    color: var(--ivory-soft);
-    font-size: clamp(1.05rem, min(2.6vw, 4.4vh), 2.5rem);
+    color: var(--moon-dim);
+    font-size: calc(clamp(0.95rem, min(2.5cqw, 4.2cqh), 2.4rem) * var(--fit, 1));
     font-style: italic;
-    max-width: 28ch;
+    max-width: 30ch;
+  }
+
+  /* The die is the moon: dark numerals on a pale disc. */
+  .die {
+    --size: calc(clamp(2.6rem, min(13cqw, 21cqh), 12rem) * var(--fit, 1));
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: calc(var(--size) * 2.15);
+    height: calc(var(--size) * 2.15);
+    flex: none;
+  }
+
+  .moon,
+  .moon-disc,
+  .moon-blood,
+  .moon-halo {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  .moon-halo {
+    inset: -42%;
+    background: radial-gradient(circle, rgba(200, 216, 230, 0.34) 0%, rgba(200, 216, 230, 0.1) 38%, transparent 68%);
+    opacity: 0.12;
+    will-change: opacity;
+  }
+
+  /* Flat, cold and mottled: a moon seen through haze. The dark patches are its seas. */
+  .moon-disc {
+    background:
+      radial-gradient(ellipse 30% 19% at 60% 27%, rgba(84, 98, 112, 0.3), transparent 100%),
+      radial-gradient(ellipse 17% 27% at 29% 47%, rgba(84, 98, 112, 0.24), transparent 100%),
+      radial-gradient(ellipse 34% 15% at 55% 73%, rgba(84, 98, 112, 0.2), transparent 100%),
+      radial-gradient(ellipse 9% 7% at 76% 52%, rgba(84, 98, 112, 0.22), transparent 100%),
+      radial-gradient(circle at 42% 38%, #e4eaef 0%, #b3bfc9 62%, #74828f 100%);
+    box-shadow:
+      inset -0.16em -0.1em 0.42em rgba(10, 16, 24, 0.72),
+      0 0 1.1em rgba(190, 210, 228, 0.16);
+  }
+
+  .moon-blood {
+    background:
+      radial-gradient(ellipse 30% 19% at 60% 27%, rgba(58, 6, 14, 0.3), transparent 100%),
+      radial-gradient(ellipse 17% 27% at 29% 47%, rgba(58, 6, 14, 0.24), transparent 100%),
+      radial-gradient(ellipse 34% 15% at 55% 73%, rgba(58, 6, 14, 0.2), transparent 100%),
+      radial-gradient(ellipse 9% 7% at 76% 52%, rgba(58, 6, 14, 0.22), transparent 100%),
+      radial-gradient(circle at 42% 38%, #df6b66 0%, #ad2a3a 62%, #5c0d1a 100%);
+    box-shadow:
+      inset -0.16em -0.1em 0.42em rgba(26, 3, 7, 0.78),
+      0 0 1.3em rgba(190, 40, 56, 0.3);
+    opacity: 0;
+    will-change: opacity;
   }
 
   .number {
-    color: var(--gold-light);
-    font-size: clamp(4rem, min(19vw, 30vh), 17rem);
-    font-variant-numeric: tabular-nums;
-    line-height: 0.95;
-    min-height: 0.95em;
+    position: relative;
+    color: var(--night-0);
+    font-family: var(--font-display);
+    font-size: var(--size);
+    font-weight: 600;
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: 1;
     will-change: transform, opacity;
-    transition: text-shadow 500ms;
   }
 
-  .number.landed {
-    text-shadow: 0 0 0.25em rgba(230, 200, 125, 0.45);
+  /* Before the roll the moon carries the name of the die it is waiting for. */
+  .number.waiting-die {
+    font-size: calc(var(--size) * 0.5);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    opacity: 0.72;
   }
 
   /* The glitch roll style: the digits scramble and tear sideways until they lock. */
   .number.scrambling {
-    color: var(--ivory);
     text-shadow:
-      0.04em 0 0 rgba(194, 59, 59, 0.75),
-      -0.04em 0 0 rgba(120, 190, 200, 0.55);
+      0.04em 0 0 rgba(156, 26, 44, 0.8),
+      -0.04em 0 0 rgba(60, 96, 120, 0.6);
     animation: pv-tear 140ms steps(2) infinite;
   }
 
   h1 {
-    color: var(--gold-light);
-    font-size: clamp(1.6rem, min(5.6vw, 9vh), 5.6rem);
-    font-weight: normal;
+    color: var(--moon);
+    font-family: var(--font-display);
+    font-size: calc(clamp(1.5rem, min(5.4cqw, 8.6cqh), 5.4rem) * var(--fit, 1));
+    font-weight: 500;
     line-height: 1.1;
-    max-width: 17ch;
+    max-width: 18ch;
     min-height: 1.1em;
-    letter-spacing: normal;
-    text-transform: none;
   }
 
   /* While the title is still noise it flickers like a bad signal. */
   h1.forming {
-    color: var(--ivory);
+    color: var(--moon-dim);
     letter-spacing: 0.04em;
     animation: pv-flicker 180ms steps(2) infinite;
   }
@@ -131,19 +205,87 @@
   /* --fit is set by Display.tsx when a long text has to shrink to fit the screen:
      the type gets smaller and the line gets longer by the same amount. */
   .effect {
-    font-size: calc(clamp(1.05rem, min(2.6vw, 4.4vh), 2.5rem) * var(--fit, 1));
+    font-size: calc(clamp(0.95rem, min(2.5cqw, 4.2cqh), 2.4rem) * var(--fit, 1));
     line-height: 1.4;
-    max-width: min(100%, calc(32ch / var(--fit, 1) / var(--fit, 1)));
+    max-width: min(100%, calc(34ch / var(--fit, 1) / var(--fit, 1)));
   }
 
   .effect strong {
-    color: var(--gold-light);
+    font-weight: 600;
   }
 
   .description,
   .effect,
   .kind {
     will-change: opacity, transform;
+  }
+
+  /* The verdict tells its kind by colour before anyone reads a word. */
+  .screen.boon .kind,
+  .screen.boon .effect strong,
+  .screen.boon .banner-word,
+  .screen.boon .banner-echo {
+    color: var(--boon);
+  }
+
+  .screen.bane h1,
+  .screen.bane .kind,
+  .screen.bane .effect strong,
+  .screen.bane .banner-word,
+  .screen.bane .banner-echo {
+    color: var(--blood-bright);
+  }
+
+  /* The banner: a band of dark across the middle of the screen, with the verdict named in it. */
+  .banner {
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    height: 30cqh;
+    margin-top: -15cqh;
+    background: linear-gradient(to bottom, transparent, rgba(4, 6, 9, 0.94) 26%, rgba(4, 6, 9, 0.94) 74%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    will-change: opacity;
+  }
+
+  .banner::before,
+  .banner::after {
+    content: '';
+    position: absolute;
+    inset-inline: 12cqw;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--edge-strong) 30%, var(--edge-strong) 70%, transparent);
+  }
+
+  .banner::before {
+    top: 26%;
+  }
+
+  .banner::after {
+    bottom: 26%;
+  }
+
+  .banner-word,
+  .banner-echo {
+    grid-area: 1 / 1;
+    padding-left: 0.34em; /* the tracking adds space after the last letter; this centres the word again */
+    color: var(--moon);
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, min(5.4cqw, 10cqh), 5.6rem);
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    will-change: transform, opacity;
+  }
+
+  .banner-echo {
+    filter: blur(0.06em);
   }
 
   /* A result's own image or video: full screen, under the text, darkened so the text stays readable. */
@@ -165,12 +307,15 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(8, 5, 4, 0.62) 0%, rgba(8, 5, 4, 0.82) 70%, rgba(0, 0, 0, 0.94) 100%);
+    background: radial-gradient(ellipse at center, rgba(6, 8, 11, 0.62) 0%, rgba(6, 8, 11, 0.84) 70%, rgba(6, 8, 11, 0.95) 100%);
   }
 
   .screen.has-media .camera {
-    position: relative;
-    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 2px 18px rgba(6, 8, 11, 0.9);
+  }
+
+  .screen.has-media .number {
+    text-shadow: none;
   }
 
   .wash {
@@ -178,38 +323,32 @@
     inset: 0;
     opacity: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, var(--ivory-soft), transparent 70%);
+    background: radial-gradient(ellipse at 50% 42%, var(--moon-dim), transparent 70%);
     mix-blend-mode: screen;
   }
 
   .screen.boon .wash {
-    background: radial-gradient(ellipse at center, var(--gold), transparent 72%);
+    background: radial-gradient(ellipse at 50% 42%, var(--boon), transparent 72%);
   }
 
   .screen.bane .wash {
-    background: radial-gradient(ellipse at center, #a01818, transparent 72%);
+    background: radial-gradient(ellipse at 50% 42%, var(--blood), transparent 74%);
   }
 
-  .screen.boon .kind,
-  .screen.boon .effect strong {
-    color: var(--gold-light);
-  }
-
-  .screen.bane h1,
-  .screen.bane .kind,
-  .screen.bane .effect strong {
-    color: var(--crimson);
-  }
-
-  .screen.bane .number {
-    color: #e9b7a8;
+  /* Ash, blood and light, painted by atmosphere.ts. */
+  .air {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
 
   /* Film grain: fractal noise from an inline SVG, shifted eight times a second. */
   .grain {
     position: absolute;
     inset: -50%;
-    opacity: 0.13;
+    opacity: 0.12;
     pointer-events: none;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -220,52 +359,48 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.72) 100%);
+    background: radial-gradient(ellipse at center, transparent 42%, rgba(3, 4, 6, 0.78) 100%);
   }
 
   .preview-tag {
     position: absolute;
-    top: max(2vh, env(safe-area-inset-top));
-    right: max(2vw, env(safe-area-inset-right));
+    top: max(3cqh, env(safe-area-inset-top));
+    right: max(2.4cqw, env(safe-area-inset-right));
     margin: 0;
-    padding: 4px 12px;
-    border: 1px solid var(--ivory-soft);
-    border-radius: 999px;
-    color: var(--ivory-soft);
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
+    padding: 0.3em 0.9em;
+    border: 1px solid var(--edge-strong);
+    color: var(--moon-dim);
+    font-family: var(--font-display);
+    font-size: clamp(0.65rem, 1.3cqw, 0.9rem);
+    font-weight: 600;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-  }
-
-  .waiting {
-    color: var(--ivory-soft);
-    font-size: 1.3rem;
-  }
-
-  .small {
-    font-size: 1rem;
   }
 
   .hint {
     position: absolute;
-    bottom: max(2vh, env(safe-area-inset-bottom));
+    bottom: max(2cqh, env(safe-area-inset-bottom));
     left: 0;
     right: 0;
     margin: 0;
     text-align: center;
-    color: var(--ivory-soft);
-    font-size: 0.85rem;
+    color: var(--moon-dim);
+    font-size: 0.9rem;
     opacity: 0;
     transition: opacity 300ms;
   }
 
   &:hover .hint {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 }
 
-/* A device that cannot keep up drops the moving grain and keeps the rest. */
-.player.lite .grain {
+/* A device that cannot keep up, or a DM who turned the animations off, keeps the picture and drops the drift. */
+.player.lite .grain,
+.player.lite .fog,
+.player.still .grain,
+.player.still .fog,
+.player.still .screen {
   animation: none;
 }
 
@@ -276,6 +411,16 @@
 @keyframes pv-screen-in {
   from {
     opacity: 0;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes pv-fog {
+  from {
+    transform: translate3d(-6%, 2%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, -3%, 0) scale(1.12);
   }
 }
 
@@ -310,8 +455,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .player .screen.quiet,
-  .player .screen.still,
+  .player .screen,
+  .player .fog,
   .player .number.scrambling,
   .player .grain,
   .player h1.forming {

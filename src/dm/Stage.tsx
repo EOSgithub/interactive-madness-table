@@ -6,6 +6,7 @@ import type { Category, Entry, Outcome, RollStyle, Staging } from '../shared/typ
 import { addFile, listFiles, removeFile, storageUse, urlFor, type MediaFile } from '../state/media'
 import { usePresence } from '../state/sync'
 import { useStore } from '../state/store'
+import { Monitor } from './Monitor'
 import { useSound } from './sound'
 
 // Stage: the DM's own files, and which result plays which. A result can have an
@@ -76,8 +77,8 @@ function Notices() {
     <>
       <p className="hint">
         {screenOpen
-          ? 'Test plays a result on the player screen without a real roll. Sound comes from this window.'
-          : 'Open the player screen to see images and videos. Sound plays from this window either way.'}
+          ? 'Test plays a result on the monitor and on the player screen, without a real roll. Sound comes from this window.'
+          : 'Test plays a result on the monitor, without a real roll. Sound comes from this window.'}
         {preview && (
           <>
             {' '}
@@ -114,6 +115,7 @@ function Library({ files, used, onChange }: { files: MediaFile[]; used: Set<stri
 
   return (
     <aside className="library">
+      <Monitor label="Tests play here." />
       <h2>Your files</h2>
       <button className="ghost" onClick={() => picker.current?.click()}>
         Add images, videos or sounds

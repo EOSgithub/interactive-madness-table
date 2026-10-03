@@ -1,8 +1,7 @@
-import { useMemo } from 'react'
 import { PlayerView } from '../display/Display'
-import { toDisplayState } from '../shared/display'
 import { checkCategory } from '../shared/tables'
 import { currentCategory, useStore } from '../state/store'
+import { useDisplayState } from './Monitor'
 
 // Table mode: the player view inside the DM window, with a thin bar to run the
 // roll. It is for one screen only, a phone or a tablet on the table, or a device
@@ -10,10 +9,7 @@ import { currentCategory, useStore } from '../state/store'
 
 export function TableMode({ onClose }: { onClose: () => void }) {
   const s = useStore()
-  const state = useMemo(
-    () => toDisplayState(s),
-    [s.tables, s.settings, s.blackout, s.preview, s.step, s.stepAt, s.categoryId, s.first, s.second, s.verdict]
-  )
+  const state = useDisplayState()
   const category = currentCategory(s)
 
   const fullScreen = () => {
@@ -47,9 +43,12 @@ export function TableMode({ onClose }: { onClose: () => void }) {
           </button>
         )}
         {s.step === 'verdict' && (
-          <button className="main" onClick={s.restart}>
-            Again
-          </button>
+          <>
+            <button className="main" onClick={s.restart}>
+              Again
+            </button>
+            <button onClick={s.replay}>Replay</button>
+          </>
         )}
         <span className="table-bar-gap" />
         {typeof document.documentElement.requestFullscreen === 'function' && <button onClick={fullScreen}>Full screen</button>}

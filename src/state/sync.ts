@@ -9,12 +9,21 @@ import { useStore } from './store'
 
 const CHANNEL = 'interactive-madness-table'
 
-type Message = { type: 'state'; state: DisplayState } | { type: 'hello' } | { type: 'bye' } | { type: 'who' }
+type Message =
+  | { type: 'state'; state: DisplayState }
+  /** The player screen is there. `visible` is false while its window is covered, minimised or in a background tab. */
+  | { type: 'hello'; visible: boolean }
+  | { type: 'bye' }
+  | { type: 'who' }
 
 // ----------------------------------------------------------------- DM side
 
-/** Whether a player screen is listening. The DM window shows it. */
-export const usePresence = create<{ open: boolean }>(() => ({ open: false }))
+/**
+ * Whether a player screen is listening, and whether anyone can see it. A browser
+ * stops drawing a window that is hidden, so the show waits there until it is
+ * back in view; the DM window says so.
+ */
+export const usePresence = create<{ open: boolean; visible: boolean }>(() => ({ open: false, visible: false }))
 
 /** Starts broadcasting from the DM window. Returns a function that stops it. */
 export function startBroadcast(): () => void {
@@ -23,10 +32,10 @@ export function startBroadcast(): () => void {
 
   channel.onmessage = (e: MessageEvent<Message>) => {
     if (e.data.type === 'hello') {
-      usePresence.setState({ open: true })
+      usePresence.setState({ open: true, visible: e.data.visible })
       send()
     } else if (e.data.type === 'bye') {
-      usePresence.setState({ open: false })
+      usePresence.setState({ open: false, visible: false })
     }
   }
 
@@ -48,14 +57,17 @@ export function listen(onState: (state: DisplayState) => void): () => void {
   const channel = new BroadcastChannel(CHANNEL)
   channel.onmessage = (e: MessageEvent<Message>) => {
     if (e.data.type === 'state') onState(e.data.state)
-    else if (e.data.type === 'who') channel.postMessage({ type: 'hello' } satisfies Message)
+    else if (e.data.type === 'who') hello()
   }
-  channel.postMessage({ type: 'hello' } satisfies Message)
+  const hello = () => channel.postMessage({ type: 'hello', visible: document.visibilityState === 'visible' } satisfies Message)
+  hello()
 
   const bye = () => channel.postMessage({ type: 'bye' } satisfies Message)
   window.addEventListener('pagehide', bye)
+  document.addEventListener('visibilitychange', hello)
   return () => {
     window.removeEventListener('pagehide', bye)
+    document.removeEventListener('visibilitychange', hello)
     bye()
     channel.close()
   }

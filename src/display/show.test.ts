@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { faceAt, firstRollBeats, glitchValue, jolt, makeDrum, revealText, secondRollBeats, tickStep } from './show'
+import { advance, bannerLevel, faceAt, firstRollBeats, glitchValue, jolt, makeDrum, revealText, secondRollBeats, tickStep, verdictBeats } from './show'
 
 describe('the drum', () => {
   const drum = makeDrum(2500)
@@ -109,5 +109,31 @@ describe('the other roll styles', () => {
   it('speed stretches and shrinks every beat', () => {
     expect(firstRollBeats(1.5).done).toBeGreaterThan(firstRollBeats(1).done)
     expect(firstRollBeats(0.6).done).toBeLessThan(firstRollBeats(1).done)
+  })
+})
+
+describe('the verdict', () => {
+  it('holds the text back until the banner leaves, with or without a second roll', () => {
+    for (const second of [true, false]) {
+      const b = verdictBeats(second)
+      expect(b.banner.start).toBeGreaterThan(second ? b.drum.landed : b.titleEnd)
+      expect(b.textStart).toBeGreaterThan(b.banner.release)
+      expect(b.done).toBeGreaterThan(b.textEnd)
+    }
+  })
+
+  it('brings the banner in, holds it and takes it away', () => {
+    const { banner } = verdictBeats(true)
+    expect(bannerLevel(banner.start - 1, banner)).toBe(0)
+    expect(bannerLevel((banner.held + banner.release) / 2, banner)).toBe(1)
+    expect(bannerLevel(banner.end + 1, banner)).toBe(0)
+  })
+})
+
+describe('the clock of the show', () => {
+  it('runs frame by frame and stands still while the window is hidden', () => {
+    expect(advance(1000, 16)).toBe(1016)
+    expect(advance(1000, 30000)).toBe(1000)
+    expect(advance(1000, -5)).toBe(1000)
   })
 })

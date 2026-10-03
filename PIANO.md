@@ -184,3 +184,23 @@ Il sito è su GitHub Pages dal ramo `gh-pages`, aggiornato con `npm run deploy`.
 - Pacchetto unico di esportazione con dentro anche audio, immagini e video.
 - Più raccolte di tabelle affiancate, o tabelle che non riguardano la follia.
 - Italiano come seconda lingua dell'interfaccia.
+
+## UI/UX overhaul (branch `uix-overhaul`, 2026-10-03)
+
+Written in English, like everything produced from now on.
+
+Direction: a hunter's night, after Bloodborne. Cold near-black surfaces, moonlight for text, blood as the only accent, square corners, Cormorant Garamond for display and EB Garamond for text. This replaces the black, gold and crimson identity carried over from Follie. All colours, fonts and layers are in `src/styles/tokens.css`. The theme is dark only, on purpose.
+
+What changed:
+
+- The die is a moon. It reddens a little with every verdict of the session ("Insight", shown in the header) and turns to blood on a bane.
+- Every verdict gets a banner ("Bane Inflicted", "Boon Granted", "Madness Manifest", or "Madness Takes Hold" when there is no second roll). The text waits until the banner leaves. Before, the verdict styles only ran when there was a second roll.
+- `src/display/atmosphere.ts` paints ash, blood and light on a canvas, as a pure function of time and seed, like `show.ts`.
+- The DM window has a monitor: the player view itself, live. It replaces the old dice effect. Settings and Stage use it for previews, so they no longer need the player screen open.
+- The clock of the show only runs while frames are drawn (`advance` in `show.ts`). A hidden player screen used to miss the whole show, because the browser stops drawing it and the show was timed by the wall clock. Now it waits and resumes. The player screen reports its visibility and the DM window shows it.
+- Replay and Skip restamp `stepAt` for every window.
+- Several table sets: `src/shared/library.ts`, saved under `sets` and `activeId` (storage version 3, the single set of version 2 becomes the first). Import adds a set and no longer overwrites.
+- The player view is sized in container units, so it looks the same in the monitor and on a TV.
+- Interface motion uses Motion (`motion/react`) and follows the system's reduced motion setting. Icons are Phosphor.
+
+This closes "Più raccolte di tabelle affiancate" from the list above.

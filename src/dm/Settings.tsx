@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { ROLL_STYLES, SPEEDS, VERDICT_STYLES, type Settings as SettingsValue } from '../shared/settings'
-import { usePresence } from '../state/sync'
 import { useStore } from '../state/store'
+import { Monitor } from './Monitor'
 
 // How the show looks and moves. Every control applies at once and is saved; the
-// preview buttons play the current choices on the player screen without a real roll.
+// preview buttons play the current choices on the monitor and on the player
+// screen, without a real roll.
 
 const PREVIEW_MS = 9000
 
@@ -12,12 +13,9 @@ export function Settings() {
   const settings = useStore((s) => s.settings)
   const set = useStore((s) => s.setSettings)
   const reset = useStore((s) => s.resetSettings)
-  const diceEffect = useStore((s) => s.diceEffect)
-  const toggleDiceEffect = useStore((s) => s.toggleDiceEffect)
   const preview = useStore((s) => s.preview)
   const startPreview = useStore((s) => s.startPreview)
   const stopPreview = useStore((s) => s.stopPreview)
-  const screenOpen = usePresence((s) => s.open)
   const timer = useRef(0)
 
   // A preview ends by itself, and when the DM leaves this tab.
@@ -38,6 +36,22 @@ export function Settings() {
   const off = !settings.animations
   return (
     <div className="settings">
+      <aside className="settings-preview">
+        <Monitor label="Preview. Nothing here is added to the session." />
+        <div className="preview-buttons">
+          <button className="ghost" onClick={() => play('roll')}>
+            Preview the roll
+          </button>
+          <button className="ghost" onClick={() => play('verdict')}>
+            Preview the verdict
+          </button>
+          {preview && (
+            <button className="link" onClick={stopPreview}>
+              Stop
+            </button>
+          )}
+        </div>
+      </aside>
       <section>
         <h2>The show</h2>
         <Switch label="Animations" hint="Off: every step is a plain fade." checked={settings.animations} onChange={(animations) => set({ animations })} />
@@ -56,12 +70,6 @@ export function Settings() {
       <section>
         <h2>This window</h2>
         <Switch
-          label="Dice effect"
-          hint="The numbers spin, shake and light up here when you roll."
-          checked={diceEffect}
-          onChange={toggleDiceEffect}
-        />
-        <Switch
           label="Respect reduced motion"
           hint="Skip the show when the system asks for less movement."
           checked={settings.respectReducedMotion}
@@ -76,25 +84,7 @@ export function Settings() {
       </section>
 
       <section>
-        <h2>Preview</h2>
-        <p className="hint">
-          {screenOpen
-            ? 'Plays on the player screen with a made-up roll. Nothing is added to the session.'
-            : 'Open the player screen to see a preview.'}
-        </p>
-        <div className="preview-buttons">
-          <button className="ghost" disabled={!screenOpen} onClick={() => play('roll')}>
-            Preview the roll
-          </button>
-          <button className="ghost" disabled={!screenOpen} onClick={() => play('verdict')}>
-            Preview the verdict
-          </button>
-          {preview && (
-            <button className="link" onClick={stopPreview}>
-              Stop
-            </button>
-          )}
-        </div>
+        <h2>Start over</h2>
         <button
           className="ghost danger"
           onClick={() => {

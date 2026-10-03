@@ -1,0 +1,46 @@
+/* The look of the whole tool, in one place. Both pages load this file.
+
+   Direction: a hunter's night. Cold, nearly colourless darks, the pale light of
+   a moon for text, and one accent: blood. Type is a sharp Garamond, the kind of
+   face a Victorian printer would have set a case history in. Corners are square
+   everywhere; nothing in this world was moulded.
+
+   The tool has one theme and it is dark on purpose: it is used at a dim table,
+   and the player screen sits next to the people it is trying to unsettle. */
+
+:root {
+  /* Night: the surfaces, darkest first. None of them is pure black. */
+  --night-0: #06080b;
+  --night-1: #0b0f14;
+  --night-2: #10161d;
+  --night-3: #18212b;
+  --edge: #25303c;
+  --edge-strong: #3d4b5a;
+
+  /* Moonlight: text. */
+  --moon: #d7dee4;
+  --moon-dim: #97a3ae;
+  --moon-faint: #6b7783;
+
+  /* Blood: the one accent. The bright one is for text on a dark surface. */
+  --blood: #9c1a2c;
+  --blood-deep: #6d0f1d;
+  --blood-bright: #e2525f;
+
+  /* A boon is told apart from a bane by a colder, paler light, not by a second accent. */
+  --boon: #b8d2e6;
+
+  --font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'EB Garamond Variable', 'EB Garamond', Georgia, serif;
+
+  /* Motion: one curve for things that arrive, one length for small feedback. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --quick: 180ms;
+
+  /* Layers, lowest first. Nothing else sets a z-index above 2. */
+  --z-bar: 10;
+  --z-dialog: 30;
+  --z-table: 40;
+
+  color-scheme: dark;
+}
