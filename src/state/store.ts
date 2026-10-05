@@ -3,6 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import defaults from '../content/defaults.en.json'
 import type { Preview } from '../shared/display'
 import { fairRoll } from '../shared/dice'
+import { addSet, blankSet, parseLibrary, removeSet, saveActive, switchTo, type Library, type SavedSet } from '../shared/library'
 import { DEFAULT_SETTINGS, parseSettings, type Settings } from '../shared/settings'
 import { resolveStaging } from '../shared/staging'
 import { checkCategory, findEntry, findOutcome } from '../shared/tables'
@@ -31,15 +32,6 @@ export interface Verdict {
   staging?: Staging
 }
 
-/** The dice effect playing in the DM window over a roll that is already committed. */
-export interface Hold {
-  label: string
-  sides: number
-  result: number
-  /** Whether the numbers spin first; a roll typed by hand only lights up. */
-  spin: boolean
-}
-
 interface Play {
   step: Step
   /** When the current step began. The player screen times its show from this. */
@@ -51,17 +43,23 @@ interface Play {
 }
 
 interface State extends Play {
+  /** The working copy of the active set: what Play rolls on and Edit changes. */
   tables: TableSet
+  /** Every saved set. The active one is kept in step with `tables`. */
+  sets: SavedSet[]
+  activeId: string
+  switchSet: (id: string) => void
+  /** Adds a set and switches to it: an empty one, the defaults, a copy of the active one, or an imported one. */
+  createSet: (from: 'blank' | 'defaults' | 'copy' | TableSet) => void
+  deleteSet: (id: string) => void
   history: Verdict[]
   /** The DM has hidden the player screen. */
   blackout: boolean
   toggleBlackout: () => void
-  /** Spin, shake and light up the number in the DM window when a die is rolled. */
-  diceEffect: boolean
-  toggleDiceEffect: () => void
-  hold: Hold | null
-  setHold: (hold: Hold) => void
-  clearHold: () => void
+  /** Plays the current show again from its first frame, in every window. */
+  replay: () => void
+  /** Jumps the current show to its last frame. */
+  skip: () => void
   settings: Settings
   setSettings: (patch: Partial<Settings>) => void
   resetSettings: () => void
@@ -76,7 +74,6 @@ interface State extends Play {
   toggleSubRoll: (categoryId: string) => void
   /** Applies one editor change. Any roll in progress is dropped: its table may no longer exist. */
   edit: (change: (tables: TableSet) => TableSet) => void
-  setTables: (tables: TableSet) => void
   resetTables: () => void
   back: () => void
   restart: () => void
@@ -84,6 +81,24 @@ interface State extends Play {
 }
 
 const DEFAULTS = defaults as TableSet
+
+/** A step time this old means "already over": every window draws the last frame. */
+export const SKIPPED = 1
+
+const lib = (s: Pick<State, 'sets' | 'activeId'>): Library => ({ sets: s.sets, activeId: s.activeId })
+
+/** New tables for the active set, written through to the library. */
+const put = (s: Pick<State, 'sets' | 'activeId'>, tables: TableSet) => ({ tables, sets: saveActive(lib(s), tables, Date.now()).sets })
+
+/** The state after the library changed: the working copy follows the active set, and any roll is dropped. */
+const opened = (next: Library) => ({
+  ...idle(),
+  sets: next.sets,
+  activeId: next.activeId,
+  tables: (next.sets.find((x) => x.id === next.activeId) ?? next.sets[0]).tables
+})
+
+const FIRST = parseLibrary(undefined, undefined, DEFAULTS, Date.now())
 
 const idle = (): Play => ({ step: 'category', stepAt: Date.now(), categoryId: null, first: null, second: null, verdict: null })
 
@@ -122,14 +137,21 @@ export const useStore = create<State>()(
     (set, get) => ({
       ...idle(),
       tables: DEFAULTS,
+      sets: FIRST.sets,
+      activeId: FIRST.activeId,
+      switchSet: (id) => set((s) => (id === s.activeId ? {} : opened(switchTo(lib(s), id)))),
+      createSet: (from) =>
+        set((s) => {
+          const tables =
+            from === 'blank' ? blankSet() : from === 'defaults' ? DEFAULTS : from === 'copy' ? { ...s.tables, name: `${s.tables.name} copy` } : from
+          return opened(addSet(lib(s), tables, Date.now()))
+        }),
+      deleteSet: (id) => set((s) => opened(removeSet(lib(s), id))),
       history: [],
       blackout: false,
       toggleBlackout: () => set(({ blackout }) => ({ blackout: !blackout })),
-      diceEffect: true,
-      toggleDiceEffect: () => set(({ diceEffect }) => ({ diceEffect: !diceEffect })),
-      hold: null,
-      setHold: (hold) => set({ hold }),
-      clearHold: () => set(({ hold }) => (hold ? { hold: null } : {})),
+      replay: () => set(({ step }) => (step === 'second' || step === 'verdict' ? { stepAt: Date.now() } : {})),
+      skip: () => set(({ step }) => (step === 'second' || step === 'verdict' ? { stepAt: SKIPPED } : {})),
       settings: DEFAULT_SETTINGS,
       setSettings: (patch) => set(({ settings }) => ({ settings: { ...settings, ...patch } })),
       resetSettings: () => set({ settings: DEFAULT_SETTINGS }),
@@ -144,9 +166,9 @@ export const useStore = create<State>()(
       },
 
       rollFirst: (value) => {
-        const { tables, categoryId, history } = get()
+        const { tables, categoryId, history, step } = get()
         const category = tables.categories.find((c) => c.id === categoryId)
-        if (!category) return
+        if (!category || step !== 'first') return
         const first = value ?? fairRoll(category.die)
         const entry = findEntry(category, first)
         if (!entry) return
@@ -159,9 +181,9 @@ export const useStore = create<State>()(
       },
 
       rollSecond: (value) => {
-        const { tables, categoryId, first, history } = get()
+        const { tables, categoryId, first, history, step } = get()
         const category = tables.categories.find((c) => c.id === categoryId)
-        if (!category || first === null) return
+        if (!category || first === null || step !== 'second') return
         const entry = findEntry(category, first)
         if (!entry) return
         const second = value ?? fairRoll(category.subDie)
@@ -171,18 +193,17 @@ export const useStore = create<State>()(
       },
 
       toggleSubRoll: (categoryId) =>
-        set(({ tables }) => ({
-          tables: {
-            ...tables,
-            categories: tables.categories.map((c) => (c.id === categoryId ? { ...c, subRoll: !c.subRoll } : c))
-          }
-        })),
+        set((s) =>
+          put(s, {
+            ...s.tables,
+            categories: s.tables.categories.map((c) => (c.id === categoryId ? { ...c, subRoll: !c.subRoll } : c))
+          })
+        ),
 
       // While the DM is only choosing, an edit leaves the play state alone, so typing does not restart the player screen.
       edit: (change) =>
-        set(({ tables, step }) => (step === 'category' ? { tables: change(tables) } : { ...idle(), tables: change(tables) })),
-      setTables: (tables) => set({ ...idle(), tables }),
-      resetTables: () => set({ ...idle(), tables: DEFAULTS }),
+        set((s) => (s.step === 'category' ? put(s, change(s.tables)) : { ...idle(), ...put(s, change(s.tables)) })),
+      resetTables: () => set((s) => ({ ...idle(), ...put(s, { ...DEFAULTS, name: s.tables.name }) })),
 
       back: () => {
         const { step } = get()
@@ -195,21 +216,28 @@ export const useStore = create<State>()(
     }),
     {
       name: 'interactive-madness-table',
-      version: 2,
+      version: 3,
       // Version 1 shipped the Italian source tables as defaults. Anyone still on
       // them, untouched or not, moves to the English set; other saved tables stay.
       migrate: (saved, version) => {
         const s = (saved ?? {}) as Partial<State>
-        if (version < 2 && s.tables?.name === 'Follie') return { ...s, tables: DEFAULTS }
+        if (version < 2 && s.tables?.name === 'Follie') s.tables = DEFAULTS
+        // Version 3 keeps several sets. The one set saved before becomes the first of them.
+        if (version < 3 && s.tables) {
+          const first = parseLibrary(undefined, undefined, s.tables, Date.now())
+          return { ...s, sets: first.sets, activeId: first.activeId }
+        }
         return s
       },
       storage: createJSONStorage(() => localStorage),
       // Only data is saved. Actions and the roll in progress are rebuilt on load.
-      partialize: ({ tables, history, diceEffect, settings }) => ({ tables, history, diceEffect, settings }),
+      partialize: ({ sets, activeId, history, settings }) => ({ sets, activeId, history, settings }),
       // Settings saved by an older version may lack newer fields: fill them in.
+      // The working copy is not saved: it is the active set of the library.
       merge: (saved, current) => {
         const s = (saved ?? {}) as Partial<State>
-        return { ...current, ...s, settings: parseSettings(s.settings) }
+        const library = parseLibrary(s.sets, s.activeId, DEFAULTS, Date.now())
+        return { ...current, ...s, ...opened(library), settings: parseSettings(s.settings) }
       }
     }
   )

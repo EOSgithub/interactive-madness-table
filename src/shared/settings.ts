@@ -43,9 +43,9 @@ export const ROLL_STYLES: { value: RollStyle; label: string; hint: string }[] = 
 ]
 
 export const VERDICT_STYLES: { value: VerdictStyle; label: string; hint: string }[] = [
-  { value: 'flash', label: 'Flash', hint: "The outcome's colour hits the screen, then fades to a tint." },
-  { value: 'burn', label: 'Burn', hint: 'The text comes in overexposed and cools down.' },
-  { value: 'fade', label: 'Fade', hint: 'The text fades in. No flash.' }
+  { value: 'flash', label: 'Flash', hint: "The banner crosses the screen in a flash of the outcome's colour, and a ghost of the words drifts out." },
+  { value: 'burn', label: 'Burn', hint: 'The banner and the text arrive overexposed and cool down.' },
+  { value: 'fade', label: 'Fade', hint: 'The banner and the text fade in. No flash, no ghost.' }
 ]
 
 export const SPEEDS: { value: Speed; label: string }[] = [

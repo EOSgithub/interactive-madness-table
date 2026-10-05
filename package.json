@@ -14,7 +14,10 @@
     "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/cinzel": "^5.3.0",
+    "@fontsource-variable/cormorant-garamond": "^5.3.0",
+    "@fontsource-variable/eb-garamond": "^5.3.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "motion": "^14.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.15"

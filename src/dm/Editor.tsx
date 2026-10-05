@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as E from '../shared/edit'
-import { exportTableSet, readTableSet } from '../shared/io'
 import { checkCategory, type Problem } from '../shared/tables'
 import type { Category, Duration, Entry, Outcome, OutcomeKind, Range } from '../shared/types'
 import { useStore } from '../state/store'
+import { downloadSet, useImport, type Message } from './Sets'
 
 // The editor: every category, entry and outcome of the tables can be changed
 // here. Each field writes straight to the store, which saves on every change.
@@ -51,54 +51,25 @@ export function Editor() {
 
 function Files() {
   const tables = useStore((s) => s.tables)
-  const setTables = useStore((s) => s.setTables)
   const resetTables = useStore((s) => s.resetTables)
-  const picker = useRef<HTMLInputElement>(null)
-  const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null)
-
-  function download() {
-    const url = URL.createObjectURL(new Blob([exportTableSet(tables)], { type: 'application/json' }))
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${tables.name.trim().replace(/[^\w-]+/g, '-').toLowerCase() || 'madness-tables'}.json`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
-  async function upload(file: File) {
-    const result = readTableSet(await file.text())
-    if (result.ok) {
-      setTables(result.tables)
-      setMessage({ ok: true, text: `Loaded "${result.tables.name}".` })
-    } else {
-      setMessage({ ok: false, text: `Not loaded. ${result.error}` })
-    }
-  }
+  const [message, setMessage] = useState<Message | null>(null)
+  // An imported file becomes a new set: it never overwrites the one being edited.
+  const { input, pick } = useImport(setMessage)
 
   return (
     <div className="files">
       <h2>File</h2>
-      <button className="ghost" onClick={download}>
-        Export to a file
+      <button className="ghost" onClick={() => downloadSet(tables)}>
+        Export this set
       </button>
-      <button className="ghost" onClick={() => picker.current?.click()}>
-        Import from a file
+      <button className="ghost" onClick={pick}>
+        Import as a new set
       </button>
-      <input
-        ref={picker}
-        type="file"
-        accept="application/json,.json"
-        hidden
-        onChange={(e) => {
-          const file = e.target.files?.[0]
-          if (file) void upload(file)
-          e.target.value = ''
-        }}
-      />
+      {input}
       <button
         className="ghost danger"
         onClick={() => {
-          if (window.confirm('Replace your tables with the default ones? Export first if you want to keep them.')) {
+          if (window.confirm('Replace the tables of this set with the default ones? Export first if you want to keep them.')) {
             resetTables()
             setMessage({ ok: true, text: 'Default tables restored.' })
           }
