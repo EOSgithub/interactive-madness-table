@@ -1,5 +1,6 @@
 {
-  "name": "Madness Tables",
+  "name": "Bloodborne Madness",
+  "theme": "gothic",
   "categories": [
     {
       "id": "short-term",
@@ -144,7 +145,7 @@
                 2
               ],
               "kind": "boon",
-              "text": "Your scream is loud enough to wound. As a bonus action on each of your turns, you can scream at a creature you can see within 30 feet. If it can hear you, it makes a DC 13 Constitution saving throw, taking 1d12 thunder damage on a failure or half as much on a success."
+              "text": "Your scream is loud enough to wound. As a bonus action on each of your turns, you can scream at a creature you can see within 30 feet. If it can hear you, it makes a Constitution saving throw, taking 1d12 thunder damage on a failure or half as much on a success."
             },
             {
               "id": "short-term-4-2",
@@ -296,7 +297,7 @@
                 2
               ],
               "kind": "boon",
-              "text": "When you gain this madness, each creature within 30 feet of you must succeed on a DC 13 Wisdom saving throw or be frightened of you for 1 minute. A frightened creature repeats the save at the end of each of its turns, ending the effect on a success."
+              "text": "When you gain this madness, each creature within 30 feet of you must succeed on a Wisdom saving throw or be frightened of you for 1 minute. A frightened creature repeats the save at the end of each of its turns, ending the effect on a success."
             },
             {
               "id": "short-term-8-2",
@@ -823,7 +824,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Terrible wounds open in your flesh. Your hit point maximum drops by 1 every 24 hours, and if it reaches 0 you die. During a long rest, you or another creature can tend the wounds with a DC 16 Medicine check, once every 24 hours. After five successes the wounds heal."
+              "text": "Terrible wounds open in your flesh. Your hit point maximum drops by 1 every 24 hours, and if it reaches 0 you die. During a long rest, you or another creature can tend the wounds with a Wisdom (Medicine) check, once every 24 hours. After five successes the wounds heal."
             }
           ]
         },
@@ -1132,7 +1133,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "Nothing happens at first. (The rest is for the GM only.) The next time you fall unconscious in battle, the event scars you. If you meet that enemy in battle again while under this madness, you are cursed. While cursed, when you finish a long rest you make a DC 12 Wisdom saving throw. On a failure your mind keeps returning to its failures, and you gain no benefit from the rest."
+              "text": "Nothing happens at first. (The rest is for the GM only.) The next time you fall unconscious in battle, the event scars you. If you meet that enemy in battle again while under this madness, you are cursed. While cursed, when you finish a long rest you make a Wisdom saving throw. On a failure your mind keeps returning to its failures, and you gain no benefit from the rest."
             },
             {
               "id": "indefinite-7-3",
@@ -1161,7 +1162,7 @@
                 2
               ],
               "kind": "bane",
-              "text": "You lose your grip on what is real. You see people who are not there and hear sounds that were never made, in battle too, where enemies that do not exist crowd the field. Make a DC 18 Wisdom saving throw at the start of each of your turns. On a failure, you must use your action to attack a target of the GM's choice."
+              "text": "You lose your grip on what is real. You see people who are not there and hear sounds that were never made, in battle too, where enemies that do not exist crowd the field. Make a Wisdom saving throw at the start of each of your turns. On a failure, you must use your action to attack a target of the GM's choice."
             },
             {
               "id": "indefinite-8-2",
@@ -1170,7 +1171,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "You lie compulsively. Whenever you try to tell the truth, make a DC 18 Wisdom saving throw. On a failure you lie, even against your own interest."
+              "text": "You lie compulsively. Whenever you try to tell the truth, make a Wisdom saving throw. On a failure you lie, even against your own interest."
             },
             {
               "id": "indefinite-8-3",
@@ -1179,7 +1180,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "You cannot keep your hands off small valuables. When you notice one, make a DC 18 Wisdom saving throw. On a failure you try to steal something nearby, whatever the consequences."
+              "text": "You cannot keep your hands off small valuables. When you notice one, make a Wisdom saving throw. On a failure you try to steal something nearby, whatever the consequences."
             }
           ]
         },
@@ -1313,7 +1314,7 @@
                 2
               ],
               "kind": "bane",
-              "text": "You grow far too sure of yourself and take needless risks. Before you attempt anything cautious or well reasoned, make a DC 18 Wisdom saving throw. On a failure, you act on impulse."
+              "text": "You grow far too sure of yourself and take needless risks. Before you attempt anything cautious or well reasoned, make a Wisdom saving throw. On a failure, you act on impulse."
             },
             {
               "id": "indefinite-12-2",
@@ -1351,7 +1352,7 @@
                 2
               ],
               "kind": "bane",
-              "text": "Whenever you roll initiative, you start to dance. At the start of each of your turns, make a DC 18 Constitution saving throw to stop for that turn. On a failure you keep dancing, as with the irresistible dance spell."
+              "text": "Whenever you roll initiative, you start to dance. At the start of each of your turns, make a Constitution saving throw to stop for that turn. On a failure you keep dancing, as with the irresistible dance spell."
             },
             {
               "id": "indefinite-13-2",
@@ -1360,7 +1361,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "Fits of helpless laughter take you at the least fitting moments, and it is hard to speak or to focus. If you are concentrating on a spell, you must succeed on a DC 15 Wisdom saving throw at the start of each of your turns or lose concentration. You also have disadvantage on Stealth checks."
+              "text": "Fits of helpless laughter take you at the least fitting moments, and it is hard to speak or to focus. If you are concentrating on a spell, you must succeed on a Wisdom saving throw at the start of each of your turns or lose concentration. You also have disadvantage on Stealth checks."
             },
             {
               "id": "indefinite-13-3",
@@ -1369,7 +1370,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "You are ravenous. You must succeed on a DC 15 Wisdom saving throw or eat whatever food you come across, however foul, rancid, or plainly abominable."
+              "text": "You are ravenous. You must succeed on a Wisdom saving throw or eat whatever food you come across, however foul, rancid, or plainly abominable."
             }
           ]
         },
@@ -1398,7 +1399,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "You conceive an irrational hatred for one creature, object, or situation chosen by the GM. When you meet it, you must succeed on a DC 15 Wisdom saving throw or turn hostile toward it for 1 hour, or until it is out of your sight or destroyed."
+              "text": "You conceive an irrational hatred for one creature, object, or situation chosen by the GM. When you meet it, you must succeed on a Wisdom saving throw or turn hostile toward it for 1 hour, or until it is out of your sight or destroyed."
             },
             {
               "id": "indefinite-14-3",

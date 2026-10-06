@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { activeSet, addSet, blankSet, countEntries, parseLibrary, removeSet, saveActive, switchTo, uniqueName, type Library } from './library'
+import { activeSet, addMissing, addSet, blankSet, countEntries, parseLibrary, removeSet, saveActive, switchTo, uniqueName, type Library } from './library'
 import { checkTableSet } from './tables'
 import type { TableSet } from './types'
 
@@ -51,14 +51,27 @@ describe('the library', () => {
 
 describe('parseLibrary', () => {
   it('builds a library from the fallback when storage has none', () => {
-    const lib = parseLibrary(undefined, undefined, set('Defaults'), 3)
-    expect(lib.sets).toHaveLength(1)
+    const lib = parseLibrary(undefined, undefined, [set('Defaults'), set('More')], 3)
+    expect(lib.sets.map((s) => s.tables.name)).toEqual(['Defaults', 'More'])
     expect(activeSet(lib).tables.name).toBe('Defaults')
   })
 
   it('drops broken sets and repairs a stale active id', () => {
-    const lib = parseLibrary([{ id: 'x', tables: set('Kept'), updatedAt: 1 }, { id: 'y' }, null], 'gone', set('Defaults'), 3)
+    const lib = parseLibrary([{ id: 'x', tables: set('Kept'), updatedAt: 1 }, { id: 'y' }, null], 'gone', [set('Defaults')], 3)
     expect(lib.sets.map((s) => s.id)).toEqual(['x'])
     expect(lib.activeId).toBe('x')
+  })
+})
+
+describe('addMissing', () => {
+  it('adds the defaults the library has no set named after, and leaves the open set open', () => {
+    const lib = addMissing(one, [set('Madness Tables'), set('Cosmic Madness')], 9)
+    expect(lib.sets.map((s) => s.tables.name)).toEqual(['Madness Tables', 'Cosmic Madness'])
+    expect(lib.activeId).toBe('a')
+    expect(lib.sets[1].updatedAt).toBe(9)
+  })
+
+  it('returns the same library when nothing is missing', () => {
+    expect(addMissing(one, [set('Madness Tables')], 9)).toBe(one)
   })
 })

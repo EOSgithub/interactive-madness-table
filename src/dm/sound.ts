@@ -28,7 +28,7 @@ export function startSound(): () => void {
   const check = () => {
     const s = useStore.getState()
     const staging = currentStaging(s)
-    const file = s.blackout ? undefined : (staging?.audio ?? staging?.video)
+    const file = staging?.audio ?? staging?.video
     const display = toDisplayState(s)
     const next = file ? `${file}@${display.stepAt}` : ''
     if (next === cue) return

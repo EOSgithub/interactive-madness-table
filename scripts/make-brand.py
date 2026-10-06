@@ -1,4 +1,7 @@
-"""Draws the icons and the link preview image in public/.
+"""Draws the ToolsmithDev icons and the link preview image in public/.
+
+The icon of the browser tab is not made here: it is public/favicon.svg, the
+tool's own moon, drawn by hand.
 
     python scripts/make-brand.py <ToolsmithDev icon, PNG> <Cinzel variable font, TTF>
 
@@ -40,7 +43,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     icon = Image.open(icon_path).convert("RGBA")
 
-    for size, name in ((32, "favicon.png"), (180, "apple-touch-icon.png"), (192, "icon-192.png")):
+    for size, name in ((180, "apple-touch-icon.png"), (192, "icon-192.png")):
         icon.resize((size, size), Image.LANCZOS).save(os.path.join(OUT, name), optimize=True)
 
     # The preview image for shared links: 1200 x 630, the size the big platforms ask for.

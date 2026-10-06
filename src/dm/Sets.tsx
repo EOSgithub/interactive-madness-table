@@ -1,7 +1,9 @@
 import { Check, Copy, DownloadSimple, Plus, Trash, UploadSimple, X } from '@phosphor-icons/react'
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { exportTableSet, readTableSet } from '../shared/io'
+import { DEFAULT_SETS } from '../content/defaults'
 import { countEntries } from '../shared/library'
+import { THEMES, themeOf } from '../shared/themes'
 import type { TableSet } from '../shared/types'
 import { useStore } from '../state/store'
 
@@ -122,8 +124,10 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
                   }}
                 >
                   <span className="set-name">{t.name || 'Untitled tables'}</span>
-                  <span className="set-meta">
-                    {count(t.categories.length, 'table', 'tables')}, {count(countEntries(t), 'entry', 'entries')}. Changed {day.format(set.updatedAt)}
+                  <span className="set-meta set-theme">
+                    <span className="theme-swatch" data-theme={themeOf(t)} aria-hidden />
+                    {THEMES.find((x) => x.id === themeOf(t))?.label}. {count(t.categories.length, 'table', 'tables')},{' '}
+                    {count(countEntries(t), 'entry', 'entries')}. Changed {day.format(set.updatedAt)}
                   </span>
                 </button>
                 {active ? (
@@ -150,9 +154,6 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
           <button className="ghost" onClick={() => createSet('blank')}>
             <Plus /> New empty set
           </button>
-          <button className="ghost" onClick={() => createSet('defaults')}>
-            <Plus /> New from the defaults
-          </button>
           <button className="ghost" onClick={() => createSet('copy')}>
             <Copy /> Copy the open set
           </button>
@@ -163,6 +164,16 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
             <DownloadSimple /> Export the open set
           </button>
           {input}
+        </div>
+
+        <h3>Start from a default</h3>
+        <p className="hint">One for each theme. You get your own copy to change.</p>
+        <div className="sets-actions">
+          {DEFAULT_SETS.map((d) => (
+            <button key={d.name} className="ghost" onClick={() => createSet(d)}>
+              <span className="theme-swatch" data-theme={themeOf(d)} aria-hidden /> {d.name}
+            </button>
+          ))}
         </div>
         {message && (
           <p className={message.ok ? 'note' : 'note bad'} role="status">

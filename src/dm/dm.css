@@ -9,10 +9,10 @@
 body {
   margin: 0;
   min-height: 100dvh;
-  /* Gaslight: a haze of oxblood from the top right, an ember of warmth from the bottom left. */
+  /* Two glows in the colours of the theme. In the Gothic one: oxblood from the top right, an ember from the bottom left. */
   background:
-    radial-gradient(80% 55% at 78% -12%, rgba(150, 30, 48, 0.16), transparent 62%),
-    radial-gradient(55% 45% at -5% 105%, rgba(150, 84, 48, 0.12), transparent 62%),
+    radial-gradient(80% 55% at 78% -12%, var(--haze-1), transparent 62%),
+    radial-gradient(55% 45% at -5% 105%, var(--haze-2), transparent 62%),
     var(--ink-1);
   background-attachment: fixed;
   color: var(--bone);
@@ -83,7 +83,7 @@ select,
 textarea {
   width: 100%;
   padding: 9px 12px;
-  background: rgba(10, 7, 9, 0.6);
+  background: color-mix(in srgb, var(--ink-0) 60%, transparent);
   border: 1px solid var(--line);
   border-radius: var(--r-ctl);
   transition:
@@ -118,7 +118,7 @@ select option {
 }
 
 input[type='range'] {
-  accent-color: var(--gold);
+  accent-color: var(--accent);
 }
 
 .primary,
@@ -146,23 +146,23 @@ input[type='range'] {
 /* The one filled button on a screen: gold, lit from above. */
 .primary {
   padding: 14px 24px;
-  background: linear-gradient(180deg, #ecd096 0%, #c79d50 100%);
-  border: 1px solid rgba(255, 240, 205, 0.5);
+  background: var(--fill);
+  border: 1px solid color-mix(in srgb, var(--accent-bright) 60%, transparent);
   border-radius: var(--r-ctl);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    0 12px 26px -14px rgba(216, 179, 106, 0.7);
-  color: #1c1408;
+    0 12px 26px -14px color-mix(in srgb, var(--accent) 70%, transparent);
+  color: var(--on-accent);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
 .primary:hover:not(:disabled) {
-  background: linear-gradient(180deg, #f5dcaa 0%, #d3aa5e 100%);
+  background: var(--fill-hover);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 16px 30px -14px rgba(216, 179, 106, 0.85);
+    0 16px 30px -14px color-mix(in srgb, var(--accent) 85%, transparent);
 }
 
 .ghost {
@@ -180,9 +180,9 @@ input[type='range'] {
 }
 
 .ghost.danger:hover:not(:disabled) {
-  background: rgba(176, 22, 47, 0.16);
-  border-color: rgba(242, 93, 110, 0.45);
-  color: var(--blood-bright);
+  background: color-mix(in srgb, var(--bane) 16%, transparent);
+  border-color: color-mix(in srgb, var(--bane-bright) 45%, transparent);
+  color: var(--bane-bright);
 }
 
 /* A small round button for a secondary action. */
@@ -225,7 +225,7 @@ input[type='range'] {
 
 .link:hover:not(:disabled) {
   color: var(--bone);
-  text-decoration-color: var(--gold);
+  text-decoration-color: var(--accent);
 }
 
 /* A button that holds one icon. */
@@ -249,8 +249,8 @@ input[type='range'] {
 }
 
 .icon.danger:hover {
-  background: rgba(176, 22, 47, 0.18);
-  color: var(--blood-bright);
+  background: color-mix(in srgb, var(--bane) 18%, transparent);
+  color: var(--bane-bright);
 }
 
 .switch {
@@ -296,14 +296,14 @@ input[type='range'] {
 
 .switch input:checked,
 .setting input:checked {
-  background: var(--gold);
-  border-color: rgba(255, 240, 205, 0.5);
+  background: var(--accent);
+  border-color: color-mix(in srgb, var(--accent-bright) 60%, transparent);
 }
 
 .switch input:checked::before,
 .setting input:checked::before {
   transform: translateX(16px);
-  background: #1c1408;
+  background: var(--on-accent);
 }
 
 .hint {
@@ -323,18 +323,18 @@ input[type='range'] {
 
 .note {
   margin: 0;
-  color: var(--candle);
+  color: var(--boon);
   font-size: 0.87rem;
 }
 
 .note.bad {
-  color: var(--blood-bright);
+  color: var(--bane-bright);
 }
 
 .badge {
   min-width: 20px;
   padding: 1px 7px;
-  background: var(--blood);
+  background: var(--bane);
   border-radius: var(--r-pill);
   color: #fff4f2;
   font-family: var(--font-ui);
@@ -361,7 +361,7 @@ kbd {
 /* A card: the unit every section is built from. */
 .panel {
   padding: 22px;
-  background: linear-gradient(180deg, rgba(36, 26, 31, 0.92) 0%, rgba(24, 17, 20, 0.92) 100%);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--r-card);
   box-shadow: var(--lift);
@@ -383,7 +383,7 @@ kbd {
   align-items: center;
   height: 100dvh;
   padding: 18px 10px;
-  background: rgba(10, 7, 9, 0.55);
+  background: color-mix(in srgb, var(--ink-0) 55%, transparent);
   border-right: 1px solid var(--line);
 }
 
@@ -429,7 +429,7 @@ kbd {
 }
 
 .tabs button.current svg {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 /* The plate behind the open section. It slides from one tab to the next. */
@@ -446,12 +446,10 @@ kbd {
   margin-top: auto;
 }
 
+/* The bar runs the whole width of the window; what is under it stops at a readable width. */
 .main {
   width: 100%;
   min-width: 0;
-  max-width: 1520px;
-  margin: 0 auto;
-  padding: 0 32px 40px;
 }
 
 .top {
@@ -462,9 +460,8 @@ kbd {
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 14px;
-  margin: 0 -32px;
-  padding: 14px 32px;
-  background: rgba(16, 11, 14, 0.72);
+  padding: 14px max(32px, calc((100% - 1456px) / 2));
+  background: color-mix(in srgb, var(--ink-1) 72%, transparent);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(16px) saturate(140%);
 }
@@ -476,7 +473,7 @@ kbd {
 }
 
 .top h1 em {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 .set-switch {
@@ -524,13 +521,6 @@ kbd {
   font-size: 0.85rem;
 }
 
-/* Blackout stays pressed while the player screen is dark. */
-.screen-control .ghost[aria-pressed='true'] {
-  background: var(--bone);
-  border-color: var(--bone);
-  color: var(--ink-1);
-}
-
 /* The state of the player screen: grey when closed, candlelight when live, red when hidden. */
 .presence {
   display: inline-flex;
@@ -556,22 +546,24 @@ kbd {
 }
 
 .presence.on::before {
-  background: var(--candle);
-  box-shadow: 0 0 0 3px rgba(230, 200, 140, 0.16);
+  background: var(--boon);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--boon) 16%, transparent);
 }
 
 .presence.hidden {
-  border-color: rgba(242, 93, 110, 0.4);
-  color: var(--blood-bright);
+  border-color: color-mix(in srgb, var(--bane-bright) 40%, transparent);
+  color: var(--bane-bright);
   cursor: help;
 }
 
 .presence.hidden::before {
-  background: var(--blood-bright);
+  background: var(--bane-bright);
 }
 
 .section {
-  padding-top: 24px;
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 24px 32px 40px;
 }
 
 /* ----------------------------------------------------------------- play */
@@ -589,7 +581,7 @@ kbd {
   min-width: 0;
 }
 
-/* The roll stays in view while the session scrolls under the monitor. */
+/* The roll stays in view beside the monitor. */
 .side-col {
   position: sticky;
   top: 88px;
@@ -612,7 +604,7 @@ kbd {
   border: 1px solid var(--line-strong);
   border-radius: var(--r-card);
   box-shadow:
-    0 0 0 6px rgba(10, 7, 9, 0.5),
+    0 0 0 6px color-mix(in srgb, var(--ink-0) 50%, transparent),
     0 0 0 7px var(--line),
     0 40px 70px -40px rgba(0, 0, 0, 0.9);
 }
@@ -736,7 +728,7 @@ kbd {
 }
 
 .table-row:hover .table-main:not(:disabled) .table-go {
-  color: var(--gold);
+  color: var(--accent);
   transform: translateX(4px);
 }
 
@@ -756,7 +748,7 @@ kbd {
   grid-column: 1 / -1;
   margin: 0;
   padding: 0 16px 12px;
-  color: var(--blood-bright);
+  color: var(--bane-bright);
   font-size: 0.85rem;
 }
 
@@ -791,13 +783,13 @@ kbd {
 
 /* The kind of a verdict tints its card: blood for a bane, candlelight for a boon. */
 .verdict.bane {
-  background: linear-gradient(140deg, rgba(176, 22, 47, 0.2), transparent 62%), var(--ink-3);
-  border-color: rgba(242, 93, 110, 0.26);
+  background: linear-gradient(140deg, color-mix(in srgb, var(--bane) 20%, transparent), transparent 62%), var(--ink-3);
+  border-color: color-mix(in srgb, var(--bane-bright) 26%, transparent);
 }
 
 .verdict.boon {
-  background: linear-gradient(140deg, rgba(230, 200, 140, 0.13), transparent 62%), var(--ink-3);
-  border-color: rgba(230, 200, 140, 0.26);
+  background: linear-gradient(140deg, color-mix(in srgb, var(--boon) 13%, transparent), transparent 62%), var(--ink-3);
+  border-color: color-mix(in srgb, var(--boon) 26%, transparent);
 }
 
 .verdict h3 {
@@ -834,52 +826,13 @@ kbd {
 }
 
 .verdict.boon .kind {
-  background: rgba(230, 200, 140, 0.16);
-  color: var(--candle);
+  background: color-mix(in srgb, var(--boon) 16%, transparent);
+  color: var(--boon);
 }
 
 .verdict.bane .kind {
-  background: rgba(176, 22, 47, 0.3);
-  color: #ff8d99;
-}
-
-.verdict.compact {
-  padding: 12px 14px;
-  border-radius: 14px;
-}
-
-.verdict.compact h3 {
-  margin: 6px 0 4px;
-  font-size: 1.15rem;
-}
-
-.verdict.compact .effect {
-  font-size: 1rem;
-}
-
-.history-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.history h2 {
-  font-size: 1.3rem;
-}
-
-.history .hint {
-  margin: 0;
-}
-
-.history ol {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  align-items: start;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  background: color-mix(in srgb, var(--bane) 30%, transparent);
+  color: var(--bane-bright);
 }
 
 /* --------------------------------------------------------------- dialogs */
@@ -888,7 +841,7 @@ kbd {
   width: min(640px, calc(100vw - 32px));
   max-height: min(86dvh, 760px);
   padding: 0;
-  background: linear-gradient(180deg, #261b20 0%, var(--ink-2) 100%);
+  background: linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%);
   border: 1px solid var(--line-strong);
   border-radius: 24px;
   box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.9);
@@ -915,7 +868,7 @@ kbd {
 }
 
 .dialog::backdrop {
-  background: rgba(6, 3, 4, 0.7);
+  background: color-mix(in srgb, var(--ink-0) 72%, transparent);
   backdrop-filter: blur(6px);
 }
 
@@ -994,17 +947,30 @@ kbd {
   align-items: center;
   gap: 6px;
   padding: 3px 10px;
-  background: rgba(230, 200, 140, 0.14);
+  background: color-mix(in srgb, var(--boon) 14%, transparent);
   border-radius: var(--r-pill);
-  color: var(--candle);
+  color: var(--boon);
   font-size: 0.78rem;
   font-weight: 600;
 }
 
+/* The buttons of a dialog: two even columns, each label starting at the same edge. */
 .sets-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+}
+
+.sets-actions .ghost {
+  justify-content: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .sets-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1027,10 +993,6 @@ kbd {
 
   .stage-col {
     display: contents;
-  }
-
-  .history {
-    order: 3;
   }
 
   .monitor-frame {

@@ -6,9 +6,16 @@ import type { TableSet } from './types'
 
 describe('export and import', () => {
   it('round-trips the default tables unchanged', () => {
-    const tables = source as TableSet
+    const tables: TableSet = { ...(source as TableSet), theme: 'surreal' }
     const back = readTableSet(exportTableSet(tables))
     expect(back).toEqual({ ok: true, tables })
+  })
+
+  it('gives a file with no theme, or an unknown one, the Gothic theme', () => {
+    const none = parseTableSet(source)
+    const odd = parseTableSet({ ...source, theme: 'vaporwave' })
+    expect(none.ok && none.tables.theme).toBe('gothic')
+    expect(odd.ok && odd.tables.theme).toBe('gothic')
   })
 
   it('accepts a bare table set, without the export wrapper', () => {

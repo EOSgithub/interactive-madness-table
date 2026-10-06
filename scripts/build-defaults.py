@@ -1,13 +1,18 @@
-"""Builds src/content/defaults.en.json, the tables the app ships with.
+"""Builds the table sets the app ships with, one for each theme.
 
-Structure (ids, ranges, kinds) comes from source/follie.it.json, the author's
+src/content/defaults.en.json is the Gothic set, "Bloodborne Madness". Its
+structure (ids, ranges, kinds) comes from source/follie.it.json, the author's
 Italian tables. The English text is below, keyed by entry id: a title, a
 description, and one text per outcome in the order of the source.
+
+src/content/themed.en.json holds the sets of the other themes. Each is one
+table on a d100 with no second roll, so every entry carries its own effect.
 
     python scripts/build-defaults.py
 """
 import json
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,7 +40,7 @@ TEXT = {
         "You are blinded, and no special sense such as blindsight or tremorsense lets you see.",
     ]),
     "short-term-4": ("The Haunting Screams", "The madness finds a way out through your throat.", [
-        "Your scream is loud enough to wound. As a bonus action on each of your turns, you can scream at a creature you can see within 30 feet. If it can hear you, it makes a DC 13 Constitution saving throw, taking 1d12 thunder damage on a failure or half as much on a success.",
+        "Your scream is loud enough to wound. As a bonus action on each of your turns, you can scream at a creature you can see within 30 feet. If it can hear you, it makes a Constitution saving throw, taking 1d12 thunder damage on a failure or half as much on a success.",
         "You cannot speak normally. Screaming is the only way you can make yourself understood.",
         "Every creature within 300 feet hears you when you speak. You cannot form coherent sentences or provide the verbal components of spells.",
     ]),
@@ -55,7 +60,7 @@ TEXT = {
         "You are poisoned, even if you are immune to the condition.",
     ]),
     "short-term-8": ("Horrors Revealed", "The horrors beyond show themselves to you, and fear closes over your head.", [
-        "When you gain this madness, each creature within 30 feet of you must succeed on a DC 13 Wisdom saving throw or be frightened of you for 1 minute. A frightened creature repeats the save at the end of each of its turns, ending the effect on a success.",
+        "When you gain this madness, each creature within 30 feet of you must succeed on a Wisdom saving throw or be frightened of you for 1 minute. A frightened creature repeats the save at the end of each of its turns, ending the effect on a success.",
         "You flinch at every movement and every sound, sure that something is coming.",
         "You are frightened of your allies. On each of your turns you must take the Dash action and move away from them by the fastest route, unless there is nowhere to go. If you start your turn where you can see none of them, you can use your action to end the madness.",
     ]),
@@ -123,7 +128,7 @@ TEXT = {
     "long-term-10": ("Rotting Flesh", "Your body cannot withstand the influence and begins to rot.", [
         "Your mind accepts that your body will rot, and welcomes it. Everything withers sooner or later. You are immune to the poisoned condition.",
         "The rot inside you turns your stomach. You feel constant disgust, and whenever you smell something foul you must spend your action retching.",
-        "Terrible wounds open in your flesh. Your hit point maximum drops by 1 every 24 hours, and if it reaches 0 you die. During a long rest, you or another creature can tend the wounds with a DC 16 Medicine check, once every 24 hours. After five successes the wounds heal.",
+        "Terrible wounds open in your flesh. Your hit point maximum drops by 1 every 24 hours, and if it reaches 0 you die. During a long rest, you or another creature can tend the wounds with a Wisdom (Medicine) check, once every 24 hours. After five successes the wounds heal.",
     ]),
     "long-term-11": ("The Beast Unleashed", "The beast inside you wakes and takes the reins.", [
         "Most of your humanity stays, but enough of the beast gets loose. You have advantage on Dexterity saving throws. Each of your hands becomes a claw that you can use as a weapon while it is empty, dealing 1d6 slashing damage on a hit. Once on each of your turns, when you attack with a claw using the Attack action, you can make one additional claw attack as part of the same action.",
@@ -163,13 +168,13 @@ TEXT = {
     ]),
     "indefinite-7": ("Ways of Coping", "Strange powers from beyond take hold of you, and you cope however you can.", [
         "You fix on one object you own. If it is not exactly as it should be at all times, it gnaws at your peace of mind. While it is out of order, you have disadvantage on ability checks and attack rolls.",
-        "Nothing happens at first. (The rest is for the GM only.) The next time you fall unconscious in battle, the event scars you. If you meet that enemy in battle again while under this madness, you are cursed. While cursed, when you finish a long rest you make a DC 12 Wisdom saving throw. On a failure your mind keeps returning to its failures, and you gain no benefit from the rest.",
+        "Nothing happens at first. (The rest is for the GM only.) The next time you fall unconscious in battle, the event scars you. If you meet that enemy in battle again while under this madness, you are cursed. While cursed, when you finish a long rest you make a Wisdom saving throw. On a failure your mind keeps returning to its failures, and you gain no benefit from the rest.",
         "You develop a strange phobia: of long words, of the dark, or of something else in your life. Work out with the GM which one suits your character.",
     ]),
     "indefinite-8": ("The Lying Heart", "Your heart falters. A reality like this cannot truly exist.", [
-        "You lose your grip on what is real. You see people who are not there and hear sounds that were never made, in battle too, where enemies that do not exist crowd the field. Make a DC 18 Wisdom saving throw at the start of each of your turns. On a failure, you must use your action to attack a target of the GM's choice.",
-        "You lie compulsively. Whenever you try to tell the truth, make a DC 18 Wisdom saving throw. On a failure you lie, even against your own interest.",
-        "You cannot keep your hands off small valuables. When you notice one, make a DC 18 Wisdom saving throw. On a failure you try to steal something nearby, whatever the consequences.",
+        "You lose your grip on what is real. You see people who are not there and hear sounds that were never made, in battle too, where enemies that do not exist crowd the field. Make a Wisdom saving throw at the start of each of your turns. On a failure, you must use your action to attack a target of the GM's choice.",
+        "You lie compulsively. Whenever you try to tell the truth, make a Wisdom saving throw. On a failure you lie, even against your own interest.",
+        "You cannot keep your hands off small valuables. When you notice one, make a Wisdom saving throw. On a failure you try to steal something nearby, whatever the consequences.",
     ]),
     "indefinite-9": ("Nerves and Mind Adrift", "You begin to lose control of your nerves and your mind.", [
         "Your senses sharpen until they hurt. Lost in the noise of them, you have disadvantage on any ability check that relies on sight, hearing, smell, taste, or touch, and on Wisdom saving throws.",
@@ -187,18 +192,18 @@ TEXT = {
         "Time moves unevenly for you, stretching and bunching without warning. You have disadvantage on initiative rolls. At the start of each of your turns, roll a d6 to see what you can do: on 1-2, only one of an action, a bonus action, or movement; on 3-4, movement and either an action or a bonus action; on 5-6, a normal turn.",
     ]),
     "indefinite-12": ("Tricks of the Mind", "Your mind starts to play tricks on you and feeds you illusions.", [
-        "You grow far too sure of yourself and take needless risks. Before you attempt anything cautious or well reasoned, make a DC 18 Wisdom saving throw. On a failure, you act on impulse.",
+        "You grow far too sure of yourself and take needless risks. Before you attempt anything cautious or well reasoned, make a Wisdom saving throw. On a failure, you act on impulse.",
         "You believe you are a god, a royal, or some other great figure. You have disadvantage on Wisdom and Charisma checks when dealing with others.",
         "You believe you belong to another people. You can speak only their native tongue, and if that is not Common you lose the ability to speak Common. If you never knew their language, you make sounds that resemble it and mean nothing.",
     ]),
     "indefinite-13": ("Unruly Chaos", "You turn against all company and become chaos and madness in person.", [
-        "Whenever you roll initiative, you start to dance. At the start of each of your turns, make a DC 18 Constitution saving throw to stop for that turn. On a failure you keep dancing, as with the irresistible dance spell.",
-        "Fits of helpless laughter take you at the least fitting moments, and it is hard to speak or to focus. If you are concentrating on a spell, you must succeed on a DC 15 Wisdom saving throw at the start of each of your turns or lose concentration. You also have disadvantage on Stealth checks.",
-        "You are ravenous. You must succeed on a DC 15 Wisdom saving throw or eat whatever food you come across, however foul, rancid, or plainly abominable.",
+        "Whenever you roll initiative, you start to dance. At the start of each of your turns, make a Constitution saving throw to stop for that turn. On a failure you keep dancing, as with the irresistible dance spell.",
+        "Fits of helpless laughter take you at the least fitting moments, and it is hard to speak or to focus. If you are concentrating on a spell, you must succeed on a Wisdom saving throw at the start of each of your turns or lose concentration. You also have disadvantage on Stealth checks.",
+        "You are ravenous. You must succeed on a Wisdom saving throw or eat whatever food you come across, however foul, rancid, or plainly abominable.",
     ]),
     "indefinite-14": ("Hatred Beyond Reason", "A hatred greater than you takes hold.", [
         "You develop a second personality that tries to destroy everything you care for and to feed everything you despise.",
-        "You conceive an irrational hatred for one creature, object, or situation chosen by the GM. When you meet it, you must succeed on a DC 15 Wisdom saving throw or turn hostile toward it for 1 hour, or until it is out of your sight or destroyed.",
+        "You conceive an irrational hatred for one creature, object, or situation chosen by the GM. When you meet it, you must succeed on a Wisdom saving throw or turn hostile toward it for 1 hour, or until it is out of your sight or destroyed.",
         "The thought of betrayal delights you. Whenever more than one creature is in range of an attack you are about to make, roll a d20. On a 10 or lower, you target another creature at random instead of the one you meant.",
     ]),
     "indefinite-15": ("The Strange Body", "Your body starts to behave in odd ways.", [
@@ -224,9 +229,158 @@ TEXT = {
 }
 
 
+# In the Hellenic set no god is called by name: each goes by a title.
+# The other themes: (set name, theme, table name, line under it, duration, entries).
+# An entry is a title, a description read aloud, and the effect. The entries share
+# the d100 evenly, in the order written. No effect names a DC: where a roll decides,
+# it is a plain die.
+THEMED = [
+    ("Cosmic Madness", "cosmic", "What the Stars Showed You", "You looked up for too long.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
+        ("The Scale of Things", "You have just worked out how far away the nearest star is, and the number will not leave you alone.",
+         "You are frightened of the open sky and cannot willingly leave cover while you can see it."),
+        ("A Colour With No Name", "There is a new colour at the edge of things. It is on your hands as well.",
+         "Anything more than 30 feet from you is heavily obscured by it."),
+        ("Too Many Corners", "You count the corners of the room twice and get a different number each time.",
+         "Your speed is halved, and you have disadvantage on Dexterity saving throws."),
+        ("The Slow Voice", "Something very far off is speaking. One word of it takes longer than your whole life, and you are stuck listening to a syllable.",
+         "Roll a d6 at the start of each of your turns. On a 1, you are stunned until your next turn starts."),
+        ("Seen From Above", "You are watching the top of your own head from a great height.",
+         "You cannot be surprised and you have advantage on Wisdom (Perception) checks. Your attack rolls have disadvantage."),
+        ("Old Light", "Starlight is thousands of years old by the time it arrives. You start to wonder how old the light from your friends is.",
+         "You trust only what you can touch. You have disadvantage on attack rolls against any target more than 5 feet from you, and you cannot target a creature with a spell unless you are touching it."),
+        ("The Quiet Is Listening", "It has gone very quiet, the way a room does when someone has stopped to listen at the door.",
+         "You will not speak above a whisper, so you cannot cast spells that have a verbal component. You have advantage on Dexterity (Stealth) checks."),
+        ("Sums", "Distances, orbits and the weight of the sea go through your head faster than you can write them down. A few of the answers are about the fight you are in.",
+         "Once on each of your turns you can add 1d4 to an attack roll, ability check or saving throw you make. You take 1d4 psychic damage each time."),
+        ("The Thin Place", "The world here is worn like the elbow of a coat, and you can see what it was covering.",
+         "You can see 30 feet into the Ethereal Plane. Everything on your own plane is lightly obscured for you."),
+        ("It Looked Back", "You always assumed that whatever is out there had never heard of you.",
+         "You have vulnerability to psychic damage. You cannot hide, and creatures within 60 feet of you know where you are even when you are invisible."),
+    ]),
+    ("Surreal Madness", "surreal", "The Dream That Stayed", "You woke up and it did not stop.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
+        ("The Way Out", "The way out of here is through a jar, a boot or a teacup. You only have to find the right one.",
+         "At the start of each of your turns, roll a d6. On a 1 or 2, you spend your action trying to climb into the nearest container, whatever its size."),
+        ("Borrowed Gravity", "The floor has started to feel like a wall you are leaning against.",
+         "You can walk on walls and ceilings at your normal speed with your hands free. If you end your turn on the floor, you fall prone."),
+        ("The Clocks Disagree", "Your pulse is running ahead of your footsteps, and the candle flames are a little behind both.",
+         "At the start of each of your turns, roll a d6. On a 1 or 2 your speed is halved and you can take an action or a bonus action this turn, but not both. On a 5 or 6 your speed is doubled until the turn ends."),
+        ("Wrong Faces", "Your friends have been swapped for people who look just like them. Whoever did it got the ears slightly wrong.",
+         "You are never a willing target for another creature's spells or effects. You cannot take the Help action, and nobody can use it on you."),
+        ("Birdsong", "People are opening their mouths and making noise. The sparrows are the ones talking sense.",
+         "You cannot speak, read or understand any language. You can talk with beasts as if you had cast speak with animals."),
+        ("Near and Far", "The far wall is against your shoulder, and your own hand takes a minute's walk to reach.",
+         "You have disadvantage on attack rolls against targets within 10 feet of you. Long range does not give you disadvantage on ranged attack rolls."),
+        ("Unpainted", "Whoever made this place ran out of paint near the walls, and you would rather not step on the bare patches.",
+         "Any space within 5 feet of a wall is difficult terrain for you. You have advantage on saving throws against illusion spells."),
+        ("The Joke", "You have just understood the joke. It is about the moon, and you cannot explain it.",
+         "Whenever you take damage, roll a d6. On a 1 or 2, you fall prone laughing and cannot stand up until the end of your next turn."),
+        ("Your Shadow Goes First", "Your shadow has stopped waiting for you. It walks ahead, looks round the corner and comes back.",
+         "You cannot be surprised and you have advantage on initiative rolls. You have disadvantage on Dexterity (Stealth) checks."),
+        ("Only a Dream", "You have realised you are asleep, which is a relief, because it means none of this can hurt you.",
+         "You are immune to the frightened condition and have advantage on saving throws against being charmed. You cannot take the Dodge or Disengage action."),
+    ]),
+    ("Occult Madness", "occult", "The Price of Knowing", "You were told not to open it.", {"kind": "fixed", "text": "Until the next dawn:"}, [
+        ("The Name", "You know a name you were never taught. It is on your tongue every time you open your mouth.",
+         "Whenever you cast a spell that has a verbal component, roll a d6. On a 1 or 2 you say the name instead. The spell fails, the spell slot is not used, and you take 1d6 psychic damage."),
+        ("Marked", "A sign came up on your forearm overnight, like a bruise in the shape of writing. It is warm.",
+         "Fiends and undead within 60 feet of you know where you are and have advantage on attack rolls against you. You have resistance to necrotic damage."),
+        ("The Debt", "Years ago something helped you without being asked. It has been keeping count since then.",
+         "Whenever you regain hit points, you regain half as many."),
+        ("Candle Sight", "You can read in a dark room now. Daylight hurts.",
+         "You have darkvision out to 60 feet and can see invisible creatures within 10 feet of you. In sunlight you have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight."),
+        ("The Old Tongue", "You meant to say good morning. What came out was older and a good deal ruder.",
+         "Infernal is the only language you can speak, read or write. You have advantage on Charisma (Intimidation) checks."),
+        ("The Circle", "You cannot sleep until you have drawn the circle, and you already know every mark that goes in it.",
+         "You must spend 10 minutes drawing a circle around yourself before you can take a short or long rest. Inside a circle you drew, you have advantage on saving throws against being charmed or frightened."),
+        ("A Second Voice", "When you pray, another voice says the words with you, half a beat late.",
+         "Whenever you cast a spell of 1st level or higher, roll a d6. On a 1 the GM picks its targets from those in range. On a 6 the spell is cast as if from a slot one level higher."),
+        ("The Hungry Page", "You read one page of it. Since then every scrap of writing looks like it might be the next one.",
+         "The first time you see a piece of writing within 30 feet of you, you must use your next action to read it. You have advantage on Intelligence (Arcana) and Intelligence (Religion) checks."),
+        ("Salt and Iron", "Your grandmother was right about doorways.",
+         "You will not go through a doorway unless there is salt across it or iron in your hand. While you are holding iron, you have advantage on saving throws against being charmed."),
+        ("The Offer", "A polite voice offers you help, once, at a price it calls small.",
+         "Once, after you roll a d20, you can treat the roll as a 20. If you do, your hit point maximum drops by 2d6 until you finish a long rest."),
+    ]),
+    ("Societal Madness", "societal", "The Machine Has Noticed You", "Please wait. Your case is being processed.", {"kind": "dice", "die": 4, "unit": "days"}, [
+        ("The Missing Form", "You were meant to hand in a form before today. Nobody at the desk can tell you which form, or which desk.",
+         "You have disadvantage on initiative rolls and you cannot take the Ready action."),
+        ("The Number", "They gave you a number at the door. You turn round faster for it now than for your own name.",
+         "You cannot say or write your name. You have disadvantage on Charisma saving throws."),
+        ("Watched", "Somebody is at every window: the neighbours, the baker, and a pigeon you have seen three times today.",
+         "You have advantage on Wisdom (Perception) checks to notice hidden creatures. A short rest does nothing for you if anyone could have seen you taking it."),
+        ("Guilty", "The court has found you guilty and will let you know the charge in due course.",
+         "You cannot knowingly lie to a guard, an official, a priest or anyone else who speaks with authority. You have disadvantage on saving throws against being charmed or frightened by them."),
+        ("The Queue", "There is a queue. You are in it, and people who push in make you feel ill.",
+         "You take your turn last in every round of combat. You have advantage on Constitution saving throws to maintain concentration."),
+        ("Loyal Citizen", "You read the slogan on the wall this morning and found nothing in it to argue with.",
+         "When a creature gives you a spoken order of one or two words, roll a d6. On a 1, 2 or 3 you follow it on your next turn, as if under the command spell. While you are following an order you are immune to the frightened condition."),
+        ("Spare Part", "You have seen the list of people who could do your job, and it is long.",
+         "You can take the Help action as a bonus action. You do not add your proficiency bonus to Charisma checks."),
+        ("Two Truths", "You believe two things that cannot both be true, and it has stopped bothering you.",
+         "Magic cannot tell whether you are lying, and you have advantage on Charisma (Deception) checks. You have disadvantage on Wisdom (Insight) checks."),
+        ("Awaiting Instructions", "Somewhere a machine is working out what you should do next. It is usually right, so you wait.",
+         "When you roll initiative, also roll a d4. On a 1 you must take the Dodge action on your first turn. On a 4 you have advantage on the first attack roll or ability check you make in that combat."),
+        ("The Crowd", "Everyone is walking the same way and you are walking with them. You could not say where.",
+         "While two or more of your allies are within 10 feet of you, you are immune to the frightened condition. While none are, you have disadvantage on Wisdom saving throws."),
+    ]),
+    ("Hellenic Madness", "hellenic", "Sent by the Gods", "A god has taken an interest in you.", {"kind": "fixed", "text": "Until the next sunrise:"}, [
+        ("The Flock", "The Goddess of Wisdom has put a mist over your eyes. The men who wronged you are standing right in front of you, bleating.",
+         "You take beasts for your enemies. While a beast is within 30 feet of you, you must use your action on each of your turns to attack it."),
+        ("The Goad", "Madness herself did not want this errand. The Queen of the Gods sent her anyway, and now you cannot tell your friends from the people you came to kill.",
+         "When you make an attack, the GM picks the target at random from the creatures within your reach or range, your allies included. You have advantage on melee weapon attack rolls."),
+        ("The Kindly Ones", "Three women with snakes in their hair are following you. Nobody else can see them, and they are in no hurry.",
+         "You cannot take a short or long rest. You keep looking behind you, so you cannot be surprised, and you have disadvantage on Wisdom (Perception) checks."),
+        ("Two Suns", "There are two suns over the city this morning and two cities under them. The stranger walking ahead of you has horns.",
+         "You see double and have disadvantage on attack rolls against targets more than 5 feet from you. The god's strength is in your arms: you have advantage on Strength checks and Strength saving throws."),
+        ("Cassandra's Gift", "The God of Prophecy gave you the truth about what is coming. He also arranged that nobody would believe a word of it.",
+         "You cannot be surprised and you have advantage on initiative rolls. You have disadvantage on Charisma (Persuasion) checks, and your allies gain nothing from your Help action."),
+        ("The Song", "Someone is singing out past the rocks. The song is about you, and it knows things you have told no one.",
+         "You are deafened. On each of your turns you must spend at least half your movement going toward the place the song comes from, which the GM chooses."),
+        ("Lotus", "You ate the fruit. Home is a word you remember hearing.",
+         "You are immune to the frightened condition and have resistance to psychic damage. You cannot take the Dash action, and you have disadvantage on initiative rolls."),
+        ("The Gadfly", "The Queen of the Gods has set her fly on you. It drove Io across three continents and it is not tired.",
+         "At the start of each of your turns you take 1 piercing damage, and you must move at least 10 feet before the turn ends. Your speed increases by 10 feet."),
+        ("The Pool", "You have caught sight of your reflection, and it is the best thing you have seen in years.",
+         "If you can see your reflection at the start of your turn, your speed is 0 until your next turn starts. You have advantage on saving throws against being charmed by anyone else."),
+        ("The Wrath", "The anger the poets sing about has got into you, the kind that chokes a river with the dead.",
+         "You have advantage on melee weapon attack rolls, and attack rolls against you have advantage. You cannot willingly end your turn farther from the nearest enemy than you began it."),
+    ]),
+]
+
+
+def themed():
+    sets = []
+    for name, theme, label, blurb, duration, rows in THEMED:
+        size = 100 // len(rows)
+        assert size * len(rows) == 100, name
+        entries = [{
+            "id": f"{theme}-{i + 1}",
+            "range": [i * size + 1, (i + 1) * size],
+            "title": title,
+            "description": description,
+            "text": text,
+            "outcomes": [],
+        } for i, (title, description, text) in enumerate(rows)]
+        sets.append({"name": name, "theme": theme, "categories": [{
+            "id": theme, "label": label, "blurb": blurb, "duration": duration,
+            "die": 100, "subRoll": False, "subDie": 10, "entries": entries,
+        }]})
+    return sets
+
+
+def write(name, data):
+    target = os.path.join(ROOT, "src", "content", name)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    assert "—" not in text and "–" not in text, "dash in the default text"
+    assert not re.search(r"\bDC \d", text), "a DC in the default text: the GM sets it"
+    open(target, "w", encoding="utf-8", newline="\n").write(text)
+    return target
+
+
 def main():
     source = json.load(open(os.path.join(ROOT, "source", "follie.it.json"), encoding="utf-8"))
-    out = {"name": "Madness Tables", "categories": []}
+    out = {"name": "Bloodborne Madness", "theme": "gothic", "categories": []}
     for c in source["categories"]:
         label, blurb, duration = CATEGORIES[c["id"]]
         entries = []
@@ -244,13 +398,11 @@ def main():
             "id": c["id"], "label": label, "blurb": blurb, "duration": duration,
             "die": c["die"], "subRoll": c["subRoll"], "subDie": c["subDie"], "entries": entries,
         })
-    target = os.path.join(ROOT, "src", "content", "defaults.en.json")
-    os.makedirs(os.path.dirname(target), exist_ok=True)
-    text = json.dumps(out, indent=2, ensure_ascii=False) + "\n"
-    assert "—" not in text and "–" not in text, "dash in the default text"
-    open(target, "w", encoding="utf-8", newline="\n").write(text)
+    target = write("defaults.en.json", out)
     entries = sum(len(c["entries"]) for c in out["categories"])
     print(f"{target}: {len(out['categories'])} categories, {entries} entries")
+    others = themed()
+    print(f"{write('themed.en.json', others)}: {len(others)} sets, {sum(len(x['categories'][0]['entries']) for x in others)} entries")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { DisplayState } from '../shared/display'
 import { SPEED_FACTOR } from '../shared/settings'
+import { DEFAULT_THEME, type ThemeId } from '../shared/themes'
 import type { OutcomeKind } from '../shared/types'
 import { urlFor } from '../state/media'
 import { listen } from '../state/sync'
@@ -15,9 +16,15 @@ import { advance, bannerLevel, clamp, faceAt, firstRollBeats, glitchValue, jolt,
 // the view itself, also used by the monitor and by table mode in the DM window.
 
 const KIND_LABEL = { boon: 'A boon', neutral: 'It shows itself', bane: 'A bane' } as const
-/** The banner that crosses the screen when the verdict is named. */
-const BANNER = { boon: 'Boon Granted', neutral: 'Madness Manifest', bane: 'Bane Inflicted' } as const
-const BANNER_PLAIN = 'Madness Takes Hold'
+/** The banner that crosses the screen when the verdict is named, in the words of each theme. `plain` is for a table with no second roll. */
+const BANNER: Record<ThemeId, Record<OutcomeKind | 'plain', string>> = {
+  gothic: { boon: 'Boon Granted', neutral: 'Madness Manifest', bane: 'Bane Inflicted', plain: 'Madness Takes Hold' },
+  cosmic: { boon: 'A Star Aligns', neutral: 'It Has Noticed You', bane: 'The Void Answers', plain: 'Beyond Comprehension' },
+  surreal: { boon: 'A Kind Dream', neutral: 'Logic Slips', bane: 'The Dream Turns', plain: 'Nothing Is As It Was' },
+  occult: { boon: 'The Pact Rewards', neutral: 'The Sign Appears', bane: 'The Price Is Paid', plain: 'The Seal Is Broken' },
+  societal: { boon: 'Appeal Granted', neutral: 'Noted On File', bane: 'Sentence Passed', plain: 'Case Opened' },
+  hellenic: { boon: 'Favour of the Gods', neutral: 'The Gods Take Notice', bane: 'Wrath of the Gods', plain: 'Sent by the Gods' }
+}
 
 /** A step time this far in the past was set by Skip: the show is over. */
 const LONG_AGO = 1e6
@@ -25,6 +32,12 @@ const LONG_AGO = 1e6
 export function Display() {
   const [state, setState] = useState<DisplayState | null>(null)
   useEffect(() => listen(setState), [])
+
+  // The page behind the view takes the colours of the theme too.
+  const theme = state?.theme ?? DEFAULT_THEME
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
 
   // A finger has no F key and no double-click that feels natural: one tap is enough there.
   const touch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
@@ -73,6 +86,7 @@ interface Els {
   camera: HTMLDivElement | null
   number: HTMLParagraphElement | null
   title: HTMLHeadingElement | null
+  lead: HTMLParagraphElement | null
   text: HTMLParagraphElement | null
   kind: HTMLParagraphElement | null
   wash: HTMLDivElement | null
@@ -88,6 +102,7 @@ const noEls = (): Els => ({
   camera: null,
   number: null,
   title: null,
+  lead: null,
   text: null,
   kind: null,
   wash: null,
@@ -112,7 +127,7 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
   const seed = s.stepAt
   const isVerdict = s.step === 'verdict'
   const second = isVerdict && s.second !== null
-  const { verdictStyle, shake } = s.settings
+  const { shake } = s.settings
   const rollStyle = s.rollStyle
   const speed = SPEED_FACTOR[s.settings.speed]
   const plain = rollStyle === 'plain'
@@ -147,8 +162,8 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
   if (e.camera) {
     // The jolt is in container units, so it is as strong on the DM's small monitor as on a TV.
     const [x, y] = shake && !plain ? jolt(t, beats.drum.landed, seed, 1.7) : [0, 0]
-    // Flash: the screen is struck a second time, harder, as the banner lands.
-    const [bx, by] = shake && verdict && verdictStyle === 'flash' ? jolt(t, verdict.banner.start, seed + 7, 2.6) : [0, 0]
+    // The screen is struck a second time, harder, as the banner lands.
+    const [bx, by] = shake && verdict ? jolt(t, verdict.banner.start, seed + 7, 2.6) : [0, 0]
     const push = 1 + 0.045 * clamp(t / beats.done)
     e.camera.style.transform = `translate(${(x + bx).toFixed(2)}cqw, ${(y + by).toFixed(2)}cqw) scale(${push.toFixed(4)})`
     // While the banner is across the screen everything behind it steps back.
@@ -161,63 +176,34 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
     e.title.classList.toggle('forming', !second && t < beats.titleEnd)
   }
 
+  // With no second roll the description comes up as soon as the title is whole, before the banner.
+  if (e.lead) e.lead.style.opacity = smooth(beats.titleEnd, beats.titleEnd + 350 * speed, t).toFixed(3)
+
   if (e.text) {
     const u = smooth(beats.textStart, beats.textEnd, t)
     e.text.style.opacity = u.toFixed(3)
     e.text.style.transform = `translateY(${((1 - u) * 0.9).toFixed(2)}em)`
-    // Burn: the text arrives overexposed and cools down to its own colour.
-    const heat = verdictStyle === 'burn' && isVerdict ? Math.exp(-2.4 * Math.max(0, (t - beats.textStart) / 1000)) : 0
-    e.text.style.filter = heat > 0.02 ? `brightness(${(1 + 2.6 * heat).toFixed(2)}) blur(${(3 * heat).toFixed(1)}px)` : ''
   }
 
   if (verdict) {
     const b = verdict.banner
     if (e.kind) e.kind.style.opacity = smooth(b.release, b.end, t).toFixed(3)
 
-    // The banner, in one of three manners.
-    //   Flash: the words slam down from oversize in a burst of light, and a ghost of them drifts out.
-    //   Burn:  the words are seared in from left to right, white-hot at first, with no ghost.
-    //   Fade:  the words come up slowly and quietly, and nothing else happens.
+    // The banner: the words slam down from oversize in a burst of light, and a ghost of them drifts out.
     if (e.banner && e.word && e.echo) {
       const p = clamp((t - b.start) / (b.end - b.start))
       const sec = Math.max(0, since / 1000)
-      const level = verdictStyle === 'fade' ? smooth(b.start, b.release, t) * (1 - smooth(b.release, b.end, t)) : banner
-      e.banner.style.opacity = level.toFixed(3)
-      e.banner.style.visibility = level > 0.001 ? 'visible' : 'hidden'
-      e.banner.dataset.style = verdictStyle
-      if (verdictStyle === 'flash') {
-        e.word.style.transform = `scale(${(1 + 0.06 * p + 0.7 * Math.exp(-9 * sec)).toFixed(4)})`
-        e.word.style.filter = ''
-        e.word.style.clipPath = ''
-        e.echo.style.transform = `scale(${(1.04 + 0.5 * p).toFixed(4)})`
-        e.echo.style.opacity = (0.55 * (1 - p)).toFixed(3)
-      } else if (verdictStyle === 'burn') {
-        const sweep = smooth(b.start, b.start + 1100 * speed, t)
-        const heat = Math.exp(-1.6 * sec)
-        e.word.style.transform = ''
-        e.word.style.clipPath = `inset(-20% ${((1 - sweep) * 100).toFixed(1)}% -20% 0)`
-        e.word.style.filter = heat > 0.02 ? `brightness(${(1 + 3.4 * heat).toFixed(2)}) blur(${(0.05 * heat).toFixed(3)}em)` : ''
-        e.echo.style.opacity = '0'
-      } else {
-        e.word.style.transform = ''
-        e.word.style.filter = ''
-        e.word.style.clipPath = ''
-        e.echo.style.opacity = '0'
-      }
+      e.banner.style.opacity = banner.toFixed(3)
+      e.banner.style.visibility = banner > 0.001 ? 'visible' : 'hidden'
+      e.word.style.transform = `scale(${(1 + 0.06 * p + 0.7 * Math.exp(-9 * sec)).toFixed(4)})`
+      e.echo.style.transform = `scale(${(1.04 + 0.5 * p).toFixed(4)})`
+      e.echo.style.opacity = (0.55 * (1 - p)).toFixed(3)
     }
 
-    // Flash strikes the whole screen white with the outcome's colour, then leaves a tint.
-    // Burn leaves a glow that pulses like an ember. Fade leaves the screen alone.
+    // The whole screen is struck white with the outcome's colour, and a tint of it stays.
     if (e.wash) {
       const sec = since / 1000
-      const lit =
-        verdictStyle === 'flash'
-          ? 0.12 * smooth(0, 0.5, sec) + 0.95 * Math.exp(-5 * sec)
-          : verdictStyle === 'burn'
-            ? smooth(0, 1.2, sec) * (0.2 + 0.07 * Math.sin(sec * 3.1))
-            : 0
-      e.wash.style.opacity = since >= 0 ? lit.toFixed(3) : '0'
-      e.wash.dataset.style = verdictStyle
+      e.wash.style.opacity = since >= 0 ? (0.12 * smooth(0, 0.5, sec) + 0.95 * Math.exp(-5 * sec)).toFixed(3) : '0'
     }
   } else if (e.wash) {
     e.wash.style.opacity = '0'
@@ -233,7 +219,7 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
   return { done: t >= beats.done + 2500, since }
 }
 
-/** How red the moon is: it turns to blood as a bane is named. */
+/** How far the emblem has turned: it takes the colour of a bane as one is named. */
 function moonBlood(kind: OutcomeKind | null, since: number): number {
   return kind === 'bane' && since >= 0 ? smooth(0, 1100, since) : 0
 }
@@ -245,11 +231,10 @@ export function PlayerView({ state, hint }: { state: DisplayState | null; hint?:
   // The clock of the current show: it only runs while frames are being drawn (see advance).
   const clock = useRef({ stepAt: 0, t: 0, last: 0 })
 
-  const live = state !== null && !state.blackout
-  const rolling = live && (state.step === 'second' || state.step === 'verdict') && state.entry !== null
+  const rolling = state !== null && (state.step === 'second' || state.step === 'verdict') && state.entry !== null
 
   useEffect(() => {
-    if (!state || state.blackout) return
+    if (!state) return
     const { animations, respectReducedMotion } = state.settings
     // With animations off, or reduced motion, the show is skipped: its last frame is drawn once and nothing drifts.
     const calm = !animations || (respectReducedMotion && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -282,7 +267,7 @@ export function PlayerView({ state, hint }: { state: DisplayState | null; hint?:
           el.height = Math.round(h * ratio)
         }
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0)
-        paint(ctx, w, h, calm ? 0 : now, { seed: state.stepAt, kind, since: shown.since, lite })
+        paint(ctx, w, h, calm ? 0 : now, { theme: state.theme, seed: state.stepAt, kind, since: shown.since, lite })
       }
       if (!calm) raf = requestAnimationFrame(frame)
     }
@@ -309,18 +294,10 @@ export function PlayerView({ state, hint }: { state: DisplayState | null; hint?:
       </div>
     )
   }
-  if (state.blackout) {
-    return (
-      <div className="player">
-        <main className="screen dark" aria-hidden />
-      </div>
-    )
-  }
-
   const e = els.current
   const still = !state.settings.animations
   return (
-    <div className={`player ${lite ? 'lite' : ''} ${still ? 'still' : ''}`}>
+    <div className={`player ${lite ? 'lite' : ''} ${still ? 'still' : ''}`} data-theme={state.theme}>
       <div className="fog" aria-hidden />
       {rolling ? (
         <Roll state={state} els={e} />
@@ -349,7 +326,7 @@ export function PlayerView({ state, hint }: { state: DisplayState | null; hint?:
   )
 }
 
-/** The moon the die sits on. It turns to blood on a bane. */
+/** The emblem the die sits on: a moon, or whatever the theme makes of it. It turns to the colour of a bane when one is named. */
 function Moon(props: { blood?: (el: HTMLDivElement | null) => void; halo?: (el: HTMLDivElement | null) => void; children?: React.ReactNode }) {
   return (
     <div className="die">
@@ -415,7 +392,9 @@ function Roll({ state, els: e }: { state: DisplayState; els: Els }) {
     return () => watch.disconnect()
   }, [e, state.entry, state.step, state.stepAt, state.settings.animations, text])
 
-  const word = verdict ? (verdict.kind ? BANNER[verdict.kind] : BANNER_PLAIN) : ''
+  const word = verdict ? BANNER[state.theme][verdict.kind ?? 'plain'] : ''
+  // A table with no second roll never showed its description on the way here, so the verdict carries it.
+  const lead = verdict?.text && !second ? state.entry?.description : ''
   return (
     <main
       className={`screen show ${verdict ? (verdict.kind ?? 'neutral') : ''} ${state.media ? 'has-media' : ''}`}
@@ -437,6 +416,11 @@ function Roll({ state, els: e }: { state: DisplayState; els: Els }) {
           </p>
         )}
         <h1 ref={(el) => void (e.title = el)} />
+        {lead && (
+          <p className="description" ref={(el) => void (e.lead = el)}>
+            {lead}
+          </p>
+        )}
         <p className={verdict?.text ? 'effect' : 'description'} ref={(el) => void (e.text = el)}>
           {verdict?.text ? (
             <>

@@ -1,0 +1,594 @@
+/* The themes other than Gothic. Each one replaces the colours of tokens.css,
+   the heading face and the corner radii, then redraws the emblem the die sits
+   on. The air of each theme (stars, embers, falling paper) is painted on the
+   canvas by display/atmosphere.ts.
+
+   A theme is switched on with data-theme, on the page for the DM window and on
+   the player view itself. This file loads after dm.css and display.css, so a
+   rule here wins over the Gothic one of the same weight. */
+
+/* ---------------------------------------------------------------- Cosmic
+   Reality is too vast for the mind. Deep space instead of a lit room: blue
+   blacks, starlight for text, a cold sea-green for the accent and a violet no
+   star should be for the bane. Headings are a thin geometric sans, the lettering
+   of the 1920s that the first cosmic horror was printed beside. */
+
+[data-theme='cosmic'] {
+  --ink-0: #04050c;
+  --ink-1: #070914;
+  --ink-2: #0d1020;
+  --ink-3: #151a2e;
+  --ink-4: #20263f;
+  --line: rgba(200, 215, 255, 0.1);
+  --line-strong: rgba(200, 215, 255, 0.22);
+
+  --bone: #e3e8f4;
+  --bone-dim: #9ea7bd;
+  --bone-faint: #78819a;
+
+  --accent: #6fd6c4;
+  --accent-bright: #a8efe1;
+  --accent-deep: #3a8f82;
+  --boon: var(--accent-bright);
+
+  --bane: #8a2fb8;
+  --bane-deep: #521a73;
+  --bane-bright: #d294f5;
+
+  --on-accent: #04130f;
+  --haze-1: rgba(96, 62, 210, 0.2);
+  --haze-2: rgba(30, 150, 138, 0.12);
+  --stage-glow: #141b3d;
+  --fog-1: rgba(96, 62, 210, 0.12);
+  --fog-2: rgba(40, 160, 150, 0.08);
+  --fog-3: rgba(140, 150, 220, 0.07);
+
+  --font-display: 'Josefin Sans Variable', 'Century Gothic', Futura, sans-serif;
+}
+
+[data-theme='cosmic'] :is(h1, h2, h3, .table-title, .set-name) {
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* The emblem is an eclipse: a black disc with a ring of light behind it. */
+[data-theme='cosmic'] .moon-halo {
+  background: radial-gradient(
+    closest-side,
+    transparent 50%,
+    color-mix(in srgb, var(--accent-bright) 85%, transparent) 55%,
+    color-mix(in srgb, var(--accent) 24%, transparent) 68%,
+    transparent 100%
+  );
+}
+
+[data-theme='cosmic'] .moon-disc {
+  background: radial-gradient(circle at 50% 50%, #010208 0%, #04061a 72%, #0b1136 100%);
+  box-shadow:
+    0 0 0.05em 0.015em #e6fffa,
+    0 0 0.9em color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+/* On a bane the ring turns the wrong colour. */
+[data-theme='cosmic'] .moon-blood {
+  background: radial-gradient(circle at 50% 50%, #06010a 0%, #16052a 72%, #3a0f5c 100%);
+  box-shadow:
+    0 0 0.05em 0.015em #f6dcff,
+    0 0 1.4em var(--bane-bright);
+}
+
+/* The corona of the total eclipse of 21 August 2017, photographed for NASA by Carla Thomas.
+   The picture is two and a half discs wide with the moon in its middle, so its black
+   moon lies exactly on the disc. Its black is cut away and it is laid over the stage, faintly: enough for the
+   streamers of the corona to show, not enough to compete with the number. */
+[data-theme='cosmic'] .moon-face {
+  inset: -75%;
+  border-radius: 0;
+  background: url('../assets/eclipse.webp') center / 100% no-repeat;
+  mix-blend-mode: normal;
+  opacity: 0.45;
+}
+
+[data-theme='cosmic'] .die .number {
+  color: var(--bone);
+  font-weight: 300;
+  text-shadow: 0 0 0.22em color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+/* --------------------------------------------------------------- Surreal
+   Reality stops obeying logic. Dusk colours that do not belong together: plum
+   for the dark, rose for the accent, a sea green for the bane. Headings are a
+   soft serif with a wobble in it, corners are rounder, and the die is an eye
+   that floats like a balloon. */
+
+[data-theme='surreal'] {
+  --ink-0: #0c0613;
+  --ink-1: #12091b;
+  --ink-2: #1b0f28;
+  --ink-3: #261737;
+  --ink-4: #342149;
+  --line: rgba(245, 215, 240, 0.1);
+  --line-strong: rgba(245, 215, 240, 0.22);
+
+  --bone: #f3e8f0;
+  --bone-dim: #b7a6bc;
+  --bone-faint: #8f7f98;
+
+  --accent: #f29fb5;
+  --accent-bright: #ffc9d6;
+  --accent-deep: #b9627a;
+  --boon: #ffdcae;
+
+  --bane: #169a92;
+  --bane-deep: #0d5c58;
+  --bane-bright: #62e3d4;
+
+  --on-accent: #2a0d18;
+  --haze-1: rgba(232, 112, 164, 0.18);
+  --haze-2: rgba(58, 170, 190, 0.13);
+  --stage-glow: #3b1848;
+  --fog-1: rgba(240, 130, 170, 0.12);
+  --fog-2: rgba(70, 190, 200, 0.09);
+  --fog-3: rgba(255, 200, 140, 0.08);
+
+  --font-display: 'Fraunces Variable', 'Cooper Black', Georgia, serif;
+  --r-card: 30px;
+  --r-ctl: 18px;
+}
+
+/* The emblem is Odilon Redon's eye: "The Eye, Like a Strange Balloon, Mounts toward
+   Infinity", a lithograph of 1882, cut out and turned white on clear. It is used as a
+   mask, so it can be painted in any colour. The balloon is taller than the die's own
+   box: it hangs below it, and the box leaves room. The number sits in the dark of the
+   eye, which is above the middle of the picture. */
+[data-theme='surreal'] .die {
+  margin-bottom: calc(var(--size) * 0.5);
+  animation: pv-bob 11s ease-in-out infinite alternate;
+}
+
+[data-theme='surreal'] .moon {
+  inset: -5% -3.5% -25%;
+  border-radius: 0;
+}
+
+[data-theme='surreal'] .moon-halo {
+  inset: -30% -30% -5%;
+  background: radial-gradient(circle at 50% 38%, rgba(255, 190, 210, 0.3) 0%, rgba(160, 130, 240, 0.1) 40%, transparent 66%);
+}
+
+[data-theme='surreal'] .moon-disc,
+[data-theme='surreal'] .moon-blood {
+  border-radius: 0;
+  box-shadow: none;
+  mask: url('../assets/eye-balloon.webp') center / contain no-repeat;
+}
+
+[data-theme='surreal'] .moon-disc {
+  background: linear-gradient(160deg, #fff3e2 0%, #ffd3de 55%, #c9b3f2 100%);
+}
+
+/* On a bane the eye turns the green of the theme. */
+[data-theme='surreal'] .moon-blood {
+  background: var(--bane-bright);
+}
+
+[data-theme='surreal'] .moon-face {
+  display: none;
+}
+
+[data-theme='surreal'] .die .number {
+  top: calc(var(--size) * -0.31);
+  color: #fff3e2;
+  font-style: italic;
+  text-shadow:
+    0 0 0.12em #0c0613,
+    0 0 0.4em #0c0613;
+}
+
+[data-theme='surreal'] .die .number:not(.waiting-die) {
+  font-size: calc(var(--size) * 0.55);
+}
+
+[data-theme='surreal'] .die .number.waiting-die {
+  font-size: calc(var(--size) * 0.34);
+}
+
+@keyframes pv-bob {
+  from {
+    transform: translateY(-2.5%) rotate(-1.2deg);
+  }
+  to {
+    transform: translateY(2.5%) rotate(1.2deg);
+  }
+}
+
+/* ---------------------------------------------------------------- Occult
+   Forbidden knowledge corrupts. Soot blacks and parchment, the orange of a
+   flame for the accent, arterial red for the bane and a pale witch-light for
+   the boon. Headings are set in a seventeenth-century book face, corners are
+   nearly square, and the emblem is a circle with a seven-pointed star in it. */
+
+[data-theme='occult'] {
+  --ink-0: #070605;
+  --ink-1: #0c0a08;
+  --ink-2: #14110d;
+  --ink-3: #1d1813;
+  --ink-4: #2a221a;
+  --line: rgba(240, 220, 185, 0.1);
+  --line-strong: rgba(240, 220, 185, 0.22);
+
+  --bone: #eadec6;
+  --bone-dim: #ab9d83;
+  --bone-faint: #857862;
+
+  --accent: #e9853f;
+  --accent-bright: #ffb27a;
+  --accent-deep: #a8521c;
+  --boon: #cfbcff;
+
+  --bane: #c21232;
+  --bane-deep: #7d0b1f;
+  --bane-bright: #ff5f73;
+
+  --on-accent: #1e0d02;
+  --haze-1: rgba(224, 104, 32, 0.15);
+  --haze-2: rgba(130, 28, 28, 0.15);
+  --stage-glow: #2c1608;
+  --fog-1: rgba(224, 120, 50, 0.1);
+  --fog-2: rgba(150, 40, 40, 0.09);
+  --fog-3: rgba(200, 170, 120, 0.06);
+
+  --font-display: 'IM Fell English', 'Iowan Old Style', Georgia, serif;
+  --r-card: 6px;
+  --r-ctl: 4px;
+}
+
+[data-theme='occult'] :is(h1, h2, h3) {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+[data-theme='occult'] .moon-halo {
+  background: radial-gradient(circle, rgba(255, 150, 70, 0.32) 0%, rgba(255, 120, 40, 0.1) 38%, transparent 68%);
+}
+
+[data-theme='occult'] .moon-disc {
+  background: radial-gradient(circle at 50% 50%, #1c0e05 0%, #0a0503 78%);
+  box-shadow:
+    inset 0 0 0 0.03em var(--accent),
+    inset 0 0 0 0.1em #0a0503,
+    inset 0 0 0 0.12em color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 1.1em color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+[data-theme='occult'] .moon-blood {
+  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--bane) 62%, #000) 0%, #1c0306 78%);
+  box-shadow:
+    inset 0 0 0 0.03em var(--bane-bright),
+    0 0 1.3em color-mix(in srgb, var(--bane) 45%, transparent);
+}
+
+/* The star is a mask, so it takes the colour of the theme, and it turns slowly. */
+[data-theme='occult'] .moon-face {
+  inset: 12%;
+  background: var(--accent);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23000' stroke-width='1.1'%3E%3Ccircle cx='50' cy='50' r='48'/%3E%3Ccircle cx='50' cy='50' r='44'/%3E%3Cpolygon points='50.0,6.0 69.1,89.6 15.6,22.6 92.9,59.8 7.1,59.8 84.4,22.6 30.9,89.6'/%3E%3Cpolygon points='50.0,6.0 92.9,59.8 30.9,89.6 15.6,22.6 84.4,22.6 69.1,89.6 7.1,59.8' stroke-width='0.6'/%3E%3C/svg%3E")
+    center / 100% no-repeat;
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  animation: pv-turn 140s linear infinite;
+}
+
+[data-theme='occult'] .die .number {
+  color: var(--bone);
+  font-weight: 400;
+  text-shadow:
+    0 0 0.1em #000,
+    0 0 0.3em #000,
+    0 0 0.5em color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+@keyframes pv-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* -------------------------------------------------------------- Societal
+   The world is mad and the individual follows. An office with the lights left
+   on: concrete greys, paper for text, the amber of a warning lamp for the
+   accent, the red of a rubber stamp for the bane and the green of an approval
+   for the boon. Headings are typewritten, every corner is square, and the die
+   is a file card with a case number on it. */
+
+[data-theme='societal'] {
+  --ink-0: #08090a;
+  --ink-1: #0d0f10;
+  --ink-2: #151819;
+  --ink-3: #1e2223;
+  --ink-4: #2a2f30;
+  --line: rgba(225, 235, 230, 0.11);
+  --line-strong: rgba(225, 235, 230, 0.24);
+
+  --bone: #e4e6e2;
+  --bone-dim: #a1a7a4;
+  --bone-faint: #7a807d;
+
+  --accent: #e3c14a;
+  --accent-bright: #f5dc82;
+  --accent-deep: #9c8226;
+  --boon: #96d6a6;
+
+  --bane: #cf2f27;
+  --bane-deep: #84201a;
+  --bane-bright: #ff6c61;
+
+  --on-accent: #1a1503;
+  --haze-1: rgba(130, 150, 150, 0.14);
+  --haze-2: rgba(210, 176, 44, 0.07);
+  --stage-glow: #1d2325;
+  --fog-1: rgba(150, 170, 170, 0.07);
+  --fog-2: rgba(150, 170, 170, 0.05);
+  --fog-3: rgba(220, 190, 80, 0.04);
+
+  --font-display: 'Special Elite', 'Courier New', Courier, monospace;
+  --r-card: 2px;
+  --r-ctl: 2px;
+  --r-pill: 2px;
+}
+
+[data-theme='societal'] :is(h1, h2, h3) {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* The typewriter has no italic: the word "Madness" in the title stays upright. */
+[data-theme='societal'] :is(h1, h2) em {
+  font-style: normal;
+}
+
+/* Scan lines over the stage instead of fog. */
+[data-theme='societal'] .fog {
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px);
+  animation: none;
+}
+
+[data-theme='societal'] .moon {
+  inset: 17% 0;
+}
+
+[data-theme='societal'] .moon,
+[data-theme='societal'] .moon-disc,
+[data-theme='societal'] .moon-blood {
+  border-radius: 0;
+}
+
+[data-theme='societal'] .moon-halo,
+[data-theme='societal'] .moon-face {
+  display: none;
+}
+
+/* A ruled card, with the heading every form has. */
+[data-theme='societal'] .moon-disc {
+  background:
+    linear-gradient(to bottom, transparent 0 24%, rgba(40, 44, 44, 0.5) 24% 25%, transparent 25%),
+    #d9d8cd;
+  box-shadow:
+    0.05em 0.05em 0 rgba(0, 0, 0, 0.65),
+    inset 0 0 0 0.02em rgba(40, 44, 44, 0.6);
+}
+
+[data-theme='societal'] .moon-disc::before {
+  content: 'CASE No.';
+  position: absolute;
+  top: 6%;
+  left: 5%;
+  color: #2a2e2e;
+  font-family: var(--font-ui);
+  font-size: calc(var(--size) * 0.1);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+/* On a bane the card is stamped red from edge to edge. */
+[data-theme='societal'] .moon-blood {
+  background: color-mix(in srgb, var(--bane) 86%, #000);
+  box-shadow: 0.05em 0.05em 0 rgba(0, 0, 0, 0.65);
+}
+
+[data-theme='societal'] .die .number {
+  /* The card's heading takes the top quarter: the number sits in the middle of what is left. */
+  top: 0.34em;
+  color: #17191a;
+  font-weight: 400;
+  text-shadow: none;
+}
+
+/* The verdict is a rubber stamp. */
+[data-theme='societal'] .banner-word,
+[data-theme='societal'] .banner-echo {
+  padding: 0.3em 0.36em 0.16em 0.7em;
+  border: 0.07em solid currentColor;
+}
+
+/* -------------------------------------------------------------- Hellenic
+   A god sends the madness. The colours of a painted vase: black glaze for the
+   dark, fired clay for the accent, the purple of Tyre for the bane (it is also
+   the colour of the wine) and laurel gold for the boon. Headings are cut like
+   an inscription, corners are square, and the die is the gorgon painted inside
+   a drinking cup. */
+
+[data-theme='hellenic'] {
+  --ink-0: #090605;
+  --ink-1: #0f0a08;
+  --ink-2: #18110d;
+  --ink-3: #221812;
+  --ink-4: #30221a;
+  --line: rgba(245, 225, 200, 0.1);
+  --line-strong: rgba(245, 225, 200, 0.22);
+
+  --bone: #f0e6d6;
+  --bone-dim: #b3a48f;
+  --bone-faint: #8a7b68;
+
+  --accent: #cc5f3c;
+  --accent-bright: #ee9670;
+  --accent-deep: #933f22;
+  --boon: #d9c56a;
+
+  --bane: #8e2a6b;
+  --bane-deep: #5a1844;
+  --bane-bright: #e07fc0;
+
+  --on-accent: #1d0a03;
+  --haze-1: rgba(200, 90, 50, 0.15);
+  --haze-2: rgba(120, 40, 95, 0.12);
+  --stage-glow: #2b140c;
+  --fog-1: rgba(204, 95, 60, 0.1);
+  --fog-2: rgba(142, 42, 107, 0.08);
+  --fog-3: rgba(217, 197, 106, 0.06);
+
+  --font-display: 'Cinzel Variable', 'Trajan Pro', Georgia, serif;
+  --r-card: 4px;
+  --r-ctl: 2px;
+}
+
+[data-theme='hellenic'] :is(h1, h2, h3) {
+  letter-spacing: 0.03em;
+}
+
+/* The inscription has no italic. */
+[data-theme='hellenic'] :is(h1, h2) em {
+  font-style: normal;
+}
+
+[data-theme='hellenic'] .moon-halo {
+  background: radial-gradient(circle, rgba(238, 150, 112, 0.3) 0%, rgba(204, 95, 60, 0.1) 38%, transparent 68%);
+}
+
+/* The disc is a gorgon: the inside of an Attic black-figure cup of about 510 BC, by a
+   painter of the Leagros Group (Paris, Cabinet des Medailles 322). A shadow over the
+   middle of the face keeps the number readable. */
+[data-theme='hellenic'] .moon-disc {
+  background:
+    radial-gradient(circle, rgba(9, 6, 5, 0.62) 0%, rgba(9, 6, 5, 0.3) 42%, transparent 68%),
+    url('../assets/gorgon.webp') center / cover no-repeat;
+  box-shadow: 0 0 1.1em rgba(204, 95, 60, 0.25);
+}
+
+/* On a bane the clay takes the purple of the theme and keeps its drawing. */
+[data-theme='hellenic'] .moon-blood {
+  background: var(--bane);
+  mix-blend-mode: color;
+  box-shadow: 0 0 1.3em rgba(142, 42, 107, 0.35);
+}
+
+[data-theme='hellenic'] .moon-face {
+  display: none;
+}
+
+[data-theme='hellenic'] .die .number {
+  color: #fbefdc;
+  text-shadow:
+    0 0 0.06em #000,
+    0 0 0.18em #000,
+    0 0 0.45em #000;
+}
+
+[data-theme='hellenic'] .die .number:not(.waiting-die) {
+  font-size: calc(var(--size) * 0.74);
+}
+
+/* The square themes also square the pieces of the DM window that set their own radius. */
+:is([data-theme='occult'], [data-theme='societal'], [data-theme='hellenic'])
+  :is(.verdict, .table-row, .table-main, .tab-mark, .tabs button, .rail-about, .dialog, .set-list li, .set-open, .icon, .monitor-frame, .row, kbd) {
+  border-radius: var(--r-card);
+}
+
+/* A device that cannot keep up, or a DM who turned the animations off, gets the emblems at rest. */
+.player.lite .die,
+.player.lite .moon-face,
+.player.still .die,
+.player.still .moon-face {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme] .die,
+  [data-theme] .moon-face {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------ the theme picker
+   Each swatch carries its own data-theme, so it shows that theme's colours
+   whatever the open one is. */
+
+.theme-pick {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.theme-pick legend {
+  padding: 0;
+  margin-bottom: 6px;
+  color: var(--bone-dim);
+  font-size: 0.85rem;
+}
+
+.theme-option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--r-ctl);
+  color: var(--bone-dim);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  transition:
+    background-color var(--quick),
+    color var(--quick);
+}
+
+.theme-option:hover {
+  background: var(--ink-3);
+  color: var(--bone);
+}
+
+.theme-option[aria-pressed='true'] {
+  background: var(--ink-3);
+  border-color: var(--line-strong);
+  color: var(--bone);
+}
+
+.theme-swatch {
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, var(--ink-2) 0 50%, var(--accent) 50% 78%, var(--bane) 78%);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+}
+
+.theme-pick .hint {
+  margin: 4px 0 0;
+}
+
+/* The theme of a set, beside its name in the list of sets. */
+.set-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.set-theme .theme-swatch {
+  width: 12px;
+  height: 12px;
+}

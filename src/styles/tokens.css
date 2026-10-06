@@ -1,5 +1,9 @@
 /* The look of the whole tool, in one place. Both pages load this file.
 
+   These are the values of the Gothic theme, which is also what a set with no
+   theme gets. The other themes replace the colours, the heading face and the
+   corner radii in themes.css; the names below stay the same in all of them.
+
    Direction: Victorian horror, built like a modern app. The darks are warm, the
    black of a room lit by gas with a trace of oxblood in it. Text is the colour
    of bone. There is one accent, gold: gilt on a dark binding. Blood is not an
@@ -15,7 +19,8 @@
    The tool has one theme and it is dark on purpose: it is used at a dim table,
    and the player screen sits next to the people it is trying to unsettle. */
 
-:root {
+:root,
+[data-theme='gothic'] {
   /* Ink: the surfaces, darkest first. None of them is pure black. */
   --ink-0: #0a0709;
   --ink-1: #100b0e;
@@ -30,16 +35,27 @@
   --bone-dim: #aba099;
   --bone-faint: #877c78;
 
-  /* Gold: the one accent. A boon is told in the same light. */
-  --gold: #d8b36a;
-  --gold-bright: #efd49a;
-  --gold-deep: #a07c38;
-  --candle: var(--gold-bright);
+  /* The one accent, gold here. A boon is told in the same light. */
+  --accent: #d8b36a;
+  --accent-bright: #efd49a;
+  --accent-deep: #a07c38;
+  --boon: var(--accent-bright);
 
-  /* Blood: a bane, a fault, a delete. The bright one is for text on a dark surface. */
-  --blood: #b0162f;
-  --blood-deep: #7a0e20;
-  --blood-bright: #f25d6e;
+  /* A bane, a fault, a delete: blood here. The bright one is for text on a dark surface. */
+  --bane: #b0162f;
+  --bane-deep: #7a0e20;
+  --bane-bright: #f25d6e;
+
+  /* Text set on the accent, as on the filled button. */
+  --on-accent: #1c1408;
+
+  /* The two glows behind the DM window, and the light and fog of the player's stage. */
+  --haze-1: rgba(150, 30, 48, 0.16);
+  --haze-2: rgba(150, 84, 48, 0.12);
+  --stage-glow: #2b1219;
+  --fog-1: rgba(176, 110, 112, 0.1);
+  --fog-2: rgba(140, 84, 96, 0.1);
+  --fog-3: rgba(176, 156, 140, 0.08);
 
   --font-display: 'Bodoni Moda Variable', 'Bodoni MT', Didot, Georgia, serif;
   --font-ui: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -62,4 +78,17 @@
   --z-table: 40;
 
   color-scheme: dark;
+}
+
+/* Surfaces mixed from the colours above. They are worked out again wherever a
+   theme is set, so they follow its colours. */
+:root,
+[data-theme] {
+  --card: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ink-3) 82%, var(--ink-4)) 0%,
+    color-mix(in srgb, var(--ink-2) 92%, transparent) 100%
+  );
+  --fill: linear-gradient(180deg, var(--accent-bright) 0%, color-mix(in srgb, var(--accent) 90%, #000) 100%);
+  --fill-hover: linear-gradient(180deg, color-mix(in srgb, var(--accent-bright) 80%, #fff) 0%, var(--accent) 100%);
 }

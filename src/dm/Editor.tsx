@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as E from '../shared/edit'
 import { checkCategory, type Problem } from '../shared/tables'
+import { THEMES, themeOf } from '../shared/themes'
 import type { Category, Duration, Entry, Outcome, OutcomeKind, Range } from '../shared/types'
 import { useStore } from '../state/store'
 import { downloadSet, useImport, type Message } from './Sets'
@@ -21,6 +22,7 @@ export function Editor() {
           <span>Name of this set</span>
           <input value={tables.name} onChange={(e) => edit(E.renameSet(e.target.value))} />
         </label>
+        <ThemePick />
         <h2>Categories</h2>
         <ul className="category-list">
           {tables.categories.map((c) => {
@@ -49,6 +51,24 @@ export function Editor() {
   )
 }
 
+/** The theme of the open set. Picking one changes the look of this window and of the player screen at once. */
+function ThemePick() {
+  const theme = useStore((s) => themeOf(s.tables))
+  const edit = useStore((s) => s.edit)
+  return (
+    <fieldset className="theme-pick">
+      <legend>Theme</legend>
+      {THEMES.map((t) => (
+        <button key={t.id} className="theme-option" aria-pressed={t.id === theme} onClick={() => edit(E.setTheme(t.id))}>
+          <span className="theme-swatch" data-theme={t.id} aria-hidden />
+          {t.label}
+        </button>
+      ))}
+      <p className="hint">{THEMES.find((t) => t.id === theme)?.principle}</p>
+    </fieldset>
+  )
+}
+
 function Files() {
   const tables = useStore((s) => s.tables)
   const resetTables = useStore((s) => s.resetTables)
@@ -69,7 +89,7 @@ function Files() {
       <button
         className="ghost danger"
         onClick={() => {
-          if (window.confirm('Replace the tables of this set with the default ones? Export first if you want to keep them.')) {
+          if (window.confirm('Replace the tables of this set with the default ones of its theme? Export first if you want to keep them.')) {
             resetTables()
             setMessage({ ok: true, text: 'Default tables restored.' })
           }

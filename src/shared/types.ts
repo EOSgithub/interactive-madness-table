@@ -1,3 +1,5 @@
+import type { ThemeId } from './themes'
+
 // The data model. A table set is what the DM edits and what a roll is looked up in.
 
 /** An inclusive span on a die, e.g. [11, 20] on a d100. */
@@ -61,5 +63,7 @@ export interface Category {
 
 export interface TableSet {
   name: string
+  /** The kind of madness: it sets the look of the tool and of the player screen. Gothic when missing. */
+  theme?: ThemeId
   categories: Category[]
 }

@@ -13,7 +13,7 @@
   gap: 18px;
   justify-items: start;
   padding: 22px;
-  background: linear-gradient(180deg, rgba(36, 26, 31, 0.92) 0%, rgba(24, 17, 20, 0.92) 100%);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--r-card);
   box-shadow: var(--lift);
@@ -80,7 +80,7 @@
   display: inline-flex;
   gap: 2px;
   padding: 3px;
-  background: rgba(10, 7, 9, 0.6);
+  background: color-mix(in srgb, var(--ink-0) 60%, transparent);
   border: 1px solid var(--line);
   border-radius: 14px;
 }

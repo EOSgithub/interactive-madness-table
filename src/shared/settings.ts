@@ -3,14 +3,12 @@ import type { RollStyle } from './types'
 // How the show looks and moves. The DM sets these once; they are saved, and sent
 // to the player screen with every state.
 
-export type VerdictStyle = 'flash' | 'fade' | 'burn'
 export type Speed = 'slow' | 'normal' | 'fast'
 
 export interface Settings {
   /** Off: every step is a plain fade, whatever else is chosen below. */
   animations: boolean
   rollStyle: RollStyle
-  verdictStyle: VerdictStyle
   speed: Speed
   grain: boolean
   vignette: boolean
@@ -24,7 +22,6 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   animations: true,
   rollStyle: 'ratchet',
-  verdictStyle: 'flash',
   speed: 'normal',
   grain: true,
   vignette: true,
@@ -40,12 +37,6 @@ export const ROLL_STYLES: { value: RollStyle; label: string; hint: string }[] = 
   { value: 'ratchet', label: 'Ratchet', hint: 'A drum that clicks, slows down and stops.' },
   { value: 'glitch', label: 'Glitch', hint: 'The digits scramble like a bad signal, then lock.' },
   { value: 'plain', label: 'Plain', hint: 'The number fades in. No spin.' }
-]
-
-export const VERDICT_STYLES: { value: VerdictStyle; label: string; hint: string }[] = [
-  { value: 'flash', label: 'Flash', hint: 'Loud. The screen is struck with light, the words slam down from oversize, and a ghost of them drifts out.' },
-  { value: 'burn', label: 'Burn', hint: 'Slow. The words are seared in from left to right, white-hot, and the screen keeps glowing like an ember.' },
-  { value: 'fade', label: 'Fade', hint: 'Quiet. The words come up slowly and nothing else moves.' }
 ]
 
 export const SPEEDS: { value: Speed; label: string }[] = [
@@ -66,7 +57,6 @@ export function parseSettings(value: unknown): Settings {
   return {
     animations: bool(o.animations, d.animations),
     rollStyle: oneOf(o.rollStyle, ['ratchet', 'glitch', 'plain'], d.rollStyle),
-    verdictStyle: oneOf(o.verdictStyle, ['flash', 'fade', 'burn'], d.verdictStyle),
     speed: oneOf(o.speed, ['slow', 'normal', 'fast'], d.speed),
     grain: bool(o.grain, d.grain),
     vignette: bool(o.vignette, d.vignette),

@@ -47,9 +47,9 @@
 }
 
 .table-bar button.main {
-  background: linear-gradient(180deg, #ecd096 0%, #c79d50 100%);
-  border-color: rgba(255, 240, 205, 0.5);
-  color: #1c1408;
+  background: var(--fill);
+  border-color: color-mix(in srgb, var(--accent-bright) 60%, transparent);
+  color: var(--on-accent);
   font-weight: 600;
 }
 
@@ -117,7 +117,7 @@
     justify-content: space-around;
     height: auto;
     padding: 6px max(8px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
-    background: rgba(16, 11, 14, 0.86);
+    background: color-mix(in srgb, var(--ink-1) 86%, transparent);
     border-right: 0;
     border-top: 1px solid var(--line);
     backdrop-filter: blur(16px) saturate(140%);
@@ -143,12 +143,15 @@
   }
 
   .main {
-    padding: 0 16px 96px;
+    padding-bottom: 96px;
+  }
+
+  .section {
+    padding: 24px 16px 0;
   }
 
   .top {
     position: static;
-    margin: 0 -16px;
     padding: 14px 16px;
     backdrop-filter: none;
   }

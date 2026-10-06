@@ -1,4 +1,5 @@
-/* What players see: a moon over a dark stage, sized to be read from a sofa or
+/* What players see: an emblem over a dark stage (a moon in the Gothic theme; the
+   others are in styles/themes.css), sized to be read from a sofa or
    from a phone held at arm's length. The motion is driven from Display.tsx; this
    file holds the stage it plays on.
 
@@ -11,7 +12,7 @@
   position: relative;
   container-type: size;
   height: 100%;
-  background: radial-gradient(ellipse 80% 70% at 50% 40%, #2b1219 0%, var(--ink-1) 55%, var(--ink-0) 100%);
+  background: radial-gradient(ellipse 80% 70% at 50% 40%, var(--stage-glow) 0%, var(--ink-1) 55%, var(--ink-0) 100%);
   color: var(--bone);
   font-family: var(--font-text);
   font-size: 16px;
@@ -30,9 +31,9 @@
     inset: -25%;
     pointer-events: none;
     background:
-      radial-gradient(38% 28% at 24% 72%, rgba(176, 110, 112, 0.1), transparent 70%),
-      radial-gradient(44% 34% at 78% 30%, rgba(140, 84, 96, 0.1), transparent 70%),
-      radial-gradient(60% 36% at 50% 100%, rgba(176, 156, 140, 0.08), transparent 70%);
+      radial-gradient(38% 28% at 24% 72%, var(--fog-1), transparent 70%),
+      radial-gradient(44% 34% at 78% 30%, var(--fog-2), transparent 70%),
+      radial-gradient(60% 36% at 50% 100%, var(--fog-3), transparent 70%);
     animation: pv-fog 46s ease-in-out infinite alternate;
   }
 
@@ -50,10 +51,6 @@
     text-align: center;
     overflow: hidden auto;
     scrollbar-width: none;
-  }
-
-  .screen.dark {
-    background: var(--ink-0);
   }
 
   .screen.quiet,
@@ -184,8 +181,8 @@
   /* The glitch roll style: the digits scramble and tear sideways until they lock. */
   .number.scrambling {
     text-shadow:
-      0.04em 0 0 rgba(156, 26, 44, 0.8),
-      -0.04em 0 0 rgba(230, 200, 140, 0.5);
+      0.04em 0 0 color-mix(in srgb, var(--bane) 80%, transparent),
+      -0.04em 0 0 color-mix(in srgb, var(--boon) 50%, transparent);
     animation: pv-tear 140ms steps(2) infinite;
   }
 
@@ -229,7 +226,7 @@
   .screen.boon .effect strong,
   .screen.boon .banner-word,
   .screen.boon .banner-echo {
-    color: var(--candle);
+    color: var(--boon);
   }
 
   .screen.bane h1,
@@ -237,7 +234,7 @@
   .screen.bane .effect strong,
   .screen.bane .banner-word,
   .screen.bane .banner-echo {
-    color: var(--blood-bright);
+    color: var(--bane-bright);
   }
 
   /* The banner: a band of dark across the middle of the screen, with the verdict named in it. */
@@ -249,7 +246,7 @@
     place-items: center;
     height: 30cqh;
     margin-top: -15cqh;
-    background: linear-gradient(to bottom, transparent, rgba(8, 5, 6, 0.94) 26%, rgba(8, 5, 6, 0.94) 74%, transparent);
+    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--ink-0) 94%, transparent) 26%, color-mix(in srgb, var(--ink-0) 94%, transparent) 74%, transparent);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -311,7 +308,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(8, 5, 6, 0.62) 0%, rgba(8, 5, 6, 0.84) 70%, rgba(8, 5, 6, 0.95) 100%);
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--ink-0) 62%, transparent) 0%, color-mix(in srgb, var(--ink-0) 84%, transparent) 70%, color-mix(in srgb, var(--ink-0) 95%, transparent) 100%);
   }
 
   .screen.has-media .camera {
@@ -322,47 +319,25 @@
     text-shadow: none;
   }
 
+  /* The flash that strikes the screen as the verdict is named: white-hot, then the colour of the outcome. */
   .wash {
     position: absolute;
     inset: 0;
     opacity: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at 50% 42%, var(--bone-dim), transparent 70%);
+    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--bone-dim) 30%, transparent 78%);
     mix-blend-mode: screen;
   }
 
   .screen.boon .wash {
-    background: radial-gradient(ellipse at 50% 42%, var(--candle), transparent 72%);
-  }
-
-  /* The flash strikes white-hot before it settles into the colour of the outcome. */
-  .wash[data-style='flash'] {
-    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--bone-dim) 30%, transparent 78%);
-  }
-
-  .screen.boon .wash[data-style='flash'] {
-    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--candle) 30%, transparent 78%);
-  }
-
-  .screen.bane .wash[data-style='flash'] {
-    background: radial-gradient(ellipse at 50% 42%, #ffd9d2 0%, var(--blood) 32%, transparent 80%);
-  }
-
-  /* Fade has no band of dark behind the words: they hang in the air. */
-  .banner[data-style='fade'] {
-    background: none;
-  }
-
-  .banner[data-style='fade']::before,
-  .banner[data-style='fade']::after {
-    display: none;
+    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--boon) 30%, transparent 78%);
   }
 
   .screen.bane .wash {
-    background: radial-gradient(ellipse at 50% 42%, var(--blood), transparent 74%);
+    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--bane) 32%, transparent 80%);
   }
 
-  /* Ash, blood and light, painted by atmosphere.ts. */
+  /* The air of the theme, painted by atmosphere.ts. */
   .air {
     position: absolute;
     inset: 0;

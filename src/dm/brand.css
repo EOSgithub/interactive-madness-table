@@ -27,13 +27,13 @@
 .about a {
   color: var(--bone);
   font-weight: 500;
-  text-decoration-color: var(--gold);
+  text-decoration-color: var(--accent);
   text-underline-offset: 3px;
 }
 
 .about a:hover,
 .about a:focus-visible {
-  color: var(--gold-bright);
+  color: var(--accent-bright);
 }
 
 .dialog .legal {

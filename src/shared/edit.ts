@@ -1,4 +1,5 @@
 import { newId, spreadRanges } from './io'
+import type { ThemeId } from './themes'
 import type { Category, Entry, Outcome, TableSet } from './types'
 
 // Every change the editor can make, as a pure function from one table set to the
@@ -16,6 +17,8 @@ const mapEntry = (categoryId: string, entryId: string, fn: (e: Entry) => Entry):
   mapCategory(categoryId, (c) => ({ ...c, entries: c.entries.map((e) => (e.id === entryId ? fn(e) : e)) }))
 
 export const renameSet = (name: string): Edit => (t) => ({ ...t, name })
+
+export const setTheme = (theme: ThemeId): Edit => (t) => ({ ...t, theme })
 
 export const patchCategory = (id: string, patch: Partial<Category>): Edit => mapCategory(id, (c) => ({ ...c, ...patch }))
 

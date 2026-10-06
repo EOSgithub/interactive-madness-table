@@ -1,23 +1,22 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import defaults from '../content/defaults.en.json'
+import { DEFAULT_SETS, defaultFor } from '../content/defaults'
 import type { Preview } from '../shared/display'
 import { fairRoll } from '../shared/dice'
-import { addSet, blankSet, parseLibrary, removeSet, saveActive, switchTo, type Library, type SavedSet } from '../shared/library'
+import { addMissing, addSet, blankSet, parseLibrary, removeSet, saveActive, switchTo, type Library, type SavedSet } from '../shared/library'
 import { DEFAULT_SETTINGS, parseSettings, type Settings } from '../shared/settings'
 import { resolveStaging } from '../shared/staging'
 import { checkCategory, findEntry, findOutcome } from '../shared/tables'
+import { themeOf } from '../shared/themes'
 import type { Category, Entry, Outcome, Staging, TableSet } from '../shared/types'
 
-// The DM window owns everything: the tables, the roll in progress and the log of
-// the session. Only the tables and the log are saved; a roll in progress is not
-// worth restoring after a reload.
+// The DM window owns everything: the tables and the roll in progress. Only the
+// tables and the settings are saved; a roll in progress is not worth restoring
+// after a reload.
 
 export type Step = 'category' | 'first' | 'second' | 'verdict'
 
 export interface Verdict {
-  id: string
-  at: number
   categoryId: string
   categoryLabel: string
   first: number
@@ -49,13 +48,9 @@ interface State extends Play {
   sets: SavedSet[]
   activeId: string
   switchSet: (id: string) => void
-  /** Adds a set and switches to it: an empty one, the defaults, a copy of the active one, or an imported one. */
-  createSet: (from: 'blank' | 'defaults' | 'copy' | TableSet) => void
+  /** Adds a set and switches to it: an empty one, a copy of the active one, or the one given (a default, an imported file). */
+  createSet: (from: 'blank' | 'copy' | TableSet) => void
   deleteSet: (id: string) => void
-  history: Verdict[]
-  /** The DM has hidden the player screen. */
-  blackout: boolean
-  toggleBlackout: () => void
   /** Plays the current show again from its first frame, in every window. */
   replay: () => void
   /** Jumps the current show to its last frame. */
@@ -77,10 +72,7 @@ interface State extends Play {
   resetTables: () => void
   back: () => void
   restart: () => void
-  clearHistory: () => void
 }
-
-const DEFAULTS = defaults as TableSet
 
 /** A step time this old means "already over": every window draws the last frame. */
 export const SKIPPED = 1
@@ -98,7 +90,7 @@ const opened = (next: Library) => ({
   tables: (next.sets.find((x) => x.id === next.activeId) ?? next.sets[0]).tables
 })
 
-const FIRST = parseLibrary(undefined, undefined, DEFAULTS, Date.now())
+const FIRST = parseLibrary(undefined, undefined, DEFAULT_SETS, Date.now())
 
 const idle = (): Play => ({ step: 'category', stepAt: Date.now(), categoryId: null, first: null, second: null, verdict: null })
 
@@ -117,8 +109,6 @@ export function durationLine(category: Category): string {
 function verdictOf(category: Category, entry: Entry, first: number, second: number | null): Verdict {
   const outcome = second === null ? null : findOutcome(entry, second)
   return {
-    id: `${Date.now()}-${first}-${second ?? 0}`,
-    at: Date.now(),
     categoryId: category.id,
     categoryLabel: category.label,
     first,
@@ -136,20 +126,16 @@ export const useStore = create<State>()(
   persist(
     (set, get) => ({
       ...idle(),
-      tables: DEFAULTS,
+      tables: DEFAULT_SETS[0],
       sets: FIRST.sets,
       activeId: FIRST.activeId,
       switchSet: (id) => set((s) => (id === s.activeId ? {} : opened(switchTo(lib(s), id)))),
       createSet: (from) =>
         set((s) => {
-          const tables =
-            from === 'blank' ? blankSet() : from === 'defaults' ? DEFAULTS : from === 'copy' ? { ...s.tables, name: `${s.tables.name} copy` } : from
+          const tables = from === 'blank' ? blankSet() : from === 'copy' ? { ...s.tables, name: `${s.tables.name} copy` } : from
           return opened(addSet(lib(s), tables, Date.now()))
         }),
       deleteSet: (id) => set((s) => opened(removeSet(lib(s), id))),
-      history: [],
-      blackout: false,
-      toggleBlackout: () => set(({ blackout }) => ({ blackout: !blackout })),
       replay: () => set(({ step }) => (step === 'second' || step === 'verdict' ? { stepAt: Date.now() } : {})),
       skip: () => set(({ step }) => (step === 'second' || step === 'verdict' ? { stepAt: SKIPPED } : {})),
       settings: DEFAULT_SETTINGS,
@@ -166,7 +152,7 @@ export const useStore = create<State>()(
       },
 
       rollFirst: (value) => {
-        const { tables, categoryId, history, step } = get()
+        const { tables, categoryId, step } = get()
         const category = tables.categories.find((c) => c.id === categoryId)
         if (!category || step !== 'first') return
         const first = value ?? fairRoll(category.die)
@@ -176,12 +162,12 @@ export const useStore = create<State>()(
           set({ step: 'second', stepAt: Date.now(), first, second: null, verdict: null })
         } else {
           const verdict = verdictOf(category, entry, first, null)
-          set({ step: 'verdict', stepAt: Date.now(), first, second: null, verdict, history: [verdict, ...history] })
+          set({ step: 'verdict', stepAt: Date.now(), first, second: null, verdict })
         }
       },
 
       rollSecond: (value) => {
-        const { tables, categoryId, first, history, step } = get()
+        const { tables, categoryId, first, step } = get()
         const category = tables.categories.find((c) => c.id === categoryId)
         if (!category || first === null || step !== 'second') return
         const entry = findEntry(category, first)
@@ -189,7 +175,7 @@ export const useStore = create<State>()(
         const second = value ?? fairRoll(category.subDie)
         if (!findOutcome(entry, second)) return
         const verdict = verdictOf(category, entry, first, second)
-        set({ step: 'verdict', stepAt: Date.now(), second, verdict, history: [verdict, ...history] })
+        set({ step: 'verdict', stepAt: Date.now(), second, verdict })
       },
 
       toggleSubRoll: (categoryId) =>
@@ -203,7 +189,8 @@ export const useStore = create<State>()(
       // While the DM is only choosing, an edit leaves the play state alone, so typing does not restart the player screen.
       edit: (change) =>
         set((s) => (s.step === 'category' ? put(s, change(s.tables)) : { ...idle(), ...put(s, change(s.tables)) })),
-      resetTables: () => set((s) => ({ ...idle(), ...put(s, { ...DEFAULTS, name: s.tables.name }) })),
+      // The defaults of the set's own theme, under the name the DM gave it.
+      resetTables: () => set((s) => ({ ...idle(), ...put(s, { ...defaultFor(themeOf(s.tables)), name: s.tables.name }) })),
 
       back: () => {
         const { step } = get()
@@ -211,32 +198,40 @@ export const useStore = create<State>()(
         else set(idle())
       },
 
-      restart: () => set(idle()),
-      clearHistory: () => set({ history: [] })
+      restart: () => set(idle())
     }),
     {
       name: 'interactive-madness-table',
-      version: 3,
+      version: 4,
       // Version 1 shipped the Italian source tables as defaults. Anyone still on
       // them, untouched or not, moves to the English set; other saved tables stay.
       migrate: (saved, version) => {
-        const s = (saved ?? {}) as Partial<State>
-        if (version < 2 && s.tables?.name === 'Follie') s.tables = DEFAULTS
+        const s = (saved ?? {}) as Partial<State> & { history?: unknown }
+        if (version < 2 && s.tables?.name === 'Follie') s.tables = DEFAULT_SETS[0]
         // Version 3 keeps several sets. The one set saved before becomes the first of them.
         if (version < 3 && s.tables) {
-          const first = parseLibrary(undefined, undefined, s.tables, Date.now())
-          return { ...s, sets: first.sets, activeId: first.activeId }
+          const first = parseLibrary(undefined, undefined, [s.tables], Date.now())
+          s.sets = first.sets
+          s.activeId = first.activeId
+        }
+        // Version 4 brings themes. The set that shipped as "Madness Tables" takes its
+        // new name, the default sets of the other themes are added beside the DM's
+        // own, and the log of the session is gone.
+        if (version < 4 && s.sets && s.activeId) {
+          const renamed = s.sets.map((x) => (x.tables.name === 'Madness Tables' ? { ...x, tables: { ...x.tables, name: DEFAULT_SETS[0].name } } : x))
+          s.sets = addMissing({ sets: renamed, activeId: s.activeId }, DEFAULT_SETS, Date.now()).sets
+          delete s.history
         }
         return s
       },
       storage: createJSONStorage(() => localStorage),
       // Only data is saved. Actions and the roll in progress are rebuilt on load.
-      partialize: ({ sets, activeId, history, settings }) => ({ sets, activeId, history, settings }),
+      partialize: ({ sets, activeId, settings }) => ({ sets, activeId, settings }),
       // Settings saved by an older version may lack newer fields: fill them in.
       // The working copy is not saved: it is the active set of the library.
       merge: (saved, current) => {
         const s = (saved ?? {}) as Partial<State>
-        const library = parseLibrary(s.sets, s.activeId, DEFAULTS, Date.now())
+        const library = parseLibrary(s.sets, s.activeId, DEFAULT_SETS, Date.now())
         return { ...current, ...s, ...opened(library), settings: parseSettings(s.settings) }
       }
     }

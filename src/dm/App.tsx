@@ -13,9 +13,10 @@ import {
   SlidersHorizontal
 } from '@phosphor-icons/react'
 import { AnimatePresence, MotionConfig, motion } from 'motion/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fairRoll } from '../shared/dice'
 import { checkCategory, findEntry } from '../shared/tables'
+import { themeOf } from '../shared/themes'
 import type { Category } from '../shared/types'
 import { currentCategory, useStore, type Verdict } from '../state/store'
 import { Editor } from './Editor'
@@ -51,13 +52,18 @@ const arrive = {
 
 export function App() {
   const name = useStore((s) => s.tables.name)
-  const toggleBlackout = useStore((s) => s.toggleBlackout)
+  const theme = useStore((s) => themeOf(s.tables))
   const [tab, setTab] = useState<Tab>('play')
   const [tableMode, setTableMode] = useState(false)
   const [sets, setSets] = useState(false)
   const [about, setAbout] = useState(false)
   const modal = sets || about
-  useKeys({ b: toggleBlackout, t: () => setTableMode((open) => !open) }, (tab === 'play' || tableMode) && !modal)
+  useKeys({ t: () => setTableMode((open) => !open) }, (tab === 'play' || tableMode) && !modal)
+
+  // The whole window takes the look of the open set's theme (styles/themes.css).
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
 
   return (
     <IconContext.Provider value={{ weight: 'regular', size: '1.2em' }}>
@@ -131,14 +137,17 @@ function AboutDialog({ open, onClose }: { open: boolean; onClose: () => void }) 
         International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
       </p>
       <p className="legal">
-        The fonts are Bodoni Moda, Geist and EB Garamond, under the SIL Open Font License 1.1. The icons are Phosphor Icons, under the MIT
-        License. The face of the moon is a photograph by NASA/GSFC/Arizona State University, in the public domain.
+        The fonts are Bodoni Moda, Geist, EB Garamond, Josefin Sans, Fraunces, IM Fell English, Special Elite and Cinzel, under the SIL
+        Open Font License 1.1. The icons are Phosphor Icons, under the MIT
+        License. The face of the moon is a photograph by NASA/GSFC/Arizona State University and the eclipse is one by NASA/Carla Thomas, both in the
+        public domain. The eye in the Surreal theme is a lithograph by Odilon Redon, from 1882, and the gorgon in the Hellenic theme is a photograph by Bibi Saint-Pol of an Attic cup
+        in Paris, both in the public domain.
       </p>
     </Dialog>
   )
 }
 
-/** The play screen: the monitor with the session under it, and the roll beside them. */
+/** The play screen: the monitor, and the roll beside it. */
 function Play({ paused }: { paused: boolean }) {
   const step = useStore((s) => s.step)
   return (
@@ -147,7 +156,6 @@ function Play({ paused }: { paused: boolean }) {
         <Monitor>
           <ShowControls />
         </Monitor>
-        <History />
       </div>
       <div className="side-col">
         <main className="panel step" aria-live="polite">
@@ -213,10 +221,13 @@ function ChooseCategory({ paused }: { paused: boolean }) {
                 d{c.die}
                 {c.subRoll ? `, then d${c.subDie}` : ''}
               </span>
-              <label className="switch">
-                <input type="checkbox" role="switch" checked={c.subRoll} onChange={() => toggle(c.id)} />
-                Second roll
-              </label>
+              {/* A table whose entries have no outcomes is a one-roll table: the effect comes with the first die. */}
+              {c.entries.some((e) => e.outcomes.length > 0) && (
+                <label className="switch">
+                  <input type="checkbox" role="switch" checked={c.subRoll} onChange={() => toggle(c.id)} />
+                  Second roll
+                </label>
+              )}
               {broken.length > 0 && <p className="table-error">{broken[0].message} Fix it in the editor.</p>}
             </li>
           )
@@ -299,9 +310,9 @@ function VerdictStep() {
   )
 }
 
-function VerdictCard({ verdict, compact = false }: { verdict: Verdict; compact?: boolean }) {
+function VerdictCard({ verdict }: { verdict: Verdict }) {
   return (
-    <article className={`verdict ${verdict.kind ?? 'plain'} ${compact ? 'compact' : ''}`}>
+    <article className={`verdict ${verdict.kind ?? 'plain'}`}>
       <p className="tags">
         <span>{verdict.categoryLabel}</span>
         <span>
@@ -311,49 +322,12 @@ function VerdictCard({ verdict, compact = false }: { verdict: Verdict; compact?:
         {verdict.kind && <span className="kind">{KIND_LABEL[verdict.kind]}</span>}
       </p>
       <h3>{verdict.title}</h3>
-      {!compact && <p className="lead">{verdict.description}</p>}
+      <p className="lead">{verdict.description}</p>
       {verdict.text && (
         <p className="effect">
           <strong>{verdict.duration}</strong> {verdict.text}
         </p>
       )}
     </article>
-  )
-}
-
-function History() {
-  const history = useStore((s) => s.history)
-  const clear = useStore((s) => s.clearHistory)
-  return (
-    <aside className="panel history">
-      <div className="history-head">
-        <h2>This session</h2>
-        {history.length > 0 && (
-          <button className="chip" onClick={clear}>
-            Clear
-          </button>
-        )}
-      </div>
-      {history.length === 0 ? (
-        <p className="hint">No one has gone mad yet. Every verdict lands here, newest first.</p>
-      ) : (
-        <ol>
-          <AnimatePresence initial={false}>
-            {history.map((v) => (
-              <motion.li
-                key={v.id}
-                layout
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 260, damping: 30 }}
-              >
-                <VerdictCard verdict={v} compact />
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ol>
-      )}
-    </aside>
   )
 }

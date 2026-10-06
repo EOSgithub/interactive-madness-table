@@ -223,3 +223,26 @@ The first pass read as a home project: a page with a header and a legal footer, 
 - The three verdict styles are now told apart at a glance. Flash strikes the screen with light and slams the words down. Burn sears them in from left to right and leaves an ember glow. Fade brings them up slowly with nothing else. Picking a style in Settings plays it on the monitor at once.
 - Gone: the ToolsmithDev mark in the rail (it is in About), the line of keys under the roll (the keys still work and are listed in the README), and the Insight counter with the reddening of the moon over the session.
 - Blackout is a button that stays pressed.
+
+## Themes (branch `themes`, 2026-10-06)
+
+- Every table set has a theme: Cosmic, Gothic, Surreal, Occult or Societal (`src/shared/themes.ts`, `theme` on `TableSet`, Gothic when missing). It is picked in Edit, under the name of the set.
+- A theme changes the DM window and the player screen. Colours, heading face and radii are in `src/styles/themes.css`, switched with `data-theme`; the colour tokens are now named for what they do (`--accent`, `--bane`, `--boon`). The emblem under the die and the air painted by `atmosphere.ts` change too, and so do the words of the verdict banner.
+- The default set is now "Bloodborne Madness", with the Gothic theme. Four more default sets ship beside it, one for each other theme (`src/content/themed.en.json`). Each is one d100 table with no second roll.
+- On a table with no second roll the effect is part of the entry. The player screen shows the description under the title and the effect after the banner, and Play no longer offers the "Second roll" switch for a table that has no outcomes.
+- Storage version 4: a saved "Madness Tables" set is renamed, the four new defaults are added to the library, and the session log is dropped.
+- Gone: the choice of verdict animation (the verdict always uses Flash), the list of this session's verdicts, and the Blackout button with its `B` key.
+- The browser tab uses the tool's own icon, `public/favicon.svg`. The ToolsmithDev icon stays in About and in the link preview.
+
+### Second pass, same day
+
+- A sixth theme, Hellenic, with its own default set: ten madnesses from Greek epic and tragedy.
+- The fifty entries of the five one-roll sets were rewritten with the humanizer skill. No default table names a DC any more, Bloodborne Madness included: a roll that needs a threshold is a plain die, and a saving throw is left to the GM. `build-defaults.py` and a test both refuse a DC.
+- Cosmic has a real corona behind the die (`src/assets/eclipse.webp`, NASA/Carla Thomas, 2017). Surreal has Redon's eye balloon drifting up the left of the stage (`src/assets/eye-balloon.webp`). Both are public domain and stored with their black cut away, because the camera layer is its own stacking context and a blend mode would only blend inside it.
+- The top bar runs the whole width of the window. Before, it stopped at the 1520px of the content.
+- The buttons of the sets dialog sit in a two-column grid.
+
+### Third pass, same day
+
+- Surreal: Redon's eye balloon is the emblem itself, with the number in the dark of the eye. The pink shape is gone.
+- Hellenic: the disc is a gorgon from an Attic cup (`src/assets/gorgon.webp`, public domain). No god is named in the table: each goes by a title, and a test checks it.

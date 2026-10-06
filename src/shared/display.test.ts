@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import source from '../../source/follie.it.json'
+import { defaultFor } from '../content/defaults'
 import { toDisplayState, type DisplaySource } from './display'
 import { DEFAULT_SETTINGS, parseSettings } from './settings'
 import type { TableSet } from './types'
@@ -9,7 +10,6 @@ const idle: DisplaySource = {
   tables,
   settings: DEFAULT_SETTINGS,
   preview: null,
-  blackout: false,
   step: 'category',
   stepAt: 1000,
   categoryId: null,
@@ -23,6 +23,11 @@ describe('toDisplayState', () => {
     expect(toDisplayState(idle)).toMatchObject({ setName: 'Follie', step: 'category', category: null, entry: null, verdict: null })
   })
 
+  it('sends the theme of the set, Gothic when it has none', () => {
+    expect(toDisplayState(idle).theme).toBe('gothic')
+    expect(toDisplayState({ ...idle, tables: { ...tables, theme: 'occult' } }).theme).toBe('occult')
+  })
+
   it('names the category once it is chosen, and the entry once the first roll lands', () => {
     const chosen = toDisplayState({ ...idle, step: 'first', categoryId: 'short-term' })
     expect(chosen.category).toMatchObject({ die: 100, subDie: 10, subRoll: true })
@@ -32,10 +37,10 @@ describe('toDisplayState', () => {
     expect(rolled.entry?.title).toBe(tables.categories[0].entries[1].title)
   })
 
-  it('carries the verdict, the blackout flag and the step time through', () => {
+  it('carries the verdict and the step time through', () => {
     const verdict = { kind: 'bane' as const, text: 'x', duration: 'From now on:' }
-    const s = toDisplayState({ ...idle, step: 'verdict', categoryId: 'indefinite', first: 3, second: 9, verdict, blackout: true })
-    expect(s).toMatchObject({ blackout: true, stepAt: 1000, second: 9, verdict })
+    const s = toDisplayState({ ...idle, step: 'verdict', categoryId: 'indefinite', first: 3, second: 9, verdict })
+    expect(s).toMatchObject({ stepAt: 1000, second: 9, verdict })
   })
 
   it('never includes the tables themselves', () => {
@@ -59,8 +64,11 @@ describe('previews from Settings', () => {
     expect(s.second).not.toBeNull()
   })
 
-  it('shows through a blackout, so the DM can see what was chosen', () => {
-    expect(toDisplayState({ ...idle, blackout: true, preview: { part: 'roll', at: 1 } }).blackout).toBe(false)
+  it('plays the effect of the entry itself on a table with no second roll', () => {
+    const cosmic = defaultFor('cosmic')
+    const s = toDisplayState({ ...idle, tables: cosmic, preview: { part: 'verdict', at: 5000 } })
+    expect(s).toMatchObject({ theme: 'cosmic', step: 'verdict', second: null })
+    expect(s.verdict).toMatchObject({ kind: null, text: cosmic.categories[0].entries[0].text })
   })
 })
 

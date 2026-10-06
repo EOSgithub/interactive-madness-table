@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import source from '../../source/follie.it.json'
+import { DEFAULT_SETS, defaultFor } from '../content/defaults'
 import defaults from '../content/defaults.en.json'
 import { checkCategory, checkCoverage, checkTableSet, findEntry, findOutcome, rollDie } from './tables'
+import { THEMES } from './themes'
 import type { Category, TableSet } from './types'
 
 const rows = (...ranges: [number, number][]) => ranges.map((range) => ({ range }))
@@ -132,5 +134,39 @@ describe('the default tables the app ships with', () => {
       }
     }
     expect(JSON.stringify(set)).not.toMatch(/[\u2013\u2014]/)
+  })
+})
+
+describe('the default sets of the themes', () => {
+  it('has one set for each theme, each under its own name', () => {
+    expect(DEFAULT_SETS.map((s) => s.theme).sort()).toEqual(THEMES.map((t) => t.id).sort())
+    expect(new Set(DEFAULT_SETS.map((s) => s.name)).size).toBe(DEFAULT_SETS.length)
+    for (const t of THEMES) expect(defaultFor(t.id).theme).toBe(t.id)
+  })
+
+  it('can be rolled on, all of them', () => {
+    for (const s of DEFAULT_SETS) expect(checkTableSet(s)).toEqual([])
+  })
+
+  it('gives every entry of a one-roll table its effect, with no long dashes', () => {
+    for (const s of DEFAULT_SETS.filter((x) => x.theme !== 'gothic')) {
+      for (const c of s.categories) {
+        expect(c.subRoll).toBe(false)
+        for (const e of c.entries) {
+          expect(e.title.length).toBeGreaterThan(3)
+          expect(e.description.length).toBeGreaterThan(10)
+          expect(e.text?.length).toBeGreaterThan(10)
+        }
+      }
+      expect(JSON.stringify(s)).not.toMatch(/[\u2013\u2014]/)
+    }
+  })
+
+  it('calls no god by name in the Hellenic set', () => {
+    expect(JSON.stringify(defaultFor('hellenic'))).not.toMatch(/Athena|Hera\b|Apollo|Zeus|Dionysus|Lyssa|Poseidon|Artemis|Aphrodite|Hermes|Ares\b|Hades/)
+  })
+
+  it('never fixes a DC: the GM sets it', () => {
+    expect(JSON.stringify(DEFAULT_SETS)).not.toMatch(/\bDC \d/)
   })
 })

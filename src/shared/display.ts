@@ -1,6 +1,7 @@
 import type { Settings } from './settings'
 import { resolveStaging } from './staging'
 import { findEntry } from './tables'
+import { themeOf, type ThemeId } from './themes'
 import type { OutcomeKind, RollStyle, Staging, TableSet } from './types'
 
 // What the player screen is told. The DM window owns the session and sends this
@@ -11,11 +12,11 @@ export type DisplayStep = 'category' | 'first' | 'second' | 'verdict'
 
 export interface DisplayState {
   setName: string
+  /** The theme of the set: it picks the look of the screen. */
+  theme: ThemeId
   settings: Settings
   /** The roll animation for this step: the one chosen in Settings, unless this result has its own. */
   rollStyle: RollStyle
-  /** The DM has hidden the screen. */
-  blackout: boolean
   /** This is a preview, not a real roll. */
   preview: boolean
   step: DisplayStep
@@ -50,7 +51,6 @@ interface VerdictSource {
 export interface DisplaySource {
   tables: TableSet
   settings: Settings
-  blackout: boolean
   preview: Preview | null
   step: DisplayStep
   stepAt: number
@@ -78,9 +78,9 @@ function previewState(s: DisplaySource, preview: Preview): { state: DisplayState
     staging,
     state: {
       setName: s.tables.name,
+      theme: themeOf(s.tables),
       settings: s.settings,
       rollStyle: staging?.animation ?? s.settings.rollStyle,
-      blackout: false,
       preview: true,
       step: verdict ? 'verdict' : 'second',
       stepAt: preview.at,
@@ -112,9 +112,9 @@ export function toDisplayState(s: DisplaySource): DisplayState {
   const staging = s.step === 'verdict' ? s.verdict?.staging : entry?.staging
   return {
     setName: s.tables.name,
+    theme: themeOf(s.tables),
     settings: s.settings,
     rollStyle: staging?.animation ?? s.settings.rollStyle,
-    blackout: s.blackout,
     preview: false,
     step: s.step,
     stepAt: s.stepAt,

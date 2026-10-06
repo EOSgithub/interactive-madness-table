@@ -1,15 +1,12 @@
-import { Eye, EyeSlash, FrameCorners, MonitorPlay } from '@phosphor-icons/react'
+import { FrameCorners, MonitorPlay } from '@phosphor-icons/react'
 import { usePresence } from '../state/sync'
-import { useStore } from '../state/store'
 
-// What the DM needs to run the player screen: open it, see whether it is
-// listening and in view, and black it out.
+// What the DM needs to run the player screen: open it, and see whether it is
+// listening and in view.
 
 export function ScreenControl({ onTableMode }: { onTableMode: () => void }) {
   const open = usePresence((s) => s.open)
   const visible = usePresence((s) => s.visible)
-  const blackout = useStore((s) => s.blackout)
-  const toggleBlackout = useStore((s) => s.toggleBlackout)
 
   function openScreen() {
     // A named window: clicking again brings the same one forward instead of opening a second.
@@ -29,9 +26,6 @@ export function ScreenControl({ onTableMode }: { onTableMode: () => void }) {
       </button>
       <button className="ghost" onClick={onTableMode} title="Show the player view here, on this whole window">
         <FrameCorners /> Table mode
-      </button>
-      <button className="ghost" aria-pressed={blackout} onClick={toggleBlackout} title="Hide the player screen until you press this again">
-        {blackout ? <Eye /> : <EyeSlash />} {blackout ? 'End blackout' : 'Blackout'}
       </button>
     </div>
   )

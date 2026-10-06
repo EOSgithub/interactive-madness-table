@@ -17,7 +17,7 @@
   gap: 14px;
   min-width: 0;
   padding: 22px;
-  background: linear-gradient(180deg, rgba(36, 26, 31, 0.92) 0%, rgba(24, 17, 20, 0.92) 100%);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--r-card);
   box-shadow: var(--lift);
@@ -164,13 +164,13 @@
 }
 
 .staging.boon {
-  background: linear-gradient(120deg, rgba(230, 200, 140, 0.1), transparent 45%), var(--ink-3);
-  border-color: rgba(230, 200, 140, 0.22);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--boon) 10%, transparent), transparent 45%), var(--ink-3);
+  border-color: color-mix(in srgb, var(--boon) 22%, transparent);
 }
 
 .staging.bane {
-  background: linear-gradient(120deg, rgba(176, 22, 47, 0.18), transparent 45%), var(--ink-3);
-  border-color: rgba(242, 93, 110, 0.24);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--bane) 18%, transparent), transparent 45%), var(--ink-3);
+  border-color: color-mix(in srgb, var(--bane-bright) 24%, transparent);
 }
 
 .staging legend {

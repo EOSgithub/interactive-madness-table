@@ -1,3 +1,4 @@
+import { parseTheme } from './themes'
 import type { Category, Duration, Entry, Outcome, OutcomeKind, Range, Staging, TableSet } from './types'
 
 // Reading a table set from a file the DM picked. The file is untrusted: it is
@@ -113,7 +114,7 @@ export function parseTableSet(value: unknown): Parsed {
     const body = root.kind === FILE_KIND ? obj(root.tables, 'tables') : root
     const categories = list(body.categories, 'categories').map((x, i) => category(x, `categories[${i}]`))
     if (categories.length === 0) return { ok: false, error: 'The file has no categories.' }
-    return { ok: true, tables: { name: str(body.name, 'name', 'Untitled tables'), categories } }
+    return { ok: true, tables: { name: str(body.name, 'name', 'Untitled tables'), theme: parseTheme(body.theme), categories } }
   } catch (e) {
     if (e instanceof Fault) return { ok: false, error: e.message }
     throw e

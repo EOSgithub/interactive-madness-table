@@ -13,7 +13,7 @@ export function useDisplayState(): DisplayState {
   const s = useStore()
   return useMemo(
     () => toDisplayState(s),
-    [s.tables, s.settings, s.blackout, s.preview, s.step, s.stepAt, s.categoryId, s.first, s.second, s.verdict]
+    [s.tables, s.settings, s.preview, s.step, s.stepAt, s.categoryId, s.first, s.second, s.verdict]
   )
 }
 
@@ -25,7 +25,7 @@ export function Monitor({ label = 'What your players see', children }: { label?:
         <PlayerView state={state} />
       </div>
       <div className="monitor-bar">
-        <figcaption>{state.blackout ? 'Blackout: the player screen is dark' : label}</figcaption>
+        <figcaption>{label}</figcaption>
         {children}
       </div>
     </figure>

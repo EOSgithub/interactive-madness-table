@@ -21,7 +21,7 @@ export function activeSet(lib: Library): SavedSet {
   return lib.sets.find((s) => s.id === lib.activeId) ?? lib.sets[0]
 }
 
-/** "Madness Tables", then "Madness Tables 2", "Madness Tables 3": two sets never share a name. */
+/** "Cosmic Madness", then "Cosmic Madness 2", "Cosmic Madness 3": two sets never share a name. */
 export function uniqueName(name: string, taken: string[]): string {
   const base = name.trim() || 'Untitled tables'
   if (!taken.includes(base)) return base
@@ -77,15 +77,22 @@ export function countEntries(tables: TableSet): number {
   return tables.categories.reduce((n, c) => n + c.entries.length, 0)
 }
 
-/** Cleans a library read from storage. Falls back to one set holding `fallback` when nothing usable is there. */
-export function parseLibrary(sets: unknown, activeId: unknown, fallback: TableSet, now: number): Library {
+/** Adds each of `defaults` that the library has no set named after. The active set stays the same. */
+export function addMissing(lib: Library, defaults: TableSet[], now: number): Library {
+  const taken = new Set(lib.sets.map((s) => s.tables.name))
+  const added = defaults.filter((d) => !taken.has(d.name)).map((tables) => ({ id: newId(), tables, updatedAt: now }))
+  return added.length > 0 ? { ...lib, sets: [...lib.sets, ...added] } : lib
+}
+
+/** Cleans a library read from storage. Falls back to the sets in `fallback`, the first one active, when nothing usable is there. */
+export function parseLibrary(sets: unknown, activeId: unknown, fallback: TableSet[], now: number): Library {
   const usable = (Array.isArray(sets) ? sets : []).filter(
     (s): s is SavedSet =>
       typeof s === 'object' && s !== null && typeof s.id === 'string' && typeof s.tables === 'object' && s.tables !== null && Array.isArray(s.tables.categories)
   )
   if (usable.length === 0) {
-    const id = newId()
-    return { sets: [{ id, tables: fallback, updatedAt: now }], activeId: id }
+    const fresh = fallback.map((tables) => ({ id: newId(), tables, updatedAt: now }))
+    return { sets: fresh, activeId: fresh[0].id }
   }
   return { sets: usable, activeId: usable.some((s) => s.id === activeId) ? (activeId as string) : usable[0].id }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { ROLL_STYLES, SPEEDS, VERDICT_STYLES, type Settings as SettingsValue } from '../shared/settings'
+import { ROLL_STYLES, SPEEDS, type Settings as SettingsValue } from '../shared/settings'
 import { useStore } from '../state/store'
 import { Monitor } from './Monitor'
 
@@ -60,11 +60,6 @@ export function Settings() {
             play('roll')
           }}
         />
-        <Choice label="Verdict" options={VERDICT_STYLES} value={settings.verdictStyle} disabled={off} onChange={(verdictStyle) => {
-            set({ verdictStyle })
-            play('verdict')
-          }}
-        />
         <Choice label="Speed" options={SPEEDS} value={settings.speed} disabled={off} onChange={(speed) => set({ speed })} />
       </section>
 
@@ -85,7 +80,7 @@ export function Settings() {
         />
         <Switch
           label="Keyboard shortcuts"
-          hint="Single keys on the Play screen: Space to roll, B for blackout and so on."
+          hint="Single keys on the Play screen: Space to roll, T for Table mode and so on."
           checked={settings.shortcuts}
           onChange={(shortcuts) => set({ shortcuts })}
         />
