@@ -163,7 +163,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Every creature within 300 feet hears you when you speak. You cannot form coherent sentences or provide the verbal components of spells."
+              "text": "Your screams carry so far that every creature within 300 feet hears you when you speak. You cannot form coherent sentences or provide the verbal components of spells."
             }
           ]
         },
@@ -183,7 +183,7 @@
                 2
               ],
               "kind": "boon",
-              "text": "You become hard to pin down. When you are targeted by an attack or by an effect that calls for a Dexterity saving throw, you can use your reaction to weave aside, gaining +1 to AC and advantage on Dexterity saving throws until the start of your next turn."
+              "text": "Your slack body folds out of the way of blows. When you are targeted by an attack or by an effect that calls for a Dexterity saving throw, you can use your reaction to weave aside, gaining +1 to AC and advantage on Dexterity saving throws until the start of your next turn."
             },
             {
               "id": "short-term-5-2",
@@ -192,7 +192,7 @@
                 7
               ],
               "kind": "neutral",
-              "text": "You look for someone to protect you, a parent of any kind. Once you find them you cling to them and will not leave their side, whatever happens."
+              "text": "You hunch like a frightened child and look for someone to protect you, a parent of any kind. Once you find them you cling to them and will not leave their side, whatever happens."
             },
             {
               "id": "short-term-5-3",
@@ -259,7 +259,7 @@
                 2
               ],
               "kind": "boon",
-              "text": "You are immune to the poisoned condition."
+              "text": "There is little left in you for poison to ruin. You are immune to the poisoned condition."
             },
             {
               "id": "short-term-7-2",
@@ -277,7 +277,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "You are poisoned, even if you are immune to the condition."
+              "text": "Your body turns on itself. You are poisoned, even if you are immune to the condition."
             }
           ]
         },
@@ -297,7 +297,7 @@
                 2
               ],
               "kind": "boon",
-              "text": "When you gain this madness, each creature within 30 feet of you must succeed on a Wisdom saving throw or be frightened of you for 1 minute. A frightened creature repeats the save at the end of each of its turns, ending the effect on a success."
+              "text": "Something of what you saw shows in your face. When you gain this madness, each creature within 30 feet of you must succeed on a Wisdom saving throw or be frightened of you for 1 minute. A frightened creature repeats the save at the end of each of its turns, ending the effect on a success."
             },
             {
               "id": "short-term-8-2",
@@ -315,7 +315,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "You are frightened of your allies. On each of your turns you must take the Dash action and move away from them by the fastest route, unless there is nowhere to go. If you start your turn where you can see none of them, you can use your action to end the madness."
+              "text": "You see the horrors in the faces of your allies, and you are frightened of them. On each of your turns you must take the Dash action and move away from them by the fastest route, unless there is nowhere to go. If you start your turn where you can see none of them, you can use your action to end the madness."
             }
           ]
         },
@@ -364,7 +364,7 @@
             95
           ],
           "title": "Revelations from Beyond",
-          "description": "Revelations from beyond press in on you.",
+          "description": "Truths from beyond force their way into your head.",
           "outcomes": [
             {
               "id": "short-term-10-1",
@@ -391,7 +391,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "You are stunned. The effect ends early if you take damage equal to your level or if greater restoration is cast on you."
+              "text": "The truth holds you where you stand. You are stunned. The effect ends early if you take damage equal to your level or if greater restoration is cast on you."
             }
           ]
         },
@@ -748,7 +748,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Your heart weakens, literally. You gain one level of exhaustion that cannot be removed until the madness ends. Whenever you become frightened, you gain another level, which can be removed as normal."
+              "text": "Your heart weakens in your chest. You gain one level of exhaustion that cannot be removed until the madness ends. Whenever you become frightened, you gain another level, which can be removed as normal."
             }
           ]
         },
@@ -786,7 +786,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Deep scars cover much of your body. Whenever you take bludgeoning, piercing, or slashing damage, you take an extra 1d6 damage of that type."
+              "text": "Deep scars cover much of your body, and they split open under any blow. Whenever you take bludgeoning, piercing, or slashing damage, you take an extra 1d6 damage of that type."
             }
           ]
         },
@@ -853,7 +853,7 @@
                 7
               ],
               "kind": "neutral",
-              "text": "Your body changes, though a trace of what you were remains. You take on the features of an animal, chosen by the GM. If you have already been changed this way, use the next outcome on this table instead."
+              "text": "Your body changes, though a trace of what you were remains. You take on the features of an animal, chosen by the GM. If you have already been changed this way, treat this result as a 10 and apply that outcome instead."
             },
             {
               "id": "long-term-11-3",
@@ -886,8 +886,8 @@
             1,
             5
           ],
-          "title": "Bound to the Bottle",
-          "description": "You lean hard on substances to bear the pointlessness of a painful existence.",
+          "title": "Chained to Vice",
+          "description": "You need something to dull a painful, pointless existence, and you lean on it hard.",
           "outcomes": [
             {
               "id": "indefinite-1-1",
@@ -914,7 +914,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Drugs, drink, and every other vice stop working on you. Your body throws out whatever you take before it can act, and any carnal thought disgusts you."
+              "text": "You reach for drink, drugs, and every other vice, and none of them works on you any more. Your body throws out whatever you take before it can act, and any carnal thought disgusts you."
             }
           ]
         },
@@ -934,7 +934,7 @@
                 2
               ],
               "kind": "bane",
-              "text": "Whenever you fail an ability check, attack roll, or saving throw, you have disadvantage on your next one."
+              "text": "One failure drags the next behind it. Whenever you fail an ability check, attack roll, or saving throw, you have disadvantage on your next one."
             },
             {
               "id": "indefinite-2-2",
@@ -1019,7 +1019,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "You automatically fail saving throws against being frightened, and no effect can make you immune to fear."
+              "text": "Fear goes straight through you. You automatically fail saving throws against being frightened, and no effect can make you immune to fear."
             },
             {
               "id": "indefinite-4-3",
@@ -1028,7 +1028,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Whenever a situation is tense or social, you close in on yourself. You have disadvantage on Charisma and Dexterity checks, and whatever swagger your character had is gone."
+              "text": "Whenever a situation is tense or social, you close in on yourself. You have disadvantage on Charisma and Dexterity checks, and whatever swagger you had is gone."
             }
           ]
         },
@@ -1095,7 +1095,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "Whenever you take more than 20 damage in one turn, your body bursts with psychic force. You and each creature within 30 feet of you must succeed on an Intelligence saving throw or take 3d10 psychic damage. You have disadvantage on this save."
+              "text": "Whenever you take more than 20 damage in one turn, the pain bursts out of you as psychic force. You and each creature within 30 feet of you must succeed on an Intelligence saving throw or take 3d10 psychic damage. You have disadvantage on this save."
             },
             {
               "id": "indefinite-6-3",
@@ -1153,7 +1153,7 @@
             40
           ],
           "title": "The Lying Heart",
-          "description": "Your heart falters. A reality like this cannot truly exist.",
+          "description": "Your heart will not accept a reality like this, so it stops dealing honestly with it.",
           "outcomes": [
             {
               "id": "indefinite-8-1",
@@ -1209,7 +1209,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "You teleport a short way, 10 to 60 feet, at the worst moments. The GM decides when and where."
+              "text": "You lose your hold on where you are, and you teleport a short way, 10 to 60 feet, at the worst moments. The GM decides when and where."
             },
             {
               "id": "indefinite-9-3",
@@ -1305,7 +1305,7 @@
             60
           ],
           "title": "Tricks of the Mind",
-          "description": "Your mind starts to play tricks on you and feeds you illusions.",
+          "description": "Your mind starts telling you things about yourself that are not true.",
           "outcomes": [
             {
               "id": "indefinite-12-1",
@@ -1342,8 +1342,8 @@
             61,
             65
           ],
-          "title": "Unruly Chaos",
-          "description": "You turn against all company and become chaos and madness in person.",
+          "title": "Past All Restraint",
+          "description": "You lose all restraint, and your body does as it pleases whatever the company.",
           "outcomes": [
             {
               "id": "indefinite-13-1",
@@ -1390,7 +1390,7 @@
                 2
               ],
               "kind": "bane",
-              "text": "You develop a second personality that tries to destroy everything you care for and to feed everything you despise."
+              "text": "The hatred grows a will of its own. You develop a second personality that tries to destroy everything you care for and to feed everything you despise."
             },
             {
               "id": "indefinite-14-2",
@@ -1428,7 +1428,7 @@
                 2
               ],
               "kind": "bane",
-              "text": "Your Strength and Dexterity scores are swapped."
+              "text": "Your muscles forget which of them were strong and which were quick. Your Strength and Dexterity scores are swapped."
             },
             {
               "id": "indefinite-15-2",
@@ -1446,7 +1446,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Your creature type becomes undead. Magical healing has no effect on you."
+              "text": "Your body goes on without being alive. Your creature type becomes undead. Magical healing has no effect on you."
             }
           ]
         },
@@ -1495,7 +1495,7 @@
             85
           ],
           "title": "The Call from Beyond",
-          "description": "Something beyond is calling you back.",
+          "description": "Something beyond is calling you.",
           "outcomes": [
             {
               "id": "indefinite-17-1",
@@ -1513,7 +1513,7 @@
                 7
               ],
               "kind": "bane",
-              "text": "Your ascension fails. Your speed is halved, and you can no longer teleport. If you are teleported against your will, for example by the banishment spell, you take 3d10 force damage as the cosmos takes its due from your flesh."
+              "text": "You answer the call and try to ascend, and you fail. Your speed is halved, and you can no longer teleport. If you are teleported against your will, for example by the banishment spell, you take 3d10 force damage as the cosmos takes its due from your flesh."
             },
             {
               "id": "indefinite-17-3",
@@ -1522,7 +1522,7 @@
                 10
               ],
               "kind": "bane",
-              "text": "Your ascension half succeeds. Your creature type becomes aberration. You gain resistance to psychic damage and advantage on saving throws against telepathy, but you lose all empathy and have disadvantage on Insight and Persuasion checks. You also understand Deep Speech and have disadvantage on saving throws against charm effects that come from aberrations."
+              "text": "You answer the call, and your ascension half succeeds. Your creature type becomes aberration. You gain resistance to psychic damage and advantage on saving throws against telepathy, but you lose all empathy and have disadvantage on Insight and Persuasion checks. You also understand Deep Speech and have disadvantage on saving throws against charm effects that come from aberrations."
             }
           ]
         },
