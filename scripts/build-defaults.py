@@ -229,7 +229,8 @@ TEXT = {
 }
 
 
-# In the Hellenic set no god is called by name: each goes by a title.
+# In the Hellenic set no god is called by name: each goes by a title. Its table
+# has no duration of its own: each effect starts with how long it lasts.
 # The other themes: (set name, theme, table name, line under it, duration, entries).
 # An entry is a title, a description read aloud, and the effect. The entries share
 # the d100 evenly, in the order written. No effect names a DC: where a roll decides,
@@ -323,27 +324,27 @@ THEMED = [
         ("The Crowd", "Everyone is walking the same way and you are walking with them. You could not say where.",
          "While two or more of your allies are within 10 feet of you, you are immune to the frightened condition. While none are, you have disadvantage on Wisdom saving throws."),
     ]),
-    ("Hellenic Madness", "hellenic", "Divine Madness", "A god has taken an interest in you.", {"kind": "fixed", "text": "Until the next sunrise:"}, [
+    ("Hellenic Madness", "hellenic", "Divine Madness", "A god has taken an interest in you.", {"kind": "fixed", "text": ""}, [
         ("The Flock", "The Goddess of Wisdom has put a mist over your eyes. The men who wronged you are standing right in front of you, bleating.",
-         "You take beasts for your enemies. While a beast is within 30 feet of you, you must use your action on each of your turns to attack it."),
+         "For 1 minute, you see every beast as an enemy who wronged you. On each of your turns, you must use your action to attack a beast within 30 feet of you, if there is one. The effect ends early if you reduce a beast to 0 hit points."),
         ("The Goad", "Madness herself did not want this errand. The Queen of the Gods sent her anyway, and now you cannot tell your friends from the people you came to kill.",
-         "When you make an attack, the GM picks the target at random from the creatures within your reach or range, your allies included. You have advantage on melee weapon attack rolls."),
+         "For 1 minute, you can't tell friend from foe. Whenever you make an attack, the GM randomly determines its target from among the creatures within your reach or range, including your allies. You have advantage on melee weapon attack rolls. The effect ends early if you deal damage to one of your allies."),
         ("The Kindly Ones", "Three women with snakes in their hair are following you. Nobody else can see them, and they are in no hurry.",
-         "You cannot take a short or long rest. You keep looking behind you, so you cannot be surprised, and you have disadvantage on Wisdom (Perception) checks."),
+         "For 1d4 hours, you can't take a short or long rest. You keep looking behind you, so you can't be surprised, and you have disadvantage on Wisdom (Perception) checks."),
         ("Two Suns", "There are two suns over the city this morning and two cities under them. The stranger walking ahead of you has horns.",
-         "You see double and have disadvantage on attack rolls against targets more than 5 feet from you. The god's strength is in your arms: you have advantage on Strength checks and Strength saving throws."),
+         "For 10 minutes, you see double. You have disadvantage on attack rolls against targets more than 5 feet away from you. The god's strength is in your arms, and you have advantage on Strength checks and Strength saving throws."),
         ("Cassandra's Gift", "The God of Prophecy gave you the truth about what is coming. He also arranged that nobody would believe a word of it.",
-         "You cannot be surprised and you have advantage on initiative rolls. You have disadvantage on Charisma (Persuasion) checks, and your allies gain nothing from your Help action."),
+         "Until the next dawn, you can't be surprised, and you have advantage on initiative rolls. You have disadvantage on Charisma (Persuasion) checks, and a creature gains no benefit when you use the Help action to aid it."),
         ("The Song", "Someone is singing out past the rocks. The song is about you, and it knows things you have told no one.",
-         "You are deafened. On each of your turns you must spend at least half your movement going toward the place the song comes from, which the GM chooses."),
+         "For 1 minute, you are deafened and hear nothing but the song. On each of your turns, you must use at least half your movement to move toward the song's source, a point the GM chooses. The effect ends early if you take damage."),
         ("Lotus", "You ate the fruit. Home is a word you remember hearing.",
-         "You are immune to the frightened condition and have resistance to psychic damage. You cannot take the Dash action, and you have disadvantage on initiative rolls."),
+         "Until you finish a long rest, you are immune to the frightened condition and have resistance to psychic damage. You can't take the Dash action, and you have disadvantage on initiative rolls."),
         ("The Gadfly", "The Queen of the Gods has set her fly on you. It drove Io across three continents and it is not tired.",
-         "At the start of each of your turns you take 1 piercing damage, and you must move at least 10 feet before the turn ends. Your speed increases by 10 feet."),
+         "For 1 minute, you take 1 piercing damage at the start of each of your turns, and you must move at least 10 feet before the turn ends. Your speed increases by 10 feet for the duration."),
         ("The Pool", "You have caught sight of your reflection, and it is the best thing you have seen in years.",
-         "If you can see your reflection at the start of your turn, your speed is 0 until your next turn starts. You have advantage on saving throws against being charmed by anyone else."),
+         "For 1 hour, if you can see your own reflection at the start of your turn, your speed becomes 0 until the start of your next turn. You have advantage on saving throws against being charmed by any other creature."),
         ("The Wrath", "The anger the poets sing about has got into you, the kind that chokes a river with the dead.",
-         "You have advantage on melee weapon attack rolls, and attack rolls against you have advantage. You cannot willingly end your turn farther from the nearest enemy than you began it."),
+         "For 1 minute, you have advantage on melee weapon attack rolls, and attack rolls against you have advantage. You can't willingly end your turn farther from the nearest hostile creature than you started it."),
     ]),
 ]
 

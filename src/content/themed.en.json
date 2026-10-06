@@ -532,7 +532,7 @@
         "blurb": "A god has taken an interest in you.",
         "duration": {
           "kind": "fixed",
-          "text": "Until the next sunrise:"
+          "text": ""
         },
         "die": 100,
         "subRoll": false,
@@ -546,7 +546,7 @@
             ],
             "title": "The Flock",
             "description": "The Goddess of Wisdom has put a mist over your eyes. The men who wronged you are standing right in front of you, bleating.",
-            "text": "You take beasts for your enemies. While a beast is within 30 feet of you, you must use your action on each of your turns to attack it.",
+            "text": "For 1 minute, you see every beast as an enemy who wronged you. On each of your turns, you must use your action to attack a beast within 30 feet of you, if there is one. The effect ends early if you reduce a beast to 0 hit points.",
             "outcomes": []
           },
           {
@@ -557,7 +557,7 @@
             ],
             "title": "The Goad",
             "description": "Madness herself did not want this errand. The Queen of the Gods sent her anyway, and now you cannot tell your friends from the people you came to kill.",
-            "text": "When you make an attack, the GM picks the target at random from the creatures within your reach or range, your allies included. You have advantage on melee weapon attack rolls.",
+            "text": "For 1 minute, you can't tell friend from foe. Whenever you make an attack, the GM randomly determines its target from among the creatures within your reach or range, including your allies. You have advantage on melee weapon attack rolls. The effect ends early if you deal damage to one of your allies.",
             "outcomes": []
           },
           {
@@ -568,7 +568,7 @@
             ],
             "title": "The Kindly Ones",
             "description": "Three women with snakes in their hair are following you. Nobody else can see them, and they are in no hurry.",
-            "text": "You cannot take a short or long rest. You keep looking behind you, so you cannot be surprised, and you have disadvantage on Wisdom (Perception) checks.",
+            "text": "For 1d4 hours, you can't take a short or long rest. You keep looking behind you, so you can't be surprised, and you have disadvantage on Wisdom (Perception) checks.",
             "outcomes": []
           },
           {
@@ -579,7 +579,7 @@
             ],
             "title": "Two Suns",
             "description": "There are two suns over the city this morning and two cities under them. The stranger walking ahead of you has horns.",
-            "text": "You see double and have disadvantage on attack rolls against targets more than 5 feet from you. The god's strength is in your arms: you have advantage on Strength checks and Strength saving throws.",
+            "text": "For 10 minutes, you see double. You have disadvantage on attack rolls against targets more than 5 feet away from you. The god's strength is in your arms, and you have advantage on Strength checks and Strength saving throws.",
             "outcomes": []
           },
           {
@@ -590,7 +590,7 @@
             ],
             "title": "Cassandra's Gift",
             "description": "The God of Prophecy gave you the truth about what is coming. He also arranged that nobody would believe a word of it.",
-            "text": "You cannot be surprised and you have advantage on initiative rolls. You have disadvantage on Charisma (Persuasion) checks, and your allies gain nothing from your Help action.",
+            "text": "Until the next dawn, you can't be surprised, and you have advantage on initiative rolls. You have disadvantage on Charisma (Persuasion) checks, and a creature gains no benefit when you use the Help action to aid it.",
             "outcomes": []
           },
           {
@@ -601,7 +601,7 @@
             ],
             "title": "The Song",
             "description": "Someone is singing out past the rocks. The song is about you, and it knows things you have told no one.",
-            "text": "You are deafened. On each of your turns you must spend at least half your movement going toward the place the song comes from, which the GM chooses.",
+            "text": "For 1 minute, you are deafened and hear nothing but the song. On each of your turns, you must use at least half your movement to move toward the song's source, a point the GM chooses. The effect ends early if you take damage.",
             "outcomes": []
           },
           {
@@ -612,7 +612,7 @@
             ],
             "title": "Lotus",
             "description": "You ate the fruit. Home is a word you remember hearing.",
-            "text": "You are immune to the frightened condition and have resistance to psychic damage. You cannot take the Dash action, and you have disadvantage on initiative rolls.",
+            "text": "Until you finish a long rest, you are immune to the frightened condition and have resistance to psychic damage. You can't take the Dash action, and you have disadvantage on initiative rolls.",
             "outcomes": []
           },
           {
@@ -623,7 +623,7 @@
             ],
             "title": "The Gadfly",
             "description": "The Queen of the Gods has set her fly on you. It drove Io across three continents and it is not tired.",
-            "text": "At the start of each of your turns you take 1 piercing damage, and you must move at least 10 feet before the turn ends. Your speed increases by 10 feet.",
+            "text": "For 1 minute, you take 1 piercing damage at the start of each of your turns, and you must move at least 10 feet before the turn ends. Your speed increases by 10 feet for the duration.",
             "outcomes": []
           },
           {
@@ -634,7 +634,7 @@
             ],
             "title": "The Pool",
             "description": "You have caught sight of your reflection, and it is the best thing you have seen in years.",
-            "text": "If you can see your reflection at the start of your turn, your speed is 0 until your next turn starts. You have advantage on saving throws against being charmed by anyone else.",
+            "text": "For 1 hour, if you can see your own reflection at the start of your turn, your speed becomes 0 until the start of your next turn. You have advantage on saving throws against being charmed by any other creature.",
             "outcomes": []
           },
           {
@@ -645,7 +645,7 @@
             ],
             "title": "The Wrath",
             "description": "The anger the poets sing about has got into you, the kind that chokes a river with the dead.",
-            "text": "You have advantage on melee weapon attack rolls, and attack rolls against you have advantage. You cannot willingly end your turn farther from the nearest enemy than you began it.",
+            "text": "For 1 minute, you have advantage on melee weapon attack rolls, and attack rolls against you have advantage. You can't willingly end your turn farther from the nearest hostile creature than you started it.",
             "outcomes": []
           }
         ]
