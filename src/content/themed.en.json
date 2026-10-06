@@ -545,7 +545,7 @@
               10
             ],
             "title": "The Flock",
-            "description": "The Goddess of Wisdom has put a mist over your eyes. The men who wronged you are standing right in front of you, bleating.",
+            "description": "The Goddess of Wisdom has put mist over your eyes. The men who wronged you are standing right in front of you, bleating.",
             "text": "For 1 minute, you see every beast as an enemy who wronged you. On each of your turns, you must use your action to attack a beast within 30 feet of you, if there is one. The effect ends early if you reduce a beast to 0 hit points.",
             "outcomes": []
           },
@@ -557,7 +557,7 @@
             ],
             "title": "The Goad",
             "description": "Madness herself did not want this errand. The Queen of the Gods sent her anyway, and now you cannot tell your friends from the people you came to kill.",
-            "text": "For 1 minute, you can't tell friend from foe. Whenever you make an attack, the GM randomly determines its target from among the creatures within your reach or range, including your allies. You have advantage on melee weapon attack rolls. The effect ends early if you deal damage to one of your allies.",
+            "text": "For 1 minute, you can't tell friend from foe. Whenever you make an attack, randomly determine its target from among the creatures within your reach or range, including your allies. You have advantage on melee weapon attack rolls. The effect ends early if you deal damage to one of your allies.",
             "outcomes": []
           },
           {
@@ -567,7 +567,7 @@
               30
             ],
             "title": "The Kindly Ones",
-            "description": "Three women with snakes in their hair are following you. Nobody else can see them, and they are in no hurry.",
+            "description": "Three women with snakes in their hair are following you. Nobody else can see them.",
             "text": "For 1d4 hours, you can't take a short or long rest. You keep looking behind you, so you can't be surprised, and you have disadvantage on Wisdom (Perception) checks.",
             "outcomes": []
           },
@@ -578,7 +578,7 @@
               40
             ],
             "title": "Two Suns",
-            "description": "There are two suns over the city this morning and two cities under them. The stranger walking ahead of you has horns.",
+            "description": "There are two suns over the city this morning and two cities under them.",
             "text": "For 10 minutes, you see double. You have disadvantage on attack rolls against targets more than 5 feet away from you. The god's strength is in your arms, and you have advantage on Strength checks and Strength saving throws.",
             "outcomes": []
           },
@@ -611,7 +611,7 @@
               70
             ],
             "title": "Lotus",
-            "description": "You ate the fruit. Home is a word you remember hearing.",
+            "description": "You remember eating a strange fruit.",
             "text": "Until you finish a long rest, you are immune to the frightened condition and have resistance to psychic damage. You can't take the Dash action, and you have disadvantage on initiative rolls.",
             "outcomes": []
           },
@@ -622,7 +622,7 @@
               80
             ],
             "title": "The Gadfly",
-            "description": "The Queen of the Gods has set her fly on you. It drove Io across three continents and it is not tired.",
+            "description": "The Queen of the Gods has set her fly on you. It already crossed three continents and will not stop.",
             "text": "For 1 minute, you take 1 piercing damage at the start of each of your turns, and you must move at least 10 feet before the turn ends. Your speed increases by 10 feet for the duration.",
             "outcomes": []
           },
