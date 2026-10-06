@@ -149,12 +149,13 @@ function light(ctx: Ctx, w: number, h: number, air: Air, unit: number, colour: R
  * streak that points at the centre.
  */
 function stars(ctx: Ctx, w: number, h: number, now: number, air: Air, unit: number) {
-  const count = air.lite ? 60 : 150
+  const count = air.lite ? 110 : 280
   const pull = baneLevel(air, 1800)
   const cx = w / 2
   const cy = h * 0.42
   const reach = Math.hypot(w, h) * 0.62
-  const turn = (now / 400000) * TAU
+  // One turn in two to five minutes: slow, but fast enough to be seen from the table.
+  const turn = (now / 120000) * TAU
   const pale: Rgb = [214, 226, 255]
   const wrong: Rgb = [210, 148, 245]
   ctx.lineCap = 'round'
@@ -165,10 +166,10 @@ function stars(ctx: Ctx, w: number, h: number, now: number, air: Air, unit: numb
     const x = cx + Math.cos(angle) * far
     const y = cy + Math.sin(angle) * far
     if (x < -20 || x > w + 20 || y < -20 || y > h + 20) continue
-    const twinkle = 0.55 + 0.45 * Math.sin(now / (600 + 1900 * rand(i, 14)) + i)
-    const size = (0.4 + 1.3 * rand(i, 15) * rand(i, 16)) * unit
+    const twinkle = 0.55 + 0.45 * Math.sin(now / (350 + 1100 * rand(i, 14)) + i)
+    const size = (0.7 + 2 * rand(i, 15) * rand(i, 16)) * unit
     const colour = mix(pale, wrong, pull)
-    const alpha = (0.25 + 0.6 * rand(i, 17)) * twinkle
+    const alpha = (0.4 + 0.6 * rand(i, 17)) * twinkle
     if (pull > 0.01) {
       const length = pull * (0.05 + 0.16 * rand(i, 18)) * far
       ctx.strokeStyle = rgba(colour, alpha * 0.8)
