@@ -202,7 +202,7 @@ export const useStore = create<State>()(
     }),
     {
       name: 'interactive-madness-table',
-      version: 4,
+      version: 5,
       // Version 1 shipped the Italian source tables as defaults. Anyone still on
       // them, untouched or not, moves to the English set; other saved tables stay.
       migrate: (saved, version) => {
@@ -221,6 +221,10 @@ export const useStore = create<State>()(
           const renamed = s.sets.map((x) => (x.tables.name === 'Madness Tables' ? { ...x, tables: { ...x.tables, name: DEFAULT_SETS[0].name } } : x))
           s.sets = addMissing({ sets: renamed, activeId: s.activeId }, DEFAULT_SETS, Date.now()).sets
           delete s.history
+        }
+        // Version 5 renames the Gothic default set, which shipped as "Bloodborne Madness".
+        if (version < 5 && s.sets) {
+          s.sets = s.sets.map((x) => (x.tables.name === 'Bloodborne Madness' ? { ...x, tables: { ...x.tables, name: DEFAULT_SETS[0].name } } : x))
         }
         return s
       },

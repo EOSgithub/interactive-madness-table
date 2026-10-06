@@ -1,6 +1,6 @@
 """Builds the table sets the app ships with, one for each theme.
 
-src/content/defaults.en.json is the Gothic set, "Bloodborne Madness". Its
+src/content/defaults.en.json is the Gothic set, "Gothic Madness". Its
 structure (ids, ranges, kinds) comes from source/follie.it.json, the author's
 Italian tables. The English text is below, keyed by entry id: a title, a
 description, and one text per outcome in the order of the source.
@@ -380,7 +380,7 @@ def write(name, data):
 
 def main():
     source = json.load(open(os.path.join(ROOT, "source", "follie.it.json"), encoding="utf-8"))
-    out = {"name": "Bloodborne Madness", "theme": "gothic", "categories": []}
+    out = {"name": "Gothic Madness", "theme": "gothic", "categories": []}
     for c in source["categories"]:
         label, blurb, duration = CATEGORIES[c["id"]]
         entries = []

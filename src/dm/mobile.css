@@ -44,13 +44,28 @@
   color: var(--bone);
   font-size: 0.9rem;
   font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color var(--quick),
+    border-color var(--quick);
 }
 
-.table-bar button.main {
+.table-bar button:hover {
+  background: var(--ink-4);
+  border-color: var(--line-strong);
+}
+
+/* Not ".main": that is the column of the DM window, and it is as wide as its parent. */
+.table-bar button.table-bar-main {
+  padding-inline: 28px;
   background: var(--fill);
   border-color: color-mix(in srgb, var(--accent-bright) 60%, transparent);
   color: var(--on-accent);
   font-weight: 600;
+}
+
+.table-bar button.table-bar-main:hover {
+  background: var(--fill-hover);
 }
 
 .table-bar-gap {

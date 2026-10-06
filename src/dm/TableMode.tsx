@@ -31,20 +31,20 @@ export function TableMode({ onClose }: { onClose: () => void }) {
             ))}
         {s.step === 'first' && category && (
           <>
-            <button className="main" onClick={() => s.rollFirst()}>
+            <button className="table-bar-main" onClick={() => s.rollFirst()}>
               Roll d{category.die}
             </button>
             <button onClick={s.back}>Back</button>
           </>
         )}
         {s.step === 'second' && category && (
-          <button className="main" onClick={() => s.rollSecond()}>
+          <button className="table-bar-main" onClick={() => s.rollSecond()}>
             Roll d{category.subDie}
           </button>
         )}
         {s.step === 'verdict' && (
           <>
-            <button className="main" onClick={s.restart}>
+            <button className="table-bar-main" onClick={s.restart}>
               Again
             </button>
             <button onClick={s.replay}>Replay</button>

@@ -246,3 +246,7 @@ The first pass read as a home project: a page with a header and a legal footer, 
 
 - Surreal: Redon's eye balloon is the emblem itself, with the number in the dark of the eye. The pink shape is gone.
 - Hellenic: the disc is a gorgon from an Attic cup (`src/assets/gorgon.webp`, public domain). No god is named in the table: each goes by a title, and a test checks it.
+
+### Fourth pass, same day
+
+- The Gothic default set is "Gothic Madness". "Bloodborne Madness" carried someone else's trademark, so it is gone from the tool. Storage version 5 renames a saved set that still has the old name.
