@@ -36,7 +36,7 @@ export const SPEED_FACTOR: Record<Speed, number> = { slow: 1.5, normal: 1, fast:
 export const ROLL_STYLES: { value: RollStyle; label: string; hint: string }[] = [
   { value: 'ratchet', label: 'Ratchet', hint: 'A drum that clicks, slows down and stops.' },
   { value: 'glitch', label: 'Glitch', hint: 'The digits scramble like a bad signal, then lock.' },
-  { value: 'plain', label: 'Plain', hint: 'The number fades in. No spin.' }
+  { value: 'plain', label: 'Plain', hint: 'The number fades in without spinning.' }
 ]
 
 export const SPEEDS: { value: Speed; label: string }[] = [

@@ -166,7 +166,7 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
         </div>
 
         <h3>Start from a default</h3>
-        <p className="hint">One for each theme. You get your own copy to change.</p>
+        <p className="hint">There is one for each theme, and you get your own copy to change.</p>
         <div className="sets-actions">
           {DEFAULT_SETS.map((d) => (
             <button key={d.name} className="ghost" onClick={() => createSet(d)}>

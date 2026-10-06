@@ -1,6 +1,6 @@
 # Interactive Madness Table
 
-A dramatic roller for any madness table, made for the DM who wants the roll to be a moment at the table. You roll in one window, and your players watch the result arrive on a second screen.
+A dramatic roller for any madness table. As the DM you roll in one window, and your players watch the result arrive on a second screen.
 
 Use it here: https://eosgithub.github.io/interactive-madness-table/
 
@@ -33,7 +33,7 @@ You pick the theme of the open set in the Edit tab, under its name.
 
 ## Your own tables
 
-The tool ships with six sets, one for each theme. Gothic Madness, the Gothic one, has three tables (short-term, long-term and indefinite madness) and 40 entries in all, each with three outcomes on a second roll: a boon, a neutral manifestation and a bane. The other five sets have one table of ten entries each on a d100, with no second roll: the entry itself carries the effect. The Hellenic one takes its madnesses from Greek epic and tragedy: Ajax and the flock, the madness of Heracles, the Furies, the Sirens. The gods go by their titles and are never named. No table names a DC. Where an effect calls for a saving throw, you set the DC. They are a starting point. In the Edit tab you can change every title, description, range and outcome, add or remove entries, switch the second roll on or off for each table, and change the dice. The editor tells you when the ranges leave a gap or overlap.
+The tool ships with six sets, one for each theme. Gothic Madness, the Gothic one, has three tables (short-term, long-term and indefinite madness) and 40 entries in all, each with three outcomes on a second roll: a boon, a neutral manifestation and a bane. The other five sets have one table of ten entries each on a d100, with no second roll: the entry itself carries the effect. The Hellenic one takes its madnesses from Greek epic and tragedy: Ajax and the flock, the madness of Heracles, the Furies, the Sirens. The gods go by their titles and are never named. No table names a DC. Where an effect calls for a saving throw, you set the DC. The defaults are a starting point: in the Edit tab you can change every title, description, range and outcome, add or remove entries, switch the second roll on or off for each table, and change the dice. The editor tells you when the ranges leave a gap or overlap.
 
 You can keep several sets of tables. The button with the name of the open set, at the top of the DM window, lists them. From there you open another set, start an empty one, start from one of the defaults, copy the open one, or delete one you no longer need. Each set is saved separately, and editing one leaves the others alone.
 
@@ -41,7 +41,7 @@ A set can be exported to a JSON file and imported again, which is also how you m
 
 ## Staging
 
-In Settings you choose how the show moves: three roll styles (Ratchet, Glitch, Plain), the speed, film grain, vignette and camera shake. A monitor beside the settings plays a roll style as soon as you pick it, with or without the player screen open. Animations can be turned off entirely, and the tool respects the system's reduced motion setting unless you tell it otherwise.
+In Settings you choose how the show moves: three roll styles (Ratchet, Glitch, Plain), the speed, film grain, vignette and camera shake. A monitor beside the settings plays a roll style as soon as you pick it, with or without the player screen open. Animations can be turned off entirely, and the tool respects the system's reduced-motion setting unless you tell it otherwise.
 
 In the Stage tab you can give any entry or outcome its own sound, image or video, which plays when that result comes up. Sound plays from the DM window, so connect that device to your speakers.
 

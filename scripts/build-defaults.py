@@ -25,12 +25,12 @@ CATEGORIES = {
 TEXT = {
     # ------------------------------------------------------------ short-term
     "short-term-1": ("The Unmade Self", "Everything you knew about who you are drops out of your mind.", [
-        "There is no self left in you to win over. You cannot be charmed: you are immune to the charmed condition.",
+        "There is no self left in you to win over. You are immune to the charmed condition.",
         "You take on the speech, posture and habits of the creature that was closest to you when the madness struck.",
         "Anything that offers to return you to yourself has your trust. Every saving throw you make against being charmed fails automatically.",
     ]),
     "short-term-2": ("The Sound of the Cosmos", "The roar of the cosmos has moved into your skull.", [
-        "No sound can harm you after the noise you carry in your head. Thunder damage does nothing to you: you are immune to it.",
+        "No sound can harm you after the noise you carry in your head. You are immune to thunder damage.",
         "You hear whispers at the back of your mind, and voices pass close behind you when no one is near.",
         "The world goes silent under the roar of the cosmos. You are deafened, and saving throws you make to maintain concentration have disadvantage.",
     ]),
@@ -55,7 +55,7 @@ TEXT = {
         "You cannot bear to touch anything. Whatever you are holding falls from your hands, and you cannot hold objects or grapple creatures.",
     ]),
     "short-term-7": ("The Failing Body", "The madness is more than your body can carry.", [
-        "Poison finds almost nothing left in you to spoil. The poisoned condition cannot affect you: you are immune to it.",
+        "Poison finds almost nothing left in you to spoil. You are immune to the poisoned condition.",
         "A stench comes off you that makes even you feel ill. Neither washing nor magic gets rid of it.",
         "Your own body works against you. You are poisoned, and being immune to the condition does not protect you.",
     ]),
@@ -70,7 +70,7 @@ TEXT = {
         "You are incapacitated. Taking damage equal to twice your level ends the effect early, and so does a greater restoration spell cast on you.",
     ]),
     "short-term-10": ("Revelations from Beyond", "Truths from beyond push their way into your mind.", [
-        "Only the truth you were shown matters now, and your body pays no attention to pain. You cannot be stunned: you are immune to the stunned condition.",
+        "Only the truth you were shown matters now, and your body pays no attention to pain. You are immune to the stunned condition.",
         "You talk to others about the truth you were shown. To you it could not be plainer, and to anyone who has not seen it your words are riddles.",
         "The truth pins you in place. You are stunned. Taking damage equal to your level ends the effect early, and so does a greater restoration spell cast on you.",
     ]),
@@ -126,7 +126,7 @@ TEXT = {
         "Much of your body is covered in deep scars that tear open whenever you are struck. Every time you take bludgeoning, piercing, or slashing damage, you take 1d6 more damage of the same type.",
     ]),
     "long-term-10": ("Rotting Flesh", "The influence is too strong for your body, which starts to rot.", [
-        "Your mind makes peace with the rot in your body and is glad of it, since everything decays in the end. The poisoned condition cannot affect you: you are immune to it.",
+        "Your mind makes peace with the rot in your body and is glad of it, since everything decays in the end. You are immune to the poisoned condition.",
         "You can feel the rot inside you and it makes you sick. Your disgust never lifts, and every time you smell something foul you have to spend your action retching.",
         "Dreadful wounds open across your body. Every 24 hours your hit point maximum goes down by 1, and you die if it reaches 0. Once every 24 hours, during a long rest, you or another creature can tend the wounds with a Wisdom (Medicine) check. The wounds heal after five successes.",
     ]),
