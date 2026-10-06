@@ -60,7 +60,6 @@ function ThemePick() {
       <legend>Theme</legend>
       {THEMES.map((t) => (
         <button key={t.id} className="theme-option" aria-pressed={t.id === theme} onClick={() => edit(E.setTheme(t.id))}>
-          <span className="theme-swatch" data-theme={t.id} aria-hidden />
           {t.label}
         </button>
       ))}
