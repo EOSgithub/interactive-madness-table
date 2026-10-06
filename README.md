@@ -74,6 +74,10 @@ npm run dev
 
 The default tables are written in `scripts/build-defaults.py`, which generates the two files in `src/content/`. The design notes are in `PIANO.md`, in Italian.
 
+## Licence
+
+The source code and the default tables are under the PolyForm Noncommercial License 1.0.0, in `LICENSE.md`. You can use the tool, read the code, change it and share it for any noncommercial purpose. The fonts, the icons, the images and the SRD 5.1 material keep the licences listed under Credits. The tables you write in the tool are yours.
+
 ## Credits
 
 Made by ToolsmithDev. New tools and early builds are on [Patreon](https://www.patreon.com/ToolsmithDev).

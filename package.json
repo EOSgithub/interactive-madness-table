@@ -2,6 +2,7 @@
   "name": "interactive-madness-table",
   "private": true,
   "version": "0.1.0",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "description": "A dramatic roller for any madness table, with a DM editor and a player screen. A ToolsmithDev tool.",
   "type": "module",
   "scripts": {
