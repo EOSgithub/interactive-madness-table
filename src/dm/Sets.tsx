@@ -124,8 +124,7 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
                   }}
                 >
                   <span className="set-name">{t.name || 'Untitled tables'}</span>
-                  <span className="set-meta set-theme">
-                    <span className="theme-swatch" data-theme={themeOf(t)} aria-hidden />
+                  <span className="set-meta">
                     {THEMES.find((x) => x.id === themeOf(t))?.label}. {count(t.categories.length, 'table', 'tables')},{' '}
                     {count(countEntries(t), 'entry', 'entries')}. Changed {day.format(set.updatedAt)}
                   </span>
@@ -171,7 +170,7 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
         <div className="sets-actions">
           {DEFAULT_SETS.map((d) => (
             <button key={d.name} className="ghost" onClick={() => createSet(d)}>
-              <span className="theme-swatch" data-theme={themeOf(d)} aria-hidden /> {d.name}
+              {d.name}
             </button>
           ))}
         </div>

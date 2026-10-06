@@ -580,15 +580,3 @@
 .theme-pick .hint {
   margin: 4px 0 0;
 }
-
-/* The theme of a set, beside its name in the list of sets. */
-.set-theme {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.set-theme .theme-swatch {
-  width: 12px;
-  height: 12px;
-}
