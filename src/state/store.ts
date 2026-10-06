@@ -207,7 +207,7 @@ export const useStore = create<State>()(
       // them, untouched or not, moves to the English set; other saved tables stay.
       migrate: (saved, version) => {
         const s = (saved ?? {}) as Partial<State> & { history?: unknown }
-        if (version < 2 && s.tables?.name === 'Follie') s.tables = DEFAULT_SETS[0]
+        if (version < 2 && s.tables?.name === 'Follie') s.tables = defaultFor('gothic')
         // Version 3 keeps several sets. The one set saved before becomes the first of them.
         if (version < 3 && s.tables) {
           const first = parseLibrary(undefined, undefined, [s.tables], Date.now())
@@ -218,13 +218,13 @@ export const useStore = create<State>()(
         // new name, the default sets of the other themes are added beside the DM's
         // own, and the log of the session is gone.
         if (version < 4 && s.sets && s.activeId) {
-          const renamed = s.sets.map((x) => (x.tables.name === 'Madness Tables' ? { ...x, tables: { ...x.tables, name: DEFAULT_SETS[0].name } } : x))
+          const renamed = s.sets.map((x) => (x.tables.name === 'Madness Tables' ? { ...x, tables: { ...x.tables, name: defaultFor('gothic').name } } : x))
           s.sets = addMissing({ sets: renamed, activeId: s.activeId }, DEFAULT_SETS, Date.now()).sets
           delete s.history
         }
         // Version 5 renames the Gothic default set, which shipped as "Bloodborne Madness".
         if (version < 5 && s.sets) {
-          s.sets = s.sets.map((x) => (x.tables.name === 'Bloodborne Madness' ? { ...x, tables: { ...x.tables, name: DEFAULT_SETS[0].name } } : x))
+          s.sets = s.sets.map((x) => (x.tables.name === 'Bloodborne Madness' ? { ...x, tables: { ...x.tables, name: defaultFor('gothic').name } } : x))
         }
         return s
       },

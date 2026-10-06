@@ -21,7 +21,7 @@
             1,
             10
           ],
-          "title": "No One at All",
+          "title": "The Unmade Self",
           "description": "Everything you knew about who you are drops out of your mind.",
           "outcomes": [
             {
@@ -59,7 +59,7 @@
             11,
             20
           ],
-          "title": "The Great Noise",
+          "title": "The Sound of the Cosmos",
           "description": "The roar of the cosmos has moved into your skull.",
           "outcomes": [
             {
@@ -97,7 +97,7 @@
             21,
             30
           ],
-          "title": "Too Much Seen",
+          "title": "Splintered Sight",
           "description": "You have seen more than a mind can keep, and your eyes can no longer be trusted.",
           "outcomes": [
             {
@@ -135,7 +135,7 @@
             31,
             40
           ],
-          "title": "The Open Throat",
+          "title": "The Haunting Screams",
           "description": "The madness leaves you through your throat.",
           "outcomes": [
             {
@@ -173,7 +173,7 @@
             41,
             50
           ],
-          "title": "Slack Limbs",
+          "title": "Folding Posture",
           "description": "While you struggle to understand what you are looking at, your body goes limp.",
           "outcomes": [
             {
@@ -211,7 +211,7 @@
             51,
             60
           ],
-          "title": "Unclean Hands",
+          "title": "Blasphemous Hands",
           "description": "You see your hands for what they are, tools of blasphemy.",
           "outcomes": [
             {
@@ -249,7 +249,7 @@
             61,
             70
           ],
-          "title": "Sick to the Bone",
+          "title": "The Failing Body",
           "description": "The madness is more than your body can carry.",
           "outcomes": [
             {
@@ -287,7 +287,7 @@
             71,
             80
           ],
-          "title": "What Was Shown",
+          "title": "Horrors Revealed",
           "description": "You are shown the horrors from beyond, and fear swallows you.",
           "outcomes": [
             {
@@ -325,7 +325,7 @@
             81,
             90
           ],
-          "title": "Snapped in Two",
+          "title": "The Broken Mind",
           "description": "Your mind breaks in half under the madness.",
           "outcomes": [
             {
@@ -363,7 +363,7 @@
             91,
             95
           ],
-          "title": "The Unwanted Truth",
+          "title": "Revelations from Beyond",
           "description": "Truths from beyond push their way into your mind.",
           "outcomes": [
             {
@@ -401,7 +401,7 @@
             96,
             100
           ],
-          "title": "A Stirring in the Blood",
+          "title": "The Beast Stirs",
           "description": "The beast in you opens its eyes and tries to take the reins.",
           "outcomes": [
             {
@@ -454,7 +454,7 @@
             1,
             10
           ],
-          "title": "Hollowed Out",
+          "title": "The Weakened Body",
           "description": "The corruption has eaten the strength out of you.",
           "outcomes": [
             {
@@ -492,7 +492,7 @@
             11,
             20
           ],
-          "title": "Borrowed Magic",
+          "title": "Magic from Beyond the Grave",
           "description": "A magic that is not of this world stirs in you.",
           "outcomes": [
             {
@@ -530,7 +530,7 @@
             21,
             30
           ],
-          "title": "Worth Nothing",
+          "title": "Shattered Self-Worth",
           "description": "Whatever you thought you were worth falls to pieces.",
           "outcomes": [
             {
@@ -568,7 +568,7 @@
             31,
             40
           ],
-          "title": "Unmeasured Strength",
+          "title": "Power Without Measure",
           "description": "You no longer have any idea how strong you are.",
           "outcomes": [
             {
@@ -606,7 +606,7 @@
             41,
             50
           ],
-          "title": "Behind the World",
+          "title": "The Truth Unveiled",
           "description": "You are shown the truth that lies behind the world.",
           "outcomes": [
             {
@@ -644,7 +644,7 @@
             51,
             60
           ],
-          "title": "Raw Nerves",
+          "title": "Burning Nerves",
           "description": "Your nerves burn under the madness until little is left of them.",
           "outcomes": [
             {
@@ -682,7 +682,7 @@
             61,
             70
           ],
-          "title": "The Graft",
+          "title": "Powers from Beyond",
           "description": "Powers from beyond seize you and grow into your flesh.",
           "outcomes": [
             {
@@ -720,7 +720,7 @@
             71,
             80
           ],
-          "title": "A Skipped Beat",
+          "title": "The Faltering Heart",
           "description": "Your heart stumbles, because a reality like this should not be possible.",
           "outcomes": [
             {
@@ -758,7 +758,7 @@
             81,
             90
           ],
-          "title": "The Marks It Left",
+          "title": "Scars of Madness",
           "description": "You tried to keep the madness away and failed, and your body bears the marks.",
           "outcomes": [
             {
@@ -796,7 +796,7 @@
             91,
             95
           ],
-          "title": "Slow Rot",
+          "title": "Rotting Flesh",
           "description": "The influence is too strong for your body, which starts to rot.",
           "outcomes": [
             {
@@ -834,7 +834,7 @@
             96,
             100
           ],
-          "title": "Claws",
+          "title": "The Beast Unleashed",
           "description": "The beast in you opens its eyes and takes the reins.",
           "outcomes": [
             {
@@ -886,7 +886,7 @@
             1,
             5
           ],
-          "title": "The Crutch",
+          "title": "Chained to Vice",
           "description": "Existence hurts and means nothing, so you find something to numb it and rely on it heavily.",
           "outcomes": [
             {
@@ -924,7 +924,7 @@
             6,
             10
           ],
-          "title": "Downhill",
+          "title": "Ever Worse",
           "description": "Life is bad, and each day it gets worse.",
           "outcomes": [
             {
@@ -962,7 +962,7 @@
             11,
             15
           ],
-          "title": "This Wretched Body",
+          "title": "Hatred of the Flesh",
           "description": "Your own body becomes hateful to you.",
           "outcomes": [
             {
@@ -1000,7 +1000,7 @@
             16,
             20
           ],
-          "title": "Breaking Point",
+          "title": "No Way to Bear It",
           "description": "Strain is more than you can handle now.",
           "outcomes": [
             {
@@ -1038,7 +1038,7 @@
             21,
             25
           ],
-          "title": "Eyes That Saw",
+          "title": "Blistered Eyes",
           "description": "The truth appears before you, and your eyes blister at the sight.",
           "outcomes": [
             {
@@ -1076,7 +1076,7 @@
             26,
             30
           ],
-          "title": "A Taste for Pain",
+          "title": "The Call of Pain",
           "description": "Your nerves catch fire under the madness, and your mind starts to crave pain.",
           "outcomes": [
             {
@@ -1114,7 +1114,7 @@
             31,
             35
           ],
-          "title": "Small Rituals",
+          "title": "Ways of Coping",
           "description": "Strange powers from beyond get a grip on you, and you manage in whatever way you can.",
           "outcomes": [
             {
@@ -1152,7 +1152,7 @@
             36,
             40
           ],
-          "title": "False Witness",
+          "title": "The Lying Heart",
           "description": "Your heart refuses a reality like this, and it stops being honest about it.",
           "outcomes": [
             {
@@ -1190,7 +1190,7 @@
             41,
             45
           ],
-          "title": "Coming Loose",
+          "title": "Nerves and Mind Adrift",
           "description": "Your nerves and your mind start slipping out of your control.",
           "outcomes": [
             {
@@ -1228,7 +1228,7 @@
             46,
             50
           ],
-          "title": "A Worse Body",
+          "title": "The Body Rewritten",
           "description": "Your body changes, and none of the changes help you.",
           "outcomes": [
             {
@@ -1266,7 +1266,7 @@
             51,
             55
           ],
-          "title": "Out of Step",
+          "title": "Reality Askew",
           "description": "Your body no longer takes reality in the right way.",
           "outcomes": [
             {
@@ -1304,7 +1304,7 @@
             56,
             60
           ],
-          "title": "Mistaken Identity",
+          "title": "Tricks of the Mind",
           "description": "Your mind begins to tell you false things about yourself.",
           "outcomes": [
             {
@@ -1342,7 +1342,7 @@
             61,
             65
           ],
-          "title": "Unbridled",
+          "title": "Past All Restraint",
           "description": "All restraint leaves you, and your body does what it likes in any company.",
           "outcomes": [
             {
@@ -1380,7 +1380,7 @@
             66,
             70
           ],
-          "title": "The Grudge",
+          "title": "Hatred Beyond Reason",
           "description": "A hatred bigger than you are gets hold of you.",
           "outcomes": [
             {
@@ -1418,7 +1418,7 @@
             71,
             75
           ],
-          "title": "A Stranger's Body",
+          "title": "The Strange Body",
           "description": "Your body begins doing things it should not.",
           "outcomes": [
             {
@@ -1456,7 +1456,7 @@
             76,
             80
           ],
-          "title": "What Stays With You",
+          "title": "The Wound in the Mind",
           "description": "What you went through stays lodged in your mind.",
           "outcomes": [
             {
@@ -1494,7 +1494,7 @@
             81,
             85
           ],
-          "title": "The Summons",
+          "title": "The Call from Beyond",
           "description": "Something on the other side is calling you.",
           "outcomes": [
             {
@@ -1532,7 +1532,7 @@
             86,
             100
           ],
-          "title": "Nothing but the Beast",
+          "title": "The Beast Triumphant",
           "description": "The beast in you opens its eyes and takes control.",
           "outcomes": [
             {

@@ -24,204 +24,204 @@ CATEGORIES = {
 
 TEXT = {
     # ------------------------------------------------------------ short-term
-    "short-term-1": ("No One at All", "Everything you knew about who you are drops out of your mind.", [
+    "short-term-1": ("The Unmade Self", "Everything you knew about who you are drops out of your mind.", [
         "There is no self left in you to win over. You cannot be charmed: you are immune to the charmed condition.",
         "You take on the speech, posture and habits of the creature that was closest to you when the madness struck.",
         "Anything that offers to return you to yourself has your trust. Every saving throw you make against being charmed fails automatically.",
     ]),
-    "short-term-2": ("The Great Noise", "The roar of the cosmos has moved into your skull.", [
+    "short-term-2": ("The Sound of the Cosmos", "The roar of the cosmos has moved into your skull.", [
         "No sound can harm you after the noise you carry in your head. Thunder damage does nothing to you: you are immune to it.",
         "You hear whispers at the back of your mind, and voices pass close behind you when no one is near.",
         "The world goes silent under the roar of the cosmos. You are deafened, and saving throws you make to maintain concentration have disadvantage.",
     ]),
-    "short-term-3": ("Too Much Seen", "You have seen more than a mind can keep, and your eyes can no longer be trusted.", [
+    "short-term-3": ("Splintered Sight", "You have seen more than a mind can keep, and your eyes can no longer be trusted.", [
         "You see more than you did before, as though the see invisibility spell were on you.",
         "Pale figures move at the corner of your eye and vanish as soon as you look at them.",
         "You are blinded. Special senses such as blindsight or tremorsense do not let you see either.",
     ]),
-    "short-term-4": ("The Open Throat", "The madness leaves you through your throat.", [
+    "short-term-4": ("The Haunting Screams", "The madness leaves you through your throat.", [
         "Your scream can wound. On each of your turns you can use a bonus action to scream at a creature within 30 feet that you can see. If the creature can hear you, it makes a Constitution saving throw. It takes 1d12 thunder damage if it fails, and half as much if it succeeds.",
         "Normal speech is beyond you. You can make yourself understood only by screaming.",
         "When you speak, your screams reach every creature within 300 feet. Coherent sentences are beyond you, and so are the verbal components of spells.",
     ]),
-    "short-term-5": ("Slack Limbs", "While you struggle to understand what you are looking at, your body goes limp.", [
+    "short-term-5": ("Folding Posture", "While you struggle to understand what you are looking at, your body goes limp.", [
         "Your limp body bends away from blows. When an attack targets you, or an effect that calls for a Dexterity saving throw, you can use your reaction to sway aside. Until the start of your next turn you have +1 to AC and advantage on Dexterity saving throws.",
         "You curl up like a scared child and search for a protector, anyone who could stand in for a parent. When you have found one, you hold on to them and stay at their side no matter what happens.",
         "Your legs stop obeying you. You fall prone and cannot get up, and any flying speed you have is no use to you.",
     ]),
-    "short-term-6": ("Unclean Hands", "You see your hands for what they are, tools of blasphemy.", [
+    "short-term-6": ("Blasphemous Hands", "You see your hands for what they are, tools of blasphemy.", [
         "Tools like these can shatter a mind. Once per turn, when a melee weapon attack of yours hits a creature, you can deal 1d8 psychic damage to it on top of the rest.",
         "You will not use your hands, and you hide them from view. When someone looks at them for long, you become nervous and defensive.",
         "You cannot bear to touch anything. Whatever you are holding falls from your hands, and you cannot hold objects or grapple creatures.",
     ]),
-    "short-term-7": ("Sick to the Bone", "The madness is more than your body can carry.", [
+    "short-term-7": ("The Failing Body", "The madness is more than your body can carry.", [
         "Poison finds almost nothing left in you to spoil. The poisoned condition cannot affect you: you are immune to it.",
         "A stench comes off you that makes even you feel ill. Neither washing nor magic gets rid of it.",
         "Your own body works against you. You are poisoned, and being immune to the condition does not protect you.",
     ]),
-    "short-term-8": ("What Was Shown", "You are shown the horrors from beyond, and fear swallows you.", [
+    "short-term-8": ("Horrors Revealed", "You are shown the horrors from beyond, and fear swallows you.", [
         "Your face carries a trace of what you saw. When this madness comes over you, every creature within 30 feet of you makes a Wisdom saving throw, and on a failure it is frightened of you for 1 minute. A frightened creature makes the save again at the end of each of its turns, and a success ends the effect for it.",
         "Every sound and every movement makes you start, because you are certain something is on its way.",
         "The horrors look out at you from the faces of your allies, and you are frightened of your allies. On each of your turns you must take the Dash action and get away from them by the fastest route, unless you have nowhere to go. If none of them is in sight when your turn starts, you can use your action to end the madness.",
     ]),
-    "short-term-9": ("Snapped in Two", "Your mind breaks in half under the madness.", [
+    "short-term-9": ("The Broken Mind", "Your mind breaks in half under the madness.", [
         "Your body moves more freely without your mind in the way. On each of your turns you get one additional action, and you can use it only to Dash, Disengage, Hide, or Use an Object.",
         "Laughter bursts out of you with no warning, usually at the worst moment it could.",
         "You are incapacitated. Taking damage equal to twice your level ends the effect early, and so does a greater restoration spell cast on you.",
     ]),
-    "short-term-10": ("The Unwanted Truth", "Truths from beyond push their way into your mind.", [
+    "short-term-10": ("Revelations from Beyond", "Truths from beyond push their way into your mind.", [
         "Only the truth you were shown matters now, and your body pays no attention to pain. You cannot be stunned: you are immune to the stunned condition.",
         "You talk to others about the truth you were shown. To you it could not be plainer, and to anyone who has not seen it your words are riddles.",
         "The truth pins you in place. You are stunned. Taking damage equal to your level ends the effect early, and so does a greater restoration spell cast on you.",
     ]),
-    "short-term-11": ("A Stirring in the Blood", "The beast in you opens its eyes and tries to take the reins.", [
+    "short-term-11": ("The Beast Stirs", "The beast in you opens its eyes and tries to take the reins.", [
         "No mind holds your body back from its animal instincts. The haste spell takes effect on you. It needs no concentration and stays until the madness ends.",
         "You slur your words like a drunk, and animal sounds come out between one sentence and the next.",
         "Your mind puts everything it has into stopping you from turning into a beast, and you fall unconscious. Taking damage equal to your level ends the effect early, and so does a greater restoration spell cast on you.",
     ]),
     # ------------------------------------------------------------- long-term
-    "long-term-1": ("Hollowed Out", "The corruption has eaten the strength out of you.", [
+    "long-term-1": ("The Weakened Body", "The corruption has eaten the strength out of you.", [
         "Your frail body gets knocked out of harm's way. Every time you take damage, it pushes you back 10 feet.",
         "You get tired fast, and any effort takes a heavy toll. A long rest takes you 4 hours more than usual to finish.",
         "Your legs can hardly hold you up. Every time you take damage, you fall prone.",
     ]),
-    "long-term-2": ("Borrowed Magic", "A magic that is not of this world stirs in you.", [
+    "long-term-2": ("Magic from Beyond the Grave", "A magic that is not of this world stirs in you.", [
         "Touching the beyond has left you with a gift. You learn one cantrip from the warlock spell list, picked at random, and you cast it with Charisma as your spellcasting ability.",
         "This world's magic sickens you. Every time you cast a spell or have one cast on you, you gag and stumble, and your reaction is gone until the start of your next turn.",
         "The new magic is more than you can hold in, and it spills out when you are wounded. When a single attack deals 15 or more damage to you, arcane force bursts from you. You and every creature within 10 feet of you make a Constitution saving throw, and those who fail take 2d10 force damage. After that it cannot happen again for 1d6 rounds.",
     ]),
-    "long-term-3": ("Worth Nothing", "Whatever you thought you were worth falls to pieces.", [
+    "long-term-3": ("Shattered Self-Worth", "Whatever you thought you were worth falls to pieces.", [
         "Paranoia has you watching everything and everyone, to protect what little you still have. Add 1d4 to every Perception or Insight check you make.",
         "You are gloomy and bitter, and in every conversation you put yourself down.",
         "Feeling useless seeps into all you do and erodes the skill you once had. Subtract 1d4 from every ability check you make.",
     ]),
-    "long-term-4": ("Unmeasured Strength", "You no longer have any idea how strong you are.", [
+    "long-term-4": ("Power Without Measure", "You no longer have any idea how strong you are.", [
         "You do not know where your limits are, so you go beyond them. Every time you deal damage, roll the smallest damage die used once more and add it.",
         "Your own strength is a mystery to you. Your handshake either crushes or hangs limp, your hugs are no better, and every physical task is a matter of luck.",
         "You are afraid of pulling yourself to pieces, and you hold back without wanting to. Every time you deal damage, roll the smallest damage die used once more and subtract it, to a minimum of 0.",
     ]),
-    "long-term-5": ("Behind the World", "You are shown the truth that lies behind the world.", [
+    "long-term-5": ("The Truth Unveiled", "You are shown the truth that lies behind the world.", [
         "You are able to take it in. The GM picks one Intelligence skill at random. You become proficient in it, and checks you make with it add double your proficiency bonus.",
         "The beyond holds your interest like nothing else. Whenever you notice or hear of something otherworldly, you leave whatever you were doing to investigate it and get nearer to it, in body or in some other way.",
         "The revelations keep calling, pressing you to learn more and to become more. Your saving throws against madness have disadvantage.",
     ]),
-    "long-term-6": ("Raw Nerves", "Your nerves burn under the madness until little is left of them.", [
+    "long-term-6": ("Burning Nerves", "Your nerves burn under the madness until little is left of them.", [
         "You are past the reach of pain. You cannot be stunned, and the only thing that knocks you unconscious is dropping to 0 hit points.",
         "What is left of your nerves itches all the time. Only bare metal against your skin stops the itch, for as long as it touches you.",
         "The pain does not stop, and you cannot concentrate or fight as well as you could. Your Armor Class no longer includes your Dexterity modifier, and your Dexterity checks and Dexterity saving throws have disadvantage.",
     ]),
-    "long-term-7": ("The Graft", "Powers from beyond seize you and grow into your flesh.", [
+    "long-term-7": ("Powers from Beyond", "Powers from beyond seize you and grow into your flesh.", [
         "You master them. Your Constitution saving throws to maintain concentration have advantage. Also, when you fail a saving throw, you can decide that you succeed instead. If you do, roll again on the long-term table and take on a new effect.",
         "While you try to make sense of what is now part of you, you come adrift from the world around you. Nothing near you feels real, and you jump whenever something touches you.",
         "The new powers are more than you can carry, and they wear your mind down. Your Intelligence, Wisdom, and Charisma checks have disadvantage, and so do your Constitution saving throws to maintain concentration.",
     ]),
-    "long-term-8": ("A Skipped Beat", "Your heart stumbles, because a reality like this should not be possible.", [
+    "long-term-8": ("The Faltering Heart", "Your heart stumbles, because a reality like this should not be possible.", [
         "Your pulse races and keeps you sharp. Your passive Wisdom (Perception) score and your initiative rolls go up by 3.",
         "Anything unexpected is too much for you. Every time you are surprised, you scream as loudly as you can. If it happens in combat, you fall unconscious until the start of your next turn.",
         "Your heart grows weak. You gain one level of exhaustion, and nothing removes it until the madness ends. Every time you become frightened you gain another level, and that one can be removed in the normal way.",
     ]),
-    "long-term-9": ("The Marks It Left", "You tried to keep the madness away and failed, and your body bears the marks.", [
+    "long-term-9": ("Scars of Madness", "You tried to keep the madness away and failed, and your body bears the marks.", [
         "Your skin has grown thick with scar tissue. Your AC goes up by 1.",
         "You are covered in scars far past ugly, and most people are afraid of them, children most of all. You have +2 to Intimidation checks and -2 to Persuasion checks.",
         "Much of your body is covered in deep scars that tear open whenever you are struck. Every time you take bludgeoning, piercing, or slashing damage, you take 1d6 more damage of the same type.",
     ]),
-    "long-term-10": ("Slow Rot", "The influence is too strong for your body, which starts to rot.", [
+    "long-term-10": ("Rotting Flesh", "The influence is too strong for your body, which starts to rot.", [
         "Your mind makes peace with the rot in your body and is glad of it, since everything decays in the end. The poisoned condition cannot affect you: you are immune to it.",
         "You can feel the rot inside you and it makes you sick. Your disgust never lifts, and every time you smell something foul you have to spend your action retching.",
         "Dreadful wounds open across your body. Every 24 hours your hit point maximum goes down by 1, and you die if it reaches 0. Once every 24 hours, during a long rest, you or another creature can tend the wounds with a Wisdom (Medicine) check. The wounds heal after five successes.",
     ]),
-    "long-term-11": ("Claws", "The beast in you opens its eyes and takes the reins.", [
+    "long-term-11": ("The Beast Unleashed", "The beast in you opens its eyes and takes the reins.", [
         "You keep most of your humanity, though enough of the beast breaks free. Your Dexterity saving throws have advantage. Each of your hands turns into a claw. While a hand is empty you can use its claw as a weapon that deals 1d6 slashing damage on a hit. Once on each of your turns, when you take the Attack action and attack with a claw, you can make one more claw attack as part of that action.",
         "Your body is altered, and something of your old shape is still there. The GM chooses an animal, and you take on its features. If this change has already happened to you, count this result as a 10 and apply that outcome instead.",
         "Your body turns into a beast or monstrosity that the GM chooses. Its challenge rating is half your level, rounded up. In every other way the change follows the rules of the polymorph spell, with one exception: when you drop to 0 hit points you fall unconscious and do not return to your own form.",
     ]),
     # ------------------------------------------------------------ indefinite
-    "indefinite-1": ("The Crutch", "Existence hurts and means nothing, so you find something to numb it and rely on it heavily.", [
+    "indefinite-1": ("Chained to Vice", "Existence hurts and means nothing, so you find something to numb it and rely on it heavily.", [
         "A bad habit you already have, such as drink or drugs, takes control, and you come to depend on it. If you have none, you start drinking. Your attack rolls, saving throws, and ability checks take a -3 penalty. While you are under the influence, you also have +3 to saving throws against being frightened and against further madness.",
         "You take large doses of something to numb the pain of being alive. You pick up the vice that suits you best: promiscuity, drugs, drink, or smoking. Unless you indulge at least twice every 24 hours, you subtract 1d6 from your Wisdom saving throws until you do.",
         "You try drink, drugs, and every other vice, and not one of them has any effect on you now. Your body rejects whatever you take before it can work, and any carnal thought disgusts you.",
     ]),
-    "indefinite-2": ("Downhill", "Life is bad, and each day it gets worse.", [
+    "indefinite-2": ("Ever Worse", "Life is bad, and each day it gets worse.", [
         "Each failure pulls another one after it. After any ability check, attack roll, or saving throw that you fail, your next one has disadvantage.",
         "The world feels rotten to you, and you rely only on what has worked in the past. You flatly refuse anything you had not tried before the madness took you, whether it is a new spell, a new feature, or a new tavern.",
         "Maybe you were promising once, but that was a long time ago. All your skill proficiencies are gone, and on the skills you used to be proficient in you take a penalty equal to your proficiency bonus. Features that add a bonus to a check, such as Expertise or Jack of All Trades, stop working for you.",
     ]),
-    "indefinite-3": ("This Wretched Body", "Your own body becomes hateful to you.", [
+    "indefinite-3": ("Hatred of the Flesh", "Your own body becomes hateful to you.", [
         "This madness lies hidden until you have been alone with a blade for 10 seconds or more. Then a fit of rage takes you, and you cut off one of your limbs and destroy it.",
         "You wrap yourself in layers of clothing and will not let anyone see an inch of your skin. From the moment you notice that your skin is exposed until you cover it again, your ability checks and attack rolls have disadvantage.",
         "Your soul might do better to leave this miserable body behind. When you drop to 0 hit points, you begin with two failed death saving throws, and every death saving throw you make after that fails automatically.",
     ]),
-    "indefinite-4": ("Breaking Point", "Strain is more than you can handle now.", [
+    "indefinite-4": ("No Way to Bear It", "Strain is more than you can handle now.", [
         "Every time you are under strain, rage takes you. You attack the source of the strain without restraint until it is dead or you are knocked unconscious. The GM decides when you are under strain.",
         "You have no defence against fear. Every saving throw you make against being frightened fails automatically, and no effect can make you immune to fear.",
         "In any tense or social situation you withdraw into yourself. Your Charisma and Dexterity checks have disadvantage, and any swagger you once had is gone.",
     ]),
-    "indefinite-5": ("Eyes That Saw", "The truth appears before you, and your eyes blister at the sight.", [
+    "indefinite-5": ("Blistered Eyes", "The truth appears before you, and your eyes blister at the sight.", [
         "You lose your sight, and it does not come back for as long as this madness lasts.",
         "The Ethereal Plane is visible to you, and the Material Plane no longer is. For creatures and objects on the Material Plane, you count as blinded.",
         "Your eyes turn dark and light becomes unbearable. In bright sunlight or moonlight, your attack rolls have disadvantage, and so do your Perception checks that rely on sight.",
     ]),
-    "indefinite-6": ("A Taste for Pain", "Your nerves catch fire under the madness, and your mind starts to crave pain.", [
+    "indefinite-6": ("The Call of Pain", "Your nerves catch fire under the madness, and your mind starts to crave pain.", [
         "A part of you begs to be harmed. Your saving throws against effects that deal damage have disadvantage, and attack rolls against you have advantage. In exchange, your saving throws against effects that deal no damage have advantage, because your mind finds such effects unworthy of its attention.",
         "When you take more than 20 damage in one turn, the pain breaks out of you as psychic force. You and every creature within 30 feet of you make an Intelligence saving throw, and those who fail take 3d10 psychic damage. Your own save has disadvantage.",
         "You are drawn to death. When you can see a creature that is unconscious at 0 hit points, you feel the urge to finish it, and you must spend your turn trying to kill it.",
     ]),
-    "indefinite-7": ("Small Rituals", "Strange powers from beyond get a grip on you, and you manage in whatever way you can.", [
+    "indefinite-7": ("Ways of Coping", "Strange powers from beyond get a grip on you, and you manage in whatever way you can.", [
         "One object you own becomes your fixation. Unless it is exactly as it should be at all times, you get no peace. For as long as it is out of order, your ability checks and attack rolls have disadvantage.",
         "At first nothing happens. (The rest is for the GM only.) The next time you fall unconscious in battle, the event leaves a scar on your mind. If you meet the same enemy in battle again while this madness lasts, you are cursed. While you are cursed, you make a Wisdom saving throw every time you finish a long rest. If you fail, your mind goes back over its failures again and again, and the rest gives you no benefit.",
         "You develop an odd phobia, of long words, of the dark, or of something else in your life. Decide with the GM which one fits your character.",
     ]),
-    "indefinite-8": ("False Witness", "Your heart refuses a reality like this, and it stops being honest about it.", [
+    "indefinite-8": ("The Lying Heart", "Your heart refuses a reality like this, and it stops being honest about it.", [
         "Your hold on what is real slips. You see people who are not there and hear sounds nobody made. It happens in battle too, where the field fills with enemies that do not exist. At the start of each of your turns you make a Wisdom saving throw. If you fail, you must use your action to attack a target that the GM chooses.",
         "Lying becomes a compulsion. Every time you try to tell the truth, you make a Wisdom saving throw. If you fail, you lie, even when it works against you.",
         "Small valuables are more than your hands can resist. When you notice one, you make a Wisdom saving throw. If you fail, you try to steal something nearby, whatever the consequences.",
     ]),
-    "indefinite-9": ("Coming Loose", "Your nerves and your mind start slipping out of your control.", [
+    "indefinite-9": ("Nerves and Mind Adrift", "Your nerves and your mind start slipping out of your control.", [
         "Your senses grow so sharp that they hurt, and you are lost in the flood of them. Any ability check that relies on sight, hearing, smell, taste, or touch has disadvantage for you, and so do your Wisdom saving throws.",
         "Your grip on where you are loosens, and at the worst moments you teleport a short way, 10 to 60 feet. When and where is up to the GM.",
         "Every creature within 60 feet of you hears your thoughts. You cannot keep a secret from those creatures, and you cannot surprise them.",
     ]),
-    "indefinite-10": ("A Worse Body", "Your body changes, and none of the changes help you.", [
+    "indefinite-10": ("The Body Rewritten", "Your body changes, and none of the changes help you.", [
         "One kind of harm becomes agony to you: fire, cold, lightning, acid, poison, or thunder. You are vulnerable to that damage type, and any resistance or immunity you had to it is gone.",
         "You draw lightning the way a rod does. Any lightning within 120 feet of you, and any effect there that deals lightning damage, bends toward you and strikes you as well. Every saving throw you make against an effect that deals lightning damage fails automatically.",
         "You lose all your body hair, and your body can no longer keep itself warm or cool. Your saving throws against extreme cold and extreme heat have disadvantage, as do those against disease and poison. Any resistance to poison damage you had is gone.",
     ]),
-    "indefinite-11": ("Out of Step", "Your body no longer takes reality in the right way.", [
+    "indefinite-11": ("Reality Askew", "Your body no longer takes reality in the right way.", [
         "You blink in and out of the world, and parts of you slip through objects and creatures. Every attack you make and every spell you cast has a 50 percent chance of slipping into the Ethereal Plane, where it passes through its targets and does them no harm.",
         "Distances deceive you, and things seem closer or farther away than they are. Your ranged attack rolls have disadvantage, and so do your Perception checks that rely on sight.",
         "For you time runs unevenly, and it stretches or bunches up with no warning. Your initiative rolls have disadvantage. At the start of each of your turns, roll a d6 to learn what you can do. On 1-2, you get only one of these: an action, a bonus action, or movement. On 3-4, you get movement and either an action or a bonus action. On 5-6, you take a normal turn.",
     ]),
-    "indefinite-12": ("Mistaken Identity", "Your mind begins to tell you false things about yourself.", [
+    "indefinite-12": ("Tricks of the Mind", "Your mind begins to tell you false things about yourself.", [
         "You become much too confident and run risks you have no need to run. Before you try anything cautious or well reasoned, you make a Wisdom saving throw. If you fail, you act on impulse.",
         "You are convinced that you are a god, a royal, or some other great figure. When you deal with other people, your Wisdom and Charisma checks have disadvantage.",
         "You are convinced that you belong to another people. Their native tongue is the only language you can speak, and unless that tongue is Common you can no longer speak Common. If you never knew their language, you make sounds that resemble it and mean nothing.",
     ]),
-    "indefinite-13": ("Unbridled", "All restraint leaves you, and your body does what it likes in any company.", [
+    "indefinite-13": ("Past All Restraint", "All restraint leaves you, and your body does what it likes in any company.", [
         "Every time you roll initiative, you begin to dance. At the start of each of your turns you make a Constitution saving throw, and a success stops the dance for that turn. If you fail, you go on dancing, as with the irresistible dance spell.",
         "Helpless laughter seizes you at the least suitable moments, and speaking or focusing becomes hard. While you concentrate on a spell, you make a Wisdom saving throw at the start of each of your turns, and you lose concentration if you fail. Your Stealth checks also have disadvantage.",
         "Your hunger has no bottom. When you come across food, however foul, rancid, or plainly abominable, you make a Wisdom saving throw, and you eat it if you fail.",
     ]),
-    "indefinite-14": ("The Grudge", "A hatred bigger than you are gets hold of you.", [
+    "indefinite-14": ("Hatred Beyond Reason", "A hatred bigger than you are gets hold of you.", [
         "The hatred develops a will of its own. A second personality forms in you, and it tries to destroy everything you care for and to feed everything you despise.",
         "The GM chooses one creature, object, or situation, and you come to hate it beyond reason. When you meet it, you make a Wisdom saving throw. If you fail, you are hostile toward it for 1 hour, or until it is out of your sight or destroyed.",
         "You take pleasure in the idea of betrayal. When you are about to make an attack and more than one creature is in its range, roll a d20. On a 10 or lower, the attack goes at another creature chosen at random instead of the one you meant.",
     ]),
-    "indefinite-15": ("A Stranger's Body", "Your body begins doing things it should not.", [
+    "indefinite-15": ("The Strange Body", "Your body begins doing things it should not.", [
         "Your muscles lose track of which were the strong ones and which the quick ones. Swap your Strength score with your Dexterity score.",
         "You are sure that you have a serious illness, and it may or may not be real. Your Constitution checks and Constitution saving throws have disadvantage.",
         "Your body carries on though it is no longer alive. Your creature type is now undead, and magical healing does nothing for you.",
     ]),
-    "indefinite-16": ("What Stays With You", "What you went through stays lodged in your mind.", [
+    "indefinite-16": ("The Wound in the Mind", "What you went through stays lodged in your mind.", [
         "Nightmares pursue you and you wake exhausted. When you finish a long rest with fewer than 2 levels of exhaustion, you wake with 2.",
         "The GM chooses one kind of creature, and it fills you with intense fear. If such a creature is within 10 feet of you on your turn, you must spend your movement and your action to Dash away from it. Creatures of that kind make opportunity attacks against you with advantage.",
         "The horrors you saw tie up your tongue and throat. You cannot speak or make any sound at all, and that rules out the verbal components of spells.",
     ]),
-    "indefinite-17": ("The Summons", "Something on the other side is calling you.", [
+    "indefinite-17": ("The Call from Beyond", "Something on the other side is calling you.", [
         "Every shape of the moon calls to you. Saving throws caused by lunar effects, direct or indirect, have disadvantage for you, and your ability checks about lunar lore have advantage.",
         "You follow the call and attempt to ascend, and the attempt fails. Your speed is halved, and teleporting is no longer possible for you. If something teleports you against your will, the banishment spell for example, you take 3d10 force damage as the cosmos collects what it is owed from your flesh.",
         "You follow the call, and your ascension succeeds by half. Your creature type is now aberration. You have resistance to psychic damage and advantage on saving throws against telepathy. All your empathy is gone, and your Insight and Persuasion checks have disadvantage. You also understand Deep Speech, and your saving throws against charm effects that come from aberrations have disadvantage.",
     ]),
-    "indefinite-18": ("Nothing but the Beast", "The beast in you opens its eyes and takes control.", [
+    "indefinite-18": ("The Beast Triumphant", "The beast in you opens its eyes and takes control.", [
         "The beast chews at your mind, and only by staying alert can you keep it down. Every time you fall unconscious, roll 1d2. On a 1, your mind loses its hold, and when you next wake the beast controls your body. The GM controls you from then until you fall unconscious again. In that time the chaotic evil beast inside you looks for other beasts and tries to drive you out of your own body. On a 2, you wake with your sanity kept or restored.",
         "Your body is altered, and something of your old shape is still there. You take on the features of an animal, and they are permanent. Decide with the GM which features suit your character. Only a wish spell can undo the change. If this change has already happened to you, count this result as a 10 and apply that outcome instead.",
         "You turn into a beast or monstrosity that the GM chooses. Its challenge rating is half your level, rounded up. Your mind is lost, and you are a creature under the GM's control.",

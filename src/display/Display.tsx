@@ -23,7 +23,7 @@ const BANNER: Record<ThemeId, Record<OutcomeKind | 'plain', string>> = {
   surreal: { boon: 'A Kind Dream', neutral: 'Logic Slips', bane: 'The Dream Turns', plain: 'Nothing Is As It Was' },
   occult: { boon: 'The Pact Rewards', neutral: 'The Sign Appears', bane: 'The Price Is Paid', plain: 'The Seal Is Broken' },
   societal: { boon: 'Appeal Granted', neutral: 'Noted On File', bane: 'Sentence Passed', plain: 'Case Opened' },
-  hellenic: { boon: 'Favour of the Gods', neutral: 'The Gods Take Notice', bane: 'Wrath of the Gods', plain: 'Sent by the Gods' }
+  hellenic: { boon: 'Favour of the Gods', neutral: 'The Gods Take Notice', bane: 'Wrath of the Gods', plain: 'Cursed by the Gods' }
 }
 
 /** A step time this far in the past was set by Skip: the show is over. */
