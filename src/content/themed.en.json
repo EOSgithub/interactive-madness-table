@@ -5,7 +5,7 @@
     "categories": [
       {
         "id": "cosmic",
-        "label": "What the Stars Showed You",
+        "label": "Under the Open Sky",
         "blurb": "You looked up for too long.",
         "duration": {
           "kind": "dice",
@@ -136,8 +136,8 @@
     "categories": [
       {
         "id": "surreal",
-        "label": "The Dream That Stayed",
-        "blurb": "You woke up and it did not stop.",
+        "label": "Waking Dreams",
+        "blurb": "You woke up, and the dream carried on.",
         "duration": {
           "kind": "dice",
           "die": 10,
@@ -267,8 +267,8 @@
     "categories": [
       {
         "id": "occult",
-        "label": "The Price of Knowing",
-        "blurb": "You were told not to open it.",
+        "label": "Forbidden Reading",
+        "blurb": "You opened the book you were told to leave shut.",
         "duration": {
           "kind": "fixed",
           "text": "Until the next dawn:"
@@ -397,8 +397,8 @@
     "categories": [
       {
         "id": "societal",
-        "label": "The Machine Has Noticed You",
-        "blurb": "Please wait. Your case is being processed.",
+        "label": "Under Review",
+        "blurb": "Your case is being processed. Please wait.",
         "duration": {
           "kind": "dice",
           "die": 4,
@@ -528,7 +528,7 @@
     "categories": [
       {
         "id": "hellenic",
-        "label": "Sent by the Gods",
+        "label": "Divine Madness",
         "blurb": "A god has taken an interest in you.",
         "duration": {
           "kind": "fixed",

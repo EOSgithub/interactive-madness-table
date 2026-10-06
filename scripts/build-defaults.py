@@ -235,7 +235,7 @@ TEXT = {
 # the d100 evenly, in the order written. No effect names a DC: where a roll decides,
 # it is a plain die.
 THEMED = [
-    ("Cosmic Madness", "cosmic", "What the Stars Showed You", "You looked up for too long.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
+    ("Cosmic Madness", "cosmic", "Under the Open Sky", "You looked up for too long.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
         ("The Scale of Things", "You have just worked out how far away the nearest star is, and the number will not leave you alone.",
          "You are frightened of the open sky and cannot willingly leave cover while you can see it."),
         ("A Colour With No Name", "There is a new colour at the edge of things. It is on your hands as well.",
@@ -257,7 +257,7 @@ THEMED = [
         ("It Looked Back", "You always assumed that whatever is out there had never heard of you.",
          "You have vulnerability to psychic damage. You cannot hide, and creatures within 60 feet of you know where you are even when you are invisible."),
     ]),
-    ("Surreal Madness", "surreal", "The Dream That Stayed", "You woke up and it did not stop.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
+    ("Surreal Madness", "surreal", "Waking Dreams", "You woke up, and the dream carried on.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
         ("The Way Out", "The way out of here is through a jar, a boot or a teacup. You only have to find the right one.",
          "At the start of each of your turns, roll a d6. On a 1 or 2, you spend your action trying to climb into the nearest container, whatever its size."),
         ("Borrowed Gravity", "The floor has started to feel like a wall you are leaning against.",
@@ -279,7 +279,7 @@ THEMED = [
         ("Only a Dream", "You have realised you are asleep, which is a relief, because it means none of this can hurt you.",
          "You are immune to the frightened condition and have advantage on saving throws against being charmed. You cannot take the Dodge or Disengage action."),
     ]),
-    ("Occult Madness", "occult", "The Price of Knowing", "You were told not to open it.", {"kind": "fixed", "text": "Until the next dawn:"}, [
+    ("Occult Madness", "occult", "Forbidden Reading", "You opened the book you were told to leave shut.", {"kind": "fixed", "text": "Until the next dawn:"}, [
         ("The Name", "You know a name you were never taught. It is on your tongue every time you open your mouth.",
          "Whenever you cast a spell that has a verbal component, roll a d6. On a 1 or 2 you say the name instead. The spell fails, the spell slot is not used, and you take 1d6 psychic damage."),
         ("Marked", "A sign came up on your forearm overnight, like a bruise in the shape of writing. It is warm.",
@@ -301,7 +301,7 @@ THEMED = [
         ("The Offer", "A polite voice offers you help, once, at a price it calls small.",
          "Once, after you roll a d20, you can treat the roll as a 20. If you do, your hit point maximum drops by 2d6 until you finish a long rest."),
     ]),
-    ("Societal Madness", "societal", "The Machine Has Noticed You", "Please wait. Your case is being processed.", {"kind": "dice", "die": 4, "unit": "days"}, [
+    ("Societal Madness", "societal", "Under Review", "Your case is being processed. Please wait.", {"kind": "dice", "die": 4, "unit": "days"}, [
         ("The Missing Form", "You were meant to hand in a form before today. Nobody at the desk can tell you which form, or which desk.",
          "You have disadvantage on initiative rolls and you cannot take the Ready action."),
         ("The Number", "They gave you a number at the door. You turn round faster for it now than for your own name.",
@@ -323,7 +323,7 @@ THEMED = [
         ("The Crowd", "Everyone is walking the same way and you are walking with them. You could not say where.",
          "While two or more of your allies are within 10 feet of you, you are immune to the frightened condition. While none are, you have disadvantage on Wisdom saving throws."),
     ]),
-    ("Hellenic Madness", "hellenic", "Sent by the Gods", "A god has taken an interest in you.", {"kind": "fixed", "text": "Until the next sunrise:"}, [
+    ("Hellenic Madness", "hellenic", "Divine Madness", "A god has taken an interest in you.", {"kind": "fixed", "text": "Until the next sunrise:"}, [
         ("The Flock", "The Goddess of Wisdom has put a mist over your eyes. The men who wronged you are standing right in front of you, bleating.",
          "You take beasts for your enemies. While a beast is within 30 feet of you, you must use your action on each of your turns to attack it."),
         ("The Goad", "Madness herself did not want this errand. The Queen of the Gods sent her anyway, and now you cannot tell your friends from the people you came to kill.",
