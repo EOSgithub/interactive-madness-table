@@ -28,8 +28,6 @@ export interface DisplayState {
   verdict: { kind: OutcomeKind | null; text: string; duration: string } | null
   /** Files this verdict shows, by id. Sound is not here: it plays from the DM window. */
   media: { image?: string; video?: string } | null
-  /** How many verdicts this session has seen. The moon on the player screen reddens with it. */
-  insight: number
 }
 
 /** A preview: which part of the show, when it began, and optionally which result to play. */
@@ -60,7 +58,6 @@ export interface DisplaySource {
   first: number | null
   second: number | null
   verdict: VerdictSource | null
-  history?: { length: number }
 }
 
 const mediaOf = (s?: Staging): DisplayState['media'] => (s?.image || s?.video ? { image: s.image, video: s.video } : null)
@@ -94,8 +91,7 @@ function previewState(s: DisplaySource, preview: Preview): { state: DisplayState
       verdict: verdict
         ? { kind: outcome?.kind ?? null, text: outcome?.text ?? entry.text ?? entry.description, duration: 'For the next 3 minutes:' }
         : null,
-      media: verdict ? mediaOf(staging) : null,
-      insight: s.history?.length ?? 0
+      media: verdict ? mediaOf(staging) : null
     }
   }
 }
@@ -133,7 +129,6 @@ export function toDisplayState(s: DisplaySource): DisplayState {
     entry: entry && { title: entry.title, description: entry.description },
     second: s.second,
     verdict: s.verdict && { kind: s.verdict.kind, text: s.verdict.text, duration: s.verdict.duration },
-    media: s.step === 'verdict' ? mediaOf(s.verdict?.staging) : null,
-    insight: s.history?.length ?? 0
+    media: s.step === 'verdict' ? mediaOf(s.verdict?.staging) : null
   }
 }

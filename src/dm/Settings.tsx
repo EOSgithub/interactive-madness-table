@@ -55,8 +55,16 @@ export function Settings() {
       <section>
         <h2>The show</h2>
         <Switch label="Animations" hint="Off: every step is a plain fade." checked={settings.animations} onChange={(animations) => set({ animations })} />
-        <Choice label="Roll" options={ROLL_STYLES} value={settings.rollStyle} disabled={off} onChange={(rollStyle) => set({ rollStyle })} />
-        <Choice label="Verdict" options={VERDICT_STYLES} value={settings.verdictStyle} disabled={off} onChange={(verdictStyle) => set({ verdictStyle })} />
+        <Choice label="Roll" options={ROLL_STYLES} value={settings.rollStyle} disabled={off} onChange={(rollStyle) => {
+            set({ rollStyle })
+            play('roll')
+          }}
+        />
+        <Choice label="Verdict" options={VERDICT_STYLES} value={settings.verdictStyle} disabled={off} onChange={(verdictStyle) => {
+            set({ verdictStyle })
+            play('verdict')
+          }}
+        />
         <Choice label="Speed" options={SPEEDS} value={settings.speed} disabled={off} onChange={(speed) => set({ speed })} />
       </section>
 

@@ -26,7 +26,7 @@ A set can be exported to a JSON file and imported again, which is also how you m
 
 ## Staging
 
-In Settings you choose how the show looks: three roll styles (Ratchet, Glitch, Plain), three verdict styles (Flash, Burn, Fade), the speed, film grain, vignette and camera shake. A monitor beside the settings previews each choice, with or without the player screen open. Animations can be turned off entirely, and the tool respects the system's reduced motion setting unless you tell it otherwise.
+In Settings you choose how the show looks: three roll styles (Ratchet, Glitch, Plain), three verdict styles (Flash is loud, Burn is slow, Fade is quiet), the speed, film grain, vignette and camera shake. A monitor beside the settings plays each roll and verdict style as soon as you pick it, with or without the player screen open. Animations can be turned off entirely, and the tool respects the system's reduced motion setting unless you tell it otherwise.
 
 In the Stage tab you can give any entry or outcome its own sound, image or video, which plays when that result comes up. Sound plays from the DM window, so connect that device to your speakers.
 
@@ -63,6 +63,8 @@ The default tables are written in `scripts/build-defaults.py`, which generates `
 
 Made by ToolsmithDev. New tools and early builds are on [Patreon](https://www.patreon.com/ToolsmithDev).
 
-The fonts are Cormorant Garamond, by The Cormorant Project Authors, and EB Garamond, by The EB Garamond Project Authors, both under the SIL Open Font License 1.1. The icons are Phosphor Icons, under the MIT License.
+The fonts are Bodoni Moda, by The Bodoni Moda Project Authors, Geist, by The Geist Project Authors, and EB Garamond, by The EB Garamond Project Authors, all under the SIL Open Font License 1.1. The icons are Phosphor Icons, under the MIT License.
+
+The face of the moon is a photograph of the near side of the Moon by NASA/GSFC/Arizona State University, taken by the Lunar Reconnaissance Orbiter. It is in the public domain.
 
 This work includes material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC, available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.

@@ -147,8 +147,10 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
   if (e.camera) {
     // The jolt is in container units, so it is as strong on the DM's small monitor as on a TV.
     const [x, y] = shake && !plain ? jolt(t, beats.drum.landed, seed, 1.7) : [0, 0]
+    // Flash: the screen is struck a second time, harder, as the banner lands.
+    const [bx, by] = shake && verdict && verdictStyle === 'flash' ? jolt(t, verdict.banner.start, seed + 7, 2.6) : [0, 0]
     const push = 1 + 0.045 * clamp(t / beats.done)
-    e.camera.style.transform = `translate(${x.toFixed(2)}cqw, ${y.toFixed(2)}cqw) scale(${push.toFixed(4)})`
+    e.camera.style.transform = `translate(${(x + bx).toFixed(2)}cqw, ${(y + by).toFixed(2)}cqw) scale(${push.toFixed(4)})`
     // While the banner is across the screen everything behind it steps back.
     e.camera.style.opacity = (1 - 0.82 * banner).toFixed(3)
   }
@@ -172,23 +174,50 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
     const b = verdict.banner
     if (e.kind) e.kind.style.opacity = smooth(b.release, b.end, t).toFixed(3)
 
-    // The banner: the words swell a little for as long as they are up, and a ghost of them drifts outwards.
+    // The banner, in one of three manners.
+    //   Flash: the words slam down from oversize in a burst of light, and a ghost of them drifts out.
+    //   Burn:  the words are seared in from left to right, white-hot at first, with no ghost.
+    //   Fade:  the words come up slowly and quietly, and nothing else happens.
     if (e.banner && e.word && e.echo) {
       const p = clamp((t - b.start) / (b.end - b.start))
-      e.banner.style.opacity = banner.toFixed(3)
-      e.banner.style.visibility = banner > 0.001 ? 'visible' : 'hidden'
-      e.word.style.transform = `scale(${(1 + 0.06 * p).toFixed(4)})`
-      const heat = verdictStyle === 'burn' ? Math.exp(-3 * Math.max(0, (t - b.start) / 1000)) : 0
-      e.word.style.filter = heat > 0.02 ? `brightness(${(1 + 3 * heat).toFixed(2)}) blur(${(4 * heat).toFixed(1)}px)` : ''
-      e.echo.style.transform = `scale(${(1.04 + 0.42 * p).toFixed(4)})`
-      e.echo.style.opacity = verdictStyle === 'fade' ? '0' : (0.5 * (1 - p)).toFixed(3)
+      const sec = Math.max(0, since / 1000)
+      const level = verdictStyle === 'fade' ? smooth(b.start, b.release, t) * (1 - smooth(b.release, b.end, t)) : banner
+      e.banner.style.opacity = level.toFixed(3)
+      e.banner.style.visibility = level > 0.001 ? 'visible' : 'hidden'
+      e.banner.dataset.style = verdictStyle
+      if (verdictStyle === 'flash') {
+        e.word.style.transform = `scale(${(1 + 0.06 * p + 0.7 * Math.exp(-9 * sec)).toFixed(4)})`
+        e.word.style.filter = ''
+        e.word.style.clipPath = ''
+        e.echo.style.transform = `scale(${(1.04 + 0.5 * p).toFixed(4)})`
+        e.echo.style.opacity = (0.55 * (1 - p)).toFixed(3)
+      } else if (verdictStyle === 'burn') {
+        const sweep = smooth(b.start, b.start + 1100 * speed, t)
+        const heat = Math.exp(-1.6 * sec)
+        e.word.style.transform = ''
+        e.word.style.clipPath = `inset(-20% ${((1 - sweep) * 100).toFixed(1)}% -20% 0)`
+        e.word.style.filter = heat > 0.02 ? `brightness(${(1 + 3.4 * heat).toFixed(2)}) blur(${(0.05 * heat).toFixed(3)}em)` : ''
+        e.echo.style.opacity = '0'
+      } else {
+        e.word.style.transform = ''
+        e.word.style.filter = ''
+        e.word.style.clipPath = ''
+        e.echo.style.opacity = '0'
+      }
     }
 
-    // The verdict's colour hits the whole screen as it is named, then fades to a tint.
+    // Flash strikes the whole screen white with the outcome's colour, then leaves a tint.
+    // Burn leaves a glow that pulses like an ember. Fade leaves the screen alone.
     if (e.wash) {
-      const peak = verdictStyle === 'flash' ? 0.55 : verdictStyle === 'burn' ? 0.3 : 0
       const sec = since / 1000
-      e.wash.style.opacity = since >= 0 ? (0.12 * smooth(0, 0.5, sec) + peak * Math.exp(-3 * sec)).toFixed(3) : '0'
+      const lit =
+        verdictStyle === 'flash'
+          ? 0.12 * smooth(0, 0.5, sec) + 0.95 * Math.exp(-5 * sec)
+          : verdictStyle === 'burn'
+            ? smooth(0, 1.2, sec) * (0.2 + 0.07 * Math.sin(sec * 3.1))
+            : 0
+      e.wash.style.opacity = since >= 0 ? lit.toFixed(3) : '0'
+      e.wash.dataset.style = verdictStyle
     }
   } else if (e.wash) {
     e.wash.style.opacity = '0'
@@ -204,14 +233,9 @@ function draw(t: number, s: DisplayState, e: Els): Frame {
   return { done: t >= beats.done + 2500, since }
 }
 
-/** How red the moon is: a little more with every verdict of the session, and fully on a bane. */
-function moonBlood(insight: number, kind: OutcomeKind | null, since: number): number {
-  const base = Math.min(0.5, insight * 0.05)
-  if (since < 0 || !kind) return base
-  const u = smooth(0, 1100, since)
-  if (kind === 'bane') return base + (1 - base) * u
-  if (kind === 'boon') return base * (1 - u)
-  return base
+/** How red the moon is: it turns to blood as a bane is named. */
+function moonBlood(kind: OutcomeKind | null, since: number): number {
+  return kind === 'bane' && since >= 0 ? smooth(0, 1100, since) : 0
 }
 
 export function PlayerView({ state, hint }: { state: DisplayState | null; hint?: string }) {
@@ -246,7 +270,7 @@ export function PlayerView({ state, hint }: { state: DisplayState | null; hint?:
       const t = calm || state.stepAt < LONG_AGO ? 1e9 : c.t
       const shown = rolling ? draw(t, state, els.current) : { done: true, since: -1 }
       const e = els.current
-      if (e.blood) e.blood.style.opacity = moonBlood(state.insight, kind, shown.since).toFixed(3)
+      if (e.blood) e.blood.style.opacity = moonBlood(kind, shown.since).toFixed(3)
       const el = canvas.current
       if (ctx && el) {
         // The canvas follows the size of the view, at no more than two device pixels per CSS pixel.
@@ -325,7 +349,7 @@ export function PlayerView({ state, hint }: { state: DisplayState | null; hint?:
   )
 }
 
-/** The moon the die sits on. It reddens with the session, and turns to blood on a bane. */
+/** The moon the die sits on. It turns to blood on a bane. */
 function Moon(props: { blood?: (el: HTMLDivElement | null) => void; halo?: (el: HTMLDivElement | null) => void; children?: React.ReactNode }) {
   return (
     <div className="die">
@@ -333,6 +357,7 @@ function Moon(props: { blood?: (el: HTMLDivElement | null) => void; halo?: (el: 
         <div className="moon-halo" ref={props.halo} />
         <div className="moon-disc" />
         <div className="moon-blood" ref={props.blood} />
+        <div className="moon-face" />
       </div>
       {props.children}
     </div>

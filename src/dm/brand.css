@@ -1,56 +1,43 @@
-/* The list of keys and the ToolsmithDev footer. The fonts ship with the site
-   (see main.tsx), so nothing is fetched from a font service. */
+/* The About dialog. The fonts ship with the site (see main.tsx), so nothing is
+   fetched from a font service. */
 
-/* The keys only help where there is a keyboard. */
-.keys {
-  margin: 34px 0 0;
-  color: var(--moon-faint);
-  font-size: 0.9rem;
-  line-height: 1.9;
-}
-
+/* The number keys only help where there is a keyboard. */
 @media (pointer: coarse) {
-  .keys,
   .table-main kbd {
     display: none;
   }
 }
 
-.foot {
+/* Who made the tool, and the licences of what it is built from. */
+.about {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 8px 14px;
-  margin-top: 64px;
-  padding-top: 20px;
-  border-top: 1px solid var(--edge);
-  color: var(--moon-dim);
-  font-size: 0.95rem;
+  gap: 16px;
 }
 
-.foot img {
-  width: 28px;
-  height: 28px;
+.about img {
+  width: 52px;
+  height: 52px;
 }
 
-.foot p {
+.about p {
   margin: 0;
 }
 
-.foot a {
-  color: var(--moon);
-  text-decoration-color: var(--blood-bright);
+.about a {
+  color: var(--bone);
+  font-weight: 500;
+  text-decoration-color: var(--gold);
   text-underline-offset: 3px;
 }
 
-.foot a:hover,
-.foot a:focus-visible {
-  color: var(--blood-bright);
+.about a:hover,
+.about a:focus-visible {
+  color: var(--gold-bright);
 }
 
-.foot .legal {
-  flex: 1 1 100%;
-  max-width: 100ch;
-  color: var(--moon-faint);
-  font-size: 0.8rem;
+.dialog .legal {
+  color: var(--bone-dim);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }

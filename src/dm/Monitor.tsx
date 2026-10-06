@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import { PlayerView } from '../display/Display'
 import { toDisplayState, type DisplayState } from '../shared/display'
 import { useStore } from '../state/store'
@@ -13,18 +13,21 @@ export function useDisplayState(): DisplayState {
   const s = useStore()
   return useMemo(
     () => toDisplayState(s),
-    [s.tables, s.settings, s.blackout, s.preview, s.step, s.stepAt, s.categoryId, s.first, s.second, s.verdict, s.history]
+    [s.tables, s.settings, s.blackout, s.preview, s.step, s.stepAt, s.categoryId, s.first, s.second, s.verdict]
   )
 }
 
-export function Monitor({ label = 'What your players see' }: { label?: string }) {
+export function Monitor({ label = 'What your players see', children }: { label?: string; children?: ReactNode }) {
   const state = useDisplayState()
   return (
     <figure className="monitor">
       <div className="monitor-frame">
         <PlayerView state={state} />
       </div>
-      <figcaption>{state.blackout ? 'Blackout: the player screen is dark' : label}</figcaption>
+      <div className="monitor-bar">
+        <figcaption>{state.blackout ? 'Blackout: the player screen is dark' : label}</figcaption>
+        {children}
+      </div>
     </figure>
   )
 }

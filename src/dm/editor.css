@@ -1,35 +1,45 @@
-/* The editor: the tables of the open set on the left, the one being edited on the right. */
+/* The editor: the tables of the open set in a card on the left, the one being edited on the right. */
 
 .editor {
   display: grid;
-  grid-template-columns: 270px minmax(0, 1fr);
-  gap: 44px;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
 }
 
 .editor h2,
 .editor h3 {
-  margin: 0;
-  font-size: 1.45rem;
+  font-size: 1.25rem;
+}
+
+/* Both columns are cards (see .panel in dm.css for the look). */
+.editor-side,
+.editor-main {
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(36, 26, 31, 0.92) 0%, rgba(24, 17, 20, 0.92) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: var(--lift);
 }
 
 .editor-side {
+  position: sticky;
+  top: 88px;
   display: flex;
   flex-direction: column;
-  align-self: start;
   gap: 12px;
-  position: sticky;
-  top: 16px;
 }
 
 /* In the side column a field must keep its own height; .field grows by default. */
 .editor-side .field {
   flex: none;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .category-list {
   display: grid;
-  margin: 0;
+  gap: 2px;
+  margin: 0 -8px;
   padding: 0;
   list-style: none;
 }
@@ -40,60 +50,76 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 9px 12px;
   background: none;
   border: 0;
-  border-left: 2px solid var(--edge);
-  color: var(--moon-dim);
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+  border-radius: var(--r-ctl);
+  color: var(--bone-dim);
+  font-weight: 500;
   text-align: left;
   transition:
     color var(--quick),
-    border-color var(--quick),
     background-color var(--quick);
 }
 
 .category-list button:hover {
-  color: var(--moon);
-  background: var(--night-2);
+  background: var(--ink-3);
+  color: var(--bone);
 }
 
 .category-list button.current {
-  border-left-color: var(--blood-bright);
-  background: var(--night-2);
-  color: var(--moon);
+  background: var(--ink-4);
+  box-shadow: inset 0 1px 0 rgba(255, 240, 230, 0.06);
+  color: var(--bone);
 }
 
 .files {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 10px;
   padding-top: 18px;
-  border-top: 1px solid var(--edge);
+  border-top: 1px solid var(--line);
 }
 
 .faults {
   margin: 0;
-  padding: 10px 14px 10px 30px;
-  border-left: 2px solid var(--blood-bright);
-  background: rgba(156, 26, 44, 0.12);
-  color: var(--blood-bright);
-  font-size: 0.95rem;
+  padding: 10px 14px 10px 32px;
+  background: rgba(176, 22, 47, 0.14);
+  border: 1px solid rgba(242, 93, 110, 0.3);
+  border-radius: var(--r-ctl);
+  color: #ff8d99;
+  font-size: 0.87rem;
 }
 
 .editor-main {
   display: grid;
-  gap: 22px;
+  gap: 20px;
   min-width: 0;
 }
 
+/* The table's own fields, on a grid of six: name and line, then the dice, then how long it lasts. */
 .form-grid {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  gap: 14px;
+}
+
+.form-grid .field {
+  grid-column: span 2;
+}
+
+.form-grid .field.wide {
+  grid-column: span 4;
+}
+
+.form-grid .field.narrow {
+  grid-column: span 1;
+}
+
+.form-grid .duration {
+  grid-column: 1 / -1;
 }
 
 .field {
@@ -109,7 +135,11 @@
 }
 
 .field.narrow {
-  flex: 0 0 110px;
+  flex: 0 0 104px;
+}
+
+.field.narrow input.number {
+  width: 100%;
 }
 
 .field.switch {
@@ -122,14 +152,16 @@
 .field > span,
 .field > legend,
 .staging label:not(.switch) > span {
-  color: var(--moon-dim);
-  font-size: 0.9rem;
+  color: var(--bone-dim);
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 input.number {
-  width: 78px;
+  width: 72px;
+  color: var(--bone);
   text-align: center;
-  font-variant-numeric: lining-nums tabular-nums;
+  font-variant-numeric: tabular-nums;
 }
 
 .duration {
@@ -150,6 +182,11 @@ input.number {
   width: auto;
 }
 
+.duration > span {
+  color: var(--bone-dim);
+  font-size: 0.87rem;
+}
+
 .duration input:not(.number) {
   flex: 1 1 160px;
   width: auto;
@@ -158,8 +195,8 @@ input.number {
 .rows-head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-top: 10px;
+  gap: 8px;
+  padding-top: 8px;
 }
 
 .rows-head h2,
@@ -169,30 +206,36 @@ input.number {
 
 .rows {
   display: grid;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* One entry of a table. Closed, it is a line of the ledger; open, it lifts off the page. */
+/* One entry of a table. Closed, it is a line; open, it is a card of its own. */
 .row {
-  border-top: 1px solid var(--edge);
-  transition: background-color var(--quick);
+  background: var(--ink-3);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition:
+    background-color var(--quick),
+    border-color var(--quick);
 }
 
-.row:last-child {
-  border-bottom: 1px solid var(--edge);
+.row:hover,
+.row.open {
+  border-color: var(--line-strong);
 }
 
 .row.open {
-  background: var(--night-2);
+  background: rgba(10, 7, 9, 0.45);
 }
 
 .row-head {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 8px 10px;
+  gap: 12px;
+  padding: 7px 10px;
 }
 
 .range {
@@ -200,8 +243,9 @@ input.number {
   align-items: center;
   flex: none;
   gap: 8px;
-  color: var(--moon-dim);
-  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--bone-faint);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .row-title {
@@ -213,6 +257,7 @@ input.number {
   padding: 8px 6px;
   background: none;
   border: 0;
+  border-radius: 10px;
   text-align: left;
 }
 
@@ -220,29 +265,33 @@ input.number {
   flex: 1;
   overflow: hidden;
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.12rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .chevron {
-  color: var(--moon-dim);
-  font-size: 0.9rem;
-  text-decoration: underline;
-  text-decoration-color: var(--edge-strong);
-  text-underline-offset: 3px;
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--bone-dim);
+  font-size: 0.76rem;
+  font-weight: 500;
+  transition:
+    background-color var(--quick),
+    color var(--quick);
 }
 
 .row-title:hover .chevron {
-  color: var(--moon);
-  text-decoration-color: var(--blood-bright);
+  background: var(--ink-4);
+  color: var(--bone);
 }
 
 .row-body {
   display: grid;
   gap: 16px;
-  padding: 8px 16px 20px;
-  animation: row-open 320ms var(--ease);
+  padding: 10px 16px 18px;
+  animation: row-open 360ms var(--ease);
 }
 
 .row-body .field {
@@ -255,24 +304,29 @@ input.number {
 
 .outcomes {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
+/* An outcome wears the colour of its kind as a wash, like the verdict it becomes. */
 .outcome {
   display: grid;
-  grid-template-columns: auto 130px minmax(0, 1fr) auto;
+  grid-template-columns: auto 124px minmax(0, 1fr) auto;
   align-items: start;
-  gap: 10px;
-  padding-left: 12px;
-  border-left: 2px solid var(--moon-faint);
+  gap: 8px;
+  padding: 10px;
+  background: var(--ink-3);
+  border: 1px solid var(--line);
+  border-radius: 14px;
 }
 
 .outcome.boon {
-  border-left-color: var(--boon);
+  background: linear-gradient(120deg, rgba(230, 200, 140, 0.1), transparent 45%), var(--ink-3);
+  border-color: rgba(230, 200, 140, 0.22);
 }
 
 .outcome.bane {
-  border-left-color: var(--blood-bright);
+  background: linear-gradient(120deg, rgba(176, 22, 47, 0.18), transparent 45%), var(--ink-3);
+  border-color: rgba(242, 93, 110, 0.24);
 }
 
 @keyframes row-open {
@@ -288,10 +342,9 @@ input.number {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .editor {
     grid-template-columns: 1fr;
-    gap: 28px;
   }
 
   .editor-side {

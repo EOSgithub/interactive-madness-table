@@ -1,5 +1,5 @@
 import { Check, Copy, DownloadSimple, Plus, Trash, UploadSimple, X } from '@phosphor-icons/react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { exportTableSet, readTableSet } from '../shared/io'
 import { countEntries } from '../shared/library'
 import type { TableSet } from '../shared/types'
@@ -56,6 +56,41 @@ const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : 
 
 const day = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 
+/** A modal dialog with a title and a close button. showModal gives the focus trap, the Esc key and the backdrop for free. */
+export function Dialog(props: { open: boolean; onClose: () => void; onClosed?: () => void; title: string; children: ReactNode }) {
+  const { open, onClose, onClosed } = props
+  const dialog = useRef<HTMLDialogElement>(null)
+  useEffect(() => {
+    const el = dialog.current
+    if (!el) return
+    if (open && !el.open) el.showModal()
+    if (!open && el.open) el.close()
+    if (!open) onClosed?.()
+  }, [open, onClosed])
+
+  return (
+    <dialog
+      ref={dialog}
+      className="dialog"
+      aria-label={props.title}
+      onClose={onClose}
+      onClick={(e) => {
+        if (e.target === dialog.current) onClose() // a click on the backdrop
+      }}
+    >
+      <div className="dialog-body">
+        <header className="dialog-head">
+          <h2>{props.title}</h2>
+          <button className="icon" onClick={onClose} aria-label="Close">
+            <X />
+          </button>
+        </header>
+        {props.children}
+      </div>
+    </dialog>
+  )
+}
+
 export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const sets = useStore((s) => s.sets)
   const activeId = useStore((s) => s.activeId)
@@ -65,34 +100,10 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
   const deleteSet = useStore((s) => s.deleteSet)
   const [message, setMessage] = useState<Message | null>(null)
   const { input, pick } = useImport(setMessage)
-  const dialog = useRef<HTMLDialogElement>(null)
-
-  // showModal gives the focus trap, the Esc key and the backdrop for free.
-  useEffect(() => {
-    const el = dialog.current
-    if (!el) return
-    if (open && !el.open) el.showModal()
-    if (!open && el.open) el.close()
-    if (!open) setMessage(null)
-  }, [open])
+  const clear = useCallback(() => setMessage(null), [])
 
   return (
-    <dialog
-      ref={dialog}
-      className="sets"
-      aria-labelledby="sets-title"
-      onClose={onClose}
-      onClick={(e) => {
-        if (e.target === dialog.current) onClose() // a click on the backdrop
-      }}
-    >
-      <div className="sets-body">
-        <header className="sets-head">
-          <h2 id="sets-title">Your table sets</h2>
-          <button className="icon" onClick={onClose} aria-label="Close">
-            <X />
-          </button>
-        </header>
+    <Dialog open={open} onClose={onClose} title="Your table sets" onClosed={clear}>
         <p className="hint">Each set is saved in this browser. Open one to play and edit it; the others stay as they are.</p>
 
         <ul className="set-list">
@@ -158,7 +169,6 @@ export function SetsDialog({ open, onClose }: { open: boolean; onClose: () => vo
             {message.text}
           </p>
         )}
-      </div>
-    </dialog>
+    </Dialog>
   )
 }

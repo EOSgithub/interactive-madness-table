@@ -1,15 +1,14 @@
-/* Stage: the DM's files and the monitor on the left, the results they belong to on the right. */
+/* Stage: the monitor and the DM's files on the left, the results they belong to on the right. */
 
 .stage-tab {
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-columns: 360px minmax(0, 1fr);
   align-items: start;
-  gap: 48px;
+  gap: 24px;
 }
 
 .stage-tab h2 {
-  margin: 0;
-  font-size: 1.45rem;
+  font-size: 1.25rem;
 }
 
 .library,
@@ -17,20 +16,35 @@
   display: grid;
   gap: 14px;
   min-width: 0;
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(36, 26, 31, 0.92) 0%, rgba(24, 17, 20, 0.92) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: var(--lift);
 }
 
 .library {
   position: sticky;
-  top: 16px;
+  top: 88px;
 }
 
 .library .monitor {
-  margin-bottom: 10px;
-  text-align: center;
+  margin-bottom: 6px;
+}
+
+.library .monitor-frame {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: none;
 }
 
 .library > .ghost {
   justify-self: start;
+}
+
+.library .hint,
+.stage-main .hint {
+  margin: 0;
 }
 
 .file-list,
@@ -42,12 +56,16 @@
 }
 
 .file-list {
-  gap: 12px;
+  gap: 10px;
+}
+
+.stage-rows {
+  gap: 6px;
 }
 
 .file {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) auto;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
 }
@@ -55,13 +73,14 @@
 .file-thumb {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   overflow: hidden;
-  background: var(--night-0);
-  border: 1px solid var(--edge);
-  color: var(--moon-faint);
-  font-size: 0.8rem;
+  background: var(--ink-0);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--bone-faint);
+  font-size: 0.72rem;
 }
 
 .file-thumb img,
@@ -78,6 +97,7 @@
 
 .file-name {
   overflow: hidden;
+  font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -96,71 +116,73 @@
 }
 
 .pills button {
-  padding: 7px 16px;
+  padding: 7px 14px;
   background: none;
-  border: 1px solid var(--edge);
-  color: var(--moon-dim);
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--bone-dim);
+  font-size: 0.87rem;
+  font-weight: 500;
   transition:
     color var(--quick),
+    background-color var(--quick),
     border-color var(--quick);
 }
 
 .pills button:hover {
-  color: var(--moon);
-  border-color: var(--edge-strong);
+  background: var(--ink-3);
+  color: var(--bone);
 }
 
 .pills button.current {
-  background: var(--night-3);
-  border-color: var(--edge-strong);
-  box-shadow: inset 0 -2px 0 var(--blood-bright);
-  color: var(--moon);
+  background: var(--bone);
+  border-color: var(--bone);
+  color: var(--ink-1);
 }
 
 .badge.quiet {
-  background: var(--night-3);
-  border: 1px solid var(--edge-strong);
-  color: var(--moon);
+  background: var(--ink-4);
+  border: 1px solid var(--line-strong);
+  color: var(--bone);
 }
 
 .stage-rows .range {
-  min-width: 86px;
+  min-width: 78px;
+  padding-left: 6px;
 }
 
 .staging {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 12px 14px;
+  gap: 12px;
   margin: 0;
-  padding: 12px 0 4px 14px;
-  border: 0;
-  border-left: 2px solid var(--moon-faint);
+  padding: 14px;
+  background: var(--ink-3);
+  border: 1px solid var(--line);
+  border-radius: 14px;
 }
 
 .staging.boon {
-  border-left-color: var(--boon);
+  background: linear-gradient(120deg, rgba(230, 200, 140, 0.1), transparent 45%), var(--ink-3);
+  border-color: rgba(230, 200, 140, 0.22);
 }
 
 .staging.bane {
-  border-left-color: var(--blood-bright);
+  background: linear-gradient(120deg, rgba(176, 22, 47, 0.18), transparent 45%), var(--ink-3);
+  border-color: rgba(242, 93, 110, 0.24);
 }
 
 .staging legend {
   float: left;
   width: 100%;
   padding: 0;
-  margin-bottom: 4px;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-style: italic;
+  font-weight: 500;
 }
 
 .staging label:not(.switch) {
   display: grid;
-  flex: 1 1 170px;
+  flex: 1 1 150px;
   gap: 6px;
   min-width: 0;
 }
@@ -169,10 +191,9 @@
   padding-bottom: 10px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .stage-tab {
     grid-template-columns: 1fr;
-    gap: 28px;
   }
 
   .library {

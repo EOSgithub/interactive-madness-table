@@ -26,9 +26,9 @@ function ash(ctx: CanvasRenderingContext2D, w: number, h: number, now: number, a
   const count = air.lite ? 26 : 64
   // On a bane the ash catches the colour of the moon.
   const red = air.kind === 'bane' ? smooth(0, 1200, air.since) : 0
-  const r = Math.round(196 + (214 - 196) * red)
-  const g = Math.round(204 + (58 - 204) * red)
-  const b = Math.round(212 + (70 - 212) * red)
+  const r = Math.round(216 + (214 - 216) * red)
+  const g = Math.round(206 + (58 - 206) * red)
+  const b = Math.round(192 + (70 - 192) * red)
   for (let i = 0; i < count; i++) {
     const period = 9000 + rand(i, 1) * 11000
     const phase = frac(now / period + rand(i, 2))
@@ -73,14 +73,14 @@ function blood(ctx: CanvasRenderingContext2D, w: number, h: number, air: Air, un
   }
 }
 
-/** Pale light on a boon: a shaft through the middle and rings that open and fade. */
+/** Candlelight on a boon: a shaft through the middle and rings that open and fade. */
 function light(ctx: CanvasRenderingContext2D, w: number, h: number, air: Air, unit: number) {
   const s = air.since / 1000
   const shaft = ctx.createLinearGradient(w * 0.3, 0, w * 0.7, 0)
   const glow = 0.05 * smooth(0, 800, air.since) + 0.2 * Math.exp(-0.9 * s)
-  shaft.addColorStop(0, 'rgba(190, 214, 232, 0)')
-  shaft.addColorStop(0.5, `rgba(190, 214, 232, ${glow.toFixed(3)})`)
-  shaft.addColorStop(1, 'rgba(190, 214, 232, 0)')
+  shaft.addColorStop(0, 'rgba(232, 204, 150, 0)')
+  shaft.addColorStop(0.5, `rgba(232, 204, 150, ${glow.toFixed(3)})`)
+  shaft.addColorStop(1, 'rgba(232, 204, 150, 0)')
   ctx.fillStyle = shaft
   ctx.fillRect(w * 0.3, 0, w * 0.4, h)
 
@@ -89,7 +89,7 @@ function light(ctx: CanvasRenderingContext2D, w: number, h: number, air: Air, un
     const u = s - i * 0.28
     if (u <= 0) continue
     const radius = (0.08 + 0.55 * (1 - Math.exp(-1.3 * u))) * Math.min(w, h)
-    ctx.strokeStyle = `rgba(190, 214, 232, ${(0.42 * Math.exp(-1.5 * u)).toFixed(3)})`
+    ctx.strokeStyle = `rgba(232, 204, 150, ${(0.42 * Math.exp(-1.5 * u)).toFixed(3)})`
     ctx.beginPath()
     ctx.arc(w / 2, h * 0.42, radius, 0, TAU)
     ctx.stroke()

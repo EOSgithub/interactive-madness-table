@@ -204,3 +204,22 @@ What changed:
 - Interface motion uses Motion (`motion/react`) and follows the system's reduced motion setting. Icons are Phosphor.
 
 This closes "Più raccolte di tabelle affiancate" from the list above.
+
+### Second pass, same day
+
+The first pass read as a home project: a page with a header and a legal footer, flat cold colours, square boxes with hairlines. The second pass keeps the show and rebuilds the rest.
+
+- Structure: an app shell. A rail on the left for the four sections (a bar along the bottom on a phone), a top bar with the open set and the state of the player screen, and every section built from cards.
+- The footer is gone. ToolsmithDev, Patreon and the licences (SRD 5.1, fonts, icons) are in the About dialog, opened from the rail.
+- Palette: gaslight. Warm near-black with a trace of oxblood, bone for text, blood as the accent, candlelight for a boon. Gold for the boon and crimson for the bane is what this plan asked for from the start.
+- Type: Bodoni Moda for headings (Didone was the printing style of the nineteenth century), Geist for controls, EB Garamond for text read aloud.
+- Shape: soft. Cards 20px, controls 12px, chips and switches fully round. No coloured stripe down the side of a card: the kind of a verdict is a tint and a chip.
+- Play: the monitor with the session under it on the left, the roll in a card that stays in view on the right.
+
+### Third pass, same day
+
+- The accent is gold, as in Follie. Blood is no longer an accent: it means a bane, a fault or a delete.
+- The moon has a real face: `src/assets/moon.webp`, the near side of the Moon from NASA's Lunar Reconnaissance Orbiter (public domain, from Wikimedia Commons, `Moon_nearside_LRO.jpg`), multiplied over the disc at part strength.
+- The three verdict styles are now told apart at a glance. Flash strikes the screen with light and slams the words down. Burn sears them in from left to right and leaves an ember glow. Fade brings them up slowly with nothing else. Picking a style in Settings plays it on the monitor at once.
+- Gone: the ToolsmithDev mark in the rail (it is in About), the line of keys under the roll (the keys still work and are listed in the README), and the Insight counter with the reddening of the moon over the session.
+- Blackout is a button that stays pressed.

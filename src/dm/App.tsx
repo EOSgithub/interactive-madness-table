@@ -1,11 +1,13 @@
 import {
   ArrowCounterClockwise,
+  ArrowLeft,
   Books,
   CaretDown,
+  CaretRight,
   DiceFive,
-  Eye,
   FilmSlate,
   IconContext,
+  Info,
   PencilSimpleLine,
   SkipForward,
   SlidersHorizontal
@@ -19,13 +21,13 @@ import { currentCategory, useStore, type Verdict } from '../state/store'
 import { Editor } from './Editor'
 import { Monitor } from './Monitor'
 import { ScreenControl } from './ScreenControl'
-import { SetsDialog } from './Sets'
+import { Dialog, SetsDialog } from './Sets'
 import { Settings } from './Settings'
 import { useKeys } from './shortcuts'
 import { Stage } from './Stage'
 import { TableMode } from './TableMode'
 
-// The DM window: the header, the four sections, the play screen and the footer.
+// The DM window: the rail, the top bar, the four sections and the play screen.
 
 const PATREON = 'https://www.patreon.com/ToolsmithDev'
 
@@ -49,79 +51,106 @@ const arrive = {
 
 export function App() {
   const name = useStore((s) => s.tables.name)
-  const insight = useStore((s) => s.history.length)
   const toggleBlackout = useStore((s) => s.toggleBlackout)
   const [tab, setTab] = useState<Tab>('play')
   const [tableMode, setTableMode] = useState(false)
   const [sets, setSets] = useState(false)
-  useKeys({ b: toggleBlackout, t: () => setTableMode((open) => !open) }, (tab === 'play' || tableMode) && !sets)
+  const [about, setAbout] = useState(false)
+  const modal = sets || about
+  useKeys({ b: toggleBlackout, t: () => setTableMode((open) => !open) }, (tab === 'play' || tableMode) && !modal)
 
   return (
-    <IconContext.Provider value={{ weight: 'light', size: '1.15em' }}>
+    <IconContext.Provider value={{ weight: 'regular', size: '1.2em' }}>
       {/* "user": someone who asked the system for less motion gets fades and no movement. */}
       <MotionConfig reducedMotion="user">
-        <div className="shell">
-          <header className="top">
-            <h1>Interactive Madness Table</h1>
+        <div className="app">
+          {/* The rail: where you are in the tool. On a phone it becomes a bar along the bottom. */}
+          <aside className="rail">
             <nav className="tabs" aria-label="Sections">
               {TABS.map(({ id, label, icon: Icon }) => (
                 <button key={id} className={tab === id ? 'current' : ''} aria-current={tab === id ? 'page' : undefined} onClick={() => setTab(id)}>
-                  <Icon />
-                  <span>{label}</span>
                   {tab === id && <motion.span className="tab-mark" layoutId="tab-mark" transition={{ type: 'spring', stiffness: 420, damping: 36 }} />}
+                  <Icon weight={tab === id ? 'fill' : 'regular'} />
+                  <span>{label}</span>
                 </button>
               ))}
             </nav>
-            <button className="set-switch" onClick={() => setSets(true)} title="Open, add or switch table sets">
-              <Books />
-              <span className="set-switch-name">{name || 'Untitled tables'}</span>
-              <CaretDown />
+            <button className="rail-about" onClick={() => setAbout(true)}>
+              <Info />
+              <span>About</span>
             </button>
-            <p className="insight" title="Verdicts this session. The moon on the player screen reddens as it grows.">
-              <Eye />
-              <span className="insight-count">{insight}</span>
-              <span className="insight-label">Insight</span>
-            </p>
-          </header>
-          <ScreenControl onTableMode={() => setTableMode(true)} />
+          </aside>
+
+          <div className="main">
+            {/* The bar: which set is open, and the state of the player screen. */}
+            <header className="top">
+              <h1>
+                Interactive <em>Madness</em> Table
+              </h1>
+              <button className="set-switch" onClick={() => setSets(true)} title="Open, add or switch table sets">
+                <Books />
+                <span className="set-switch-name">{name || 'Untitled tables'}</span>
+                <CaretDown size="0.9em" />
+              </button>
+              <ScreenControl onTableMode={() => setTableMode(true)} />
+            </header>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={tab} className="section" {...arrive}>
+                {tab === 'play' ? <Play paused={modal} /> : tab === 'edit' ? <Editor /> : tab === 'stage' ? <Stage /> : <Settings />}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
           <SetsDialog open={sets} onClose={() => setSets(false)} />
+          <AboutDialog open={about} onClose={() => setAbout(false)} />
           {tableMode && <TableMode onClose={() => setTableMode(false)} />}
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={tab} className="section" {...arrive}>
-              {tab === 'play' ? <Play paused={sets} /> : tab === 'edit' ? <Editor /> : tab === 'stage' ? <Stage /> : <Settings />}
-            </motion.div>
-          </AnimatePresence>
-          <footer className="foot">
-            <img src={`${import.meta.env.BASE_URL}icon-192.png`} alt="" />
-            <p>
-              A ToolsmithDev tool. New tools and early builds are on{' '}
-              <a href={PATREON} target="_blank" rel="noreferrer">
-                Patreon
-              </a>
-              .
-            </p>
-            <p className="legal">
-              This work includes material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC, available at
-              https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0
-              International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
-            </p>
-          </footer>
         </div>
       </MotionConfig>
     </IconContext.Provider>
   )
 }
 
-/** The play screen: the monitor, the step of the roll under it, and the session beside them. */
+/** Who made the tool, and the licences of what it is built from. */
+function AboutDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <Dialog open={open} onClose={onClose} title="About">
+      <div className="about">
+        <img src={`${import.meta.env.BASE_URL}icon-192.png`} alt="" />
+        <p>
+          Interactive Madness Table is a ToolsmithDev tool. New tools and early builds are on{' '}
+          <a href={PATREON} target="_blank" rel="noreferrer">
+            Patreon
+          </a>
+          .
+        </p>
+      </div>
+      <h3>Licences</h3>
+      <p className="legal">
+        This work includes material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC, available at
+        https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0
+        International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
+      </p>
+      <p className="legal">
+        The fonts are Bodoni Moda, Geist and EB Garamond, under the SIL Open Font License 1.1. The icons are Phosphor Icons, under the MIT
+        License. The face of the moon is a photograph by NASA/GSFC/Arizona State University, in the public domain.
+      </p>
+    </Dialog>
+  )
+}
+
+/** The play screen: the monitor with the session under it, and the roll beside them. */
 function Play({ paused }: { paused: boolean }) {
   const step = useStore((s) => s.step)
-  const shortcuts = useStore((s) => s.settings.shortcuts)
   return (
     <div className="layout">
-      <main className="stage">
-        <Monitor />
-        <ShowControls />
-        <div className="step" aria-live="polite">
+      <div className="stage-col">
+        <Monitor>
+          <ShowControls />
+        </Monitor>
+        <History />
+      </div>
+      <div className="side-col">
+        <main className="panel step" aria-live="polite">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={step} {...arrive}>
               {step === 'category' && <ChooseCategory paused={paused} />}
@@ -130,15 +159,8 @@ function Play({ paused }: { paused: boolean }) {
               {step === 'verdict' && <VerdictStep />}
             </motion.div>
           </AnimatePresence>
-        </div>
-        {shortcuts && (
-          <p className="keys">
-            <kbd>1</kbd> to <kbd>9</kbd> pick a table, <kbd>Space</kbd> or <kbd>R</kbd> rolls, <kbd>Esc</kbd> goes back, <kbd>B</kbd> blacks out the
-            player screen, <kbd>T</kbd> opens table mode.
-          </p>
-        )}
-      </main>
-      <History />
+        </main>
+      </div>
     </div>
   )
 }
@@ -151,10 +173,10 @@ function ShowControls() {
   const running = step === 'second' || step === 'verdict'
   return (
     <div className="show-controls">
-      <button className="link" onClick={replay} disabled={!running}>
+      <button className="chip" onClick={replay} disabled={!running}>
         <ArrowCounterClockwise /> Play it again
       </button>
-      <button className="link" onClick={skip} disabled={!running}>
+      <button className="chip" onClick={skip} disabled={!running}>
         <SkipForward /> Skip to the end
       </button>
     </div>
@@ -172,6 +194,7 @@ function ChooseCategory({ paused }: { paused: boolean }) {
   )
   return (
     <section>
+      <p className="crumb">Choose a table</p>
       <h2>Which madness takes hold?</h2>
       <ol className="tables">
         {categories.map((c, i) => {
@@ -184,11 +207,12 @@ function ChooseCategory({ paused }: { paused: boolean }) {
                   <span className="table-title">{c.label || 'Untitled'}</span>
                   {c.blurb && <span className="table-blurb">{c.blurb}</span>}
                 </span>
-                <span className="table-dice">
-                  d{c.die}
-                  {c.subRoll ? `, then d${c.subDie}` : ''}
-                </span>
+                <CaretRight className="table-go" />
               </button>
+              <span className="table-dice">
+                d{c.die}
+                {c.subRoll ? `, then d${c.subDie}` : ''}
+              </span>
               <label className="switch">
                 <input type="checkbox" role="switch" checked={c.subRoll} onChange={() => toggle(c.id)} />
                 Second roll
@@ -251,8 +275,8 @@ function RollStep({ which }: { which: 'first' | 'second' }) {
           </button>
         </form>
       </div>
-      <button className="link" onClick={back}>
-        Back
+      <button className="chip" onClick={back}>
+        <ArrowLeft /> Back
       </button>
     </section>
   )
@@ -301,11 +325,11 @@ function History() {
   const history = useStore((s) => s.history)
   const clear = useStore((s) => s.clearHistory)
   return (
-    <aside className="history">
+    <aside className="panel history">
       <div className="history-head">
         <h2>This session</h2>
         {history.length > 0 && (
-          <button className="link" onClick={clear}>
+          <button className="chip" onClick={clear}>
             Clear
           </button>
         )}

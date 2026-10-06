@@ -11,9 +11,9 @@
   position: relative;
   container-type: size;
   height: 100%;
-  background: radial-gradient(ellipse 80% 70% at 50% 40%, #16202b 0%, var(--night-1) 55%, var(--night-0) 100%);
-  color: var(--moon);
-  font-family: var(--font-body);
+  background: radial-gradient(ellipse 80% 70% at 50% 40%, #2b1219 0%, var(--ink-1) 55%, var(--ink-0) 100%);
+  color: var(--bone);
+  font-family: var(--font-text);
   font-size: 16px;
   font-variant-numeric: lining-nums;
   line-height: 1.5;
@@ -30,9 +30,9 @@
     inset: -25%;
     pointer-events: none;
     background:
-      radial-gradient(38% 28% at 24% 72%, rgba(126, 146, 168, 0.11), transparent 70%),
-      radial-gradient(44% 34% at 78% 30%, rgba(96, 116, 142, 0.1), transparent 70%),
-      radial-gradient(60% 36% at 50% 100%, rgba(146, 158, 172, 0.09), transparent 70%);
+      radial-gradient(38% 28% at 24% 72%, rgba(176, 110, 112, 0.1), transparent 70%),
+      radial-gradient(44% 34% at 78% 30%, rgba(140, 84, 96, 0.1), transparent 70%),
+      radial-gradient(60% 36% at 50% 100%, rgba(176, 156, 140, 0.08), transparent 70%);
     animation: pv-fog 46s ease-in-out infinite alternate;
   }
 
@@ -53,7 +53,7 @@
   }
 
   .screen.dark {
-    background: var(--night-0);
+    background: var(--ink-0);
   }
 
   .screen.quiet,
@@ -80,11 +80,11 @@
      phone held sideways still fits the whole verdict. */
   .eyebrow,
   .kind {
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--moon-dim);
-    font-size: clamp(0.7rem, min(1.9cqw, 3.2cqh), 1.8rem);
-    letter-spacing: 0.3em;
+    font-family: var(--font-ui);
+    font-weight: 500;
+    color: var(--bone-dim);
+    font-size: clamp(0.6rem, min(1.45cqw, 2.5cqh), 1.4rem);
+    letter-spacing: 0.34em;
     text-transform: uppercase;
   }
 
@@ -92,13 +92,13 @@
   .eyebrow-roll {
     margin-left: 1.2em;
     padding-left: 1.2em;
-    border-left: 1px solid var(--edge-strong);
+    border-left: 1px solid var(--line-strong);
     font-variant-numeric: lining-nums;
   }
 
   .blurb,
   .description {
-    color: var(--moon-dim);
+    color: var(--bone-dim);
     font-size: calc(clamp(0.95rem, min(2.5cqw, 4.2cqh), 2.4rem) * var(--fit, 1));
     font-style: italic;
     max-width: 30ch;
@@ -118,6 +118,7 @@
   .moon,
   .moon-disc,
   .moon-blood,
+  .moon-face,
   .moon-halo {
     position: absolute;
     inset: 0;
@@ -126,30 +127,22 @@
 
   .moon-halo {
     inset: -42%;
-    background: radial-gradient(circle, rgba(200, 216, 230, 0.34) 0%, rgba(200, 216, 230, 0.1) 38%, transparent 68%);
+    background: radial-gradient(circle, rgba(238, 222, 198, 0.34) 0%, rgba(238, 222, 198, 0.1) 38%, transparent 68%);
     opacity: 0.12;
     will-change: opacity;
   }
 
-  /* Flat, cold and mottled: a moon seen through haze. The dark patches are its seas. */
+  /* The colour of the moon: bone, or blood. Its face is laid over both (see .moon-face). */
   .moon-disc {
     background:
-      radial-gradient(ellipse 30% 19% at 60% 27%, rgba(84, 98, 112, 0.3), transparent 100%),
-      radial-gradient(ellipse 17% 27% at 29% 47%, rgba(84, 98, 112, 0.24), transparent 100%),
-      radial-gradient(ellipse 34% 15% at 55% 73%, rgba(84, 98, 112, 0.2), transparent 100%),
-      radial-gradient(ellipse 9% 7% at 76% 52%, rgba(84, 98, 112, 0.22), transparent 100%),
-      radial-gradient(circle at 42% 38%, #e4eaef 0%, #b3bfc9 62%, #74828f 100%);
+      radial-gradient(circle at 42% 38%, #f1eadf 0%, #cdc2b2 62%, #8b7f75 100%);
     box-shadow:
-      inset -0.16em -0.1em 0.42em rgba(10, 16, 24, 0.72),
-      0 0 1.1em rgba(190, 210, 228, 0.16);
+      inset -0.16em -0.1em 0.42em rgba(18, 9, 11, 0.72),
+      0 0 1.1em rgba(238, 222, 198, 0.16);
   }
 
   .moon-blood {
     background:
-      radial-gradient(ellipse 30% 19% at 60% 27%, rgba(58, 6, 14, 0.3), transparent 100%),
-      radial-gradient(ellipse 17% 27% at 29% 47%, rgba(58, 6, 14, 0.24), transparent 100%),
-      radial-gradient(ellipse 34% 15% at 55% 73%, rgba(58, 6, 14, 0.2), transparent 100%),
-      radial-gradient(ellipse 9% 7% at 76% 52%, rgba(58, 6, 14, 0.22), transparent 100%),
       radial-gradient(circle at 42% 38%, #df6b66 0%, #ad2a3a 62%, #5c0d1a 100%);
     box-shadow:
       inset -0.16em -0.1em 0.42em rgba(26, 3, 7, 0.78),
@@ -158,14 +151,25 @@
     will-change: opacity;
   }
 
+  /* The near side of the Moon, photographed by NASA's Lunar Reconnaissance Orbiter. It is
+     multiplied over the disc at part strength: enough to give the moon its seas and craters,
+     not enough to fight the number set on it. */
+  .moon-face {
+    background: url('../assets/moon.webp') center / 102% no-repeat;
+    mix-blend-mode: multiply;
+    opacity: 0.62;
+  }
+
   .number {
     position: relative;
-    color: var(--night-0);
+    color: var(--ink-0);
     font-family: var(--font-display);
     font-size: var(--size);
     font-weight: 600;
     font-variant-numeric: lining-nums tabular-nums;
     line-height: 1;
+    /* A breath of light around the numerals keeps them clear of the moon's seas. */
+    text-shadow: 0 0 0.14em rgba(241, 234, 223, 0.7);
     will-change: transform, opacity;
   }
 
@@ -181,23 +185,23 @@
   .number.scrambling {
     text-shadow:
       0.04em 0 0 rgba(156, 26, 44, 0.8),
-      -0.04em 0 0 rgba(60, 96, 120, 0.6);
+      -0.04em 0 0 rgba(230, 200, 140, 0.5);
     animation: pv-tear 140ms steps(2) infinite;
   }
 
   h1 {
-    color: var(--moon);
+    color: var(--bone);
     font-family: var(--font-display);
-    font-size: calc(clamp(1.5rem, min(5.4cqw, 8.6cqh), 5.4rem) * var(--fit, 1));
+    font-size: calc(clamp(1.4rem, min(5cqw, 8cqh), 5rem) * var(--fit, 1));
     font-weight: 500;
-    line-height: 1.1;
+    line-height: 1.12;
     max-width: 18ch;
     min-height: 1.1em;
   }
 
   /* While the title is still noise it flickers like a bad signal. */
   h1.forming {
-    color: var(--moon-dim);
+    color: var(--bone-dim);
     letter-spacing: 0.04em;
     animation: pv-flicker 180ms steps(2) infinite;
   }
@@ -225,7 +229,7 @@
   .screen.boon .effect strong,
   .screen.boon .banner-word,
   .screen.boon .banner-echo {
-    color: var(--boon);
+    color: var(--candle);
   }
 
   .screen.bane h1,
@@ -245,7 +249,7 @@
     place-items: center;
     height: 30cqh;
     margin-top: -15cqh;
-    background: linear-gradient(to bottom, transparent, rgba(4, 6, 9, 0.94) 26%, rgba(4, 6, 9, 0.94) 74%, transparent);
+    background: linear-gradient(to bottom, transparent, rgba(8, 5, 6, 0.94) 26%, rgba(8, 5, 6, 0.94) 74%, transparent);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -258,7 +262,7 @@
     position: absolute;
     inset-inline: 12cqw;
     height: 1px;
-    background: linear-gradient(to right, transparent, var(--edge-strong) 30%, var(--edge-strong) 70%, transparent);
+    background: linear-gradient(to right, transparent, var(--line-strong) 30%, var(--line-strong) 70%, transparent);
   }
 
   .banner::before {
@@ -273,9 +277,9 @@
   .banner-echo {
     grid-area: 1 / 1;
     padding-left: 0.34em; /* the tracking adds space after the last letter; this centres the word again */
-    color: var(--moon);
+    color: var(--bone);
     font-family: var(--font-display);
-    font-size: clamp(1.1rem, min(5.4cqw, 10cqh), 5.6rem);
+    font-size: clamp(1rem, min(4.6cqw, 8.6cqh), 4.8rem);
     font-weight: 500;
     letter-spacing: 0.34em;
     line-height: 1;
@@ -307,11 +311,11 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(6, 8, 11, 0.62) 0%, rgba(6, 8, 11, 0.84) 70%, rgba(6, 8, 11, 0.95) 100%);
+    background: radial-gradient(ellipse at center, rgba(8, 5, 6, 0.62) 0%, rgba(8, 5, 6, 0.84) 70%, rgba(8, 5, 6, 0.95) 100%);
   }
 
   .screen.has-media .camera {
-    text-shadow: 0 2px 18px rgba(6, 8, 11, 0.9);
+    text-shadow: 0 2px 18px rgba(8, 5, 6, 0.9);
   }
 
   .screen.has-media .number {
@@ -323,12 +327,35 @@
     inset: 0;
     opacity: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at 50% 42%, var(--moon-dim), transparent 70%);
+    background: radial-gradient(ellipse at 50% 42%, var(--bone-dim), transparent 70%);
     mix-blend-mode: screen;
   }
 
   .screen.boon .wash {
-    background: radial-gradient(ellipse at 50% 42%, var(--boon), transparent 72%);
+    background: radial-gradient(ellipse at 50% 42%, var(--candle), transparent 72%);
+  }
+
+  /* The flash strikes white-hot before it settles into the colour of the outcome. */
+  .wash[data-style='flash'] {
+    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--bone-dim) 30%, transparent 78%);
+  }
+
+  .screen.boon .wash[data-style='flash'] {
+    background: radial-gradient(ellipse at 50% 42%, #fff 0%, var(--candle) 30%, transparent 78%);
+  }
+
+  .screen.bane .wash[data-style='flash'] {
+    background: radial-gradient(ellipse at 50% 42%, #ffd9d2 0%, var(--blood) 32%, transparent 80%);
+  }
+
+  /* Fade has no band of dark behind the words: they hang in the air. */
+  .banner[data-style='fade'] {
+    background: none;
+  }
+
+  .banner[data-style='fade']::before,
+  .banner[data-style='fade']::after {
+    display: none;
   }
 
   .screen.bane .wash {
@@ -359,7 +386,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 42%, rgba(3, 4, 6, 0.78) 100%);
+    background: radial-gradient(ellipse at center, transparent 42%, rgba(4, 2, 3, 0.8) 100%);
   }
 
   .preview-tag {
@@ -368,11 +395,12 @@
     right: max(2.4cqw, env(safe-area-inset-right));
     margin: 0;
     padding: 0.3em 0.9em;
-    border: 1px solid var(--edge-strong);
-    color: var(--moon-dim);
-    font-family: var(--font-display);
-    font-size: clamp(0.65rem, 1.3cqw, 0.9rem);
-    font-weight: 600;
+    border: 1px solid var(--line-strong);
+    color: var(--bone-dim);
+    border-radius: 999px;
+    font-family: var(--font-ui);
+    font-size: clamp(0.6rem, 1.2cqw, 0.8rem);
+    font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
@@ -384,8 +412,9 @@
     right: 0;
     margin: 0;
     text-align: center;
-    color: var(--moon-dim);
-    font-size: 0.9rem;
+    color: var(--bone-dim);
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
     opacity: 0;
     transition: opacity 300ms;
   }
