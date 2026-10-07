@@ -264,3 +264,8 @@ The first pass read as a home project: a page with a header and a legal footer, 
 
 - The words of the verdict banner are in `src/shared/banner.ts`, one set for each theme. A table can replace them with its own (`banner` on `Category`: boon, neutral, bane, and `plain` for a table with no second roll). They are edited in Edit, under "How long it lasts"; an empty box uses the words of the theme.
 - The DM window resolves the words and sends them with the verdict, so the player screen no longer looks them up.
+
+## Durations (2026-10-07)
+
+- Cosmic, Surreal, Occult and Societal follow Hellenic: the table has no duration of its own and each effect starts with how long it lasts. What is rolled turn by turn lasts 1 minute; what only matters between fights lasts hours, days or until a rest.
+- Gothic and D&D keep one duration for each table, because the table itself is the tier (short-term, long-term, indefinite).

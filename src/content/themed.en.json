@@ -8,9 +8,8 @@
         "label": "Under the Open Sky",
         "blurb": "You looked up for too long.",
         "duration": {
-          "kind": "dice",
-          "die": 10,
-          "unit": "minutes"
+          "kind": "fixed",
+          "text": ""
         },
         "die": 100,
         "subRoll": false,
@@ -24,7 +23,7 @@
             ],
             "title": "The Scale of Things",
             "description": "You have just worked out how far away the nearest star is, and the number will not leave you alone.",
-            "text": "You are frightened of the open sky and cannot willingly leave cover while you can see it.",
+            "text": "For 1 hour, you are frightened of the open sky and cannot willingly leave cover while you can see it.",
             "outcomes": []
           },
           {
@@ -35,7 +34,7 @@
             ],
             "title": "A Colour With No Name",
             "description": "There is a new colour at the edge of things. It is on your hands as well.",
-            "text": "Anything more than 30 feet from you is heavily obscured by it.",
+            "text": "For 10 minutes, anything more than 30 feet from you is heavily obscured by it.",
             "outcomes": []
           },
           {
@@ -46,7 +45,7 @@
             ],
             "title": "Too Many Corners",
             "description": "You count the corners of the room twice and get a different number each time.",
-            "text": "Your speed is halved, and you have disadvantage on Dexterity saving throws.",
+            "text": "For 1 minute, your speed is halved, and you have disadvantage on Dexterity saving throws.",
             "outcomes": []
           },
           {
@@ -57,7 +56,7 @@
             ],
             "title": "The Slow Voice",
             "description": "Something very far off is speaking. One word of it takes longer than your whole life, and you are stuck listening to a syllable.",
-            "text": "Roll a d6 at the start of each of your turns. On a 1, you are stunned until your next turn starts.",
+            "text": "For 1 minute, roll a d6 at the start of each of your turns. On a 1, you are stunned until your next turn starts.",
             "outcomes": []
           },
           {
@@ -68,7 +67,7 @@
             ],
             "title": "Seen From Above",
             "description": "You are watching the top of your own head from a great height.",
-            "text": "You cannot be surprised and you have advantage on Wisdom (Perception) checks. Your attack rolls have disadvantage.",
+            "text": "For 1 hour, you cannot be surprised and you have advantage on Wisdom (Perception) checks. Your attack rolls have disadvantage.",
             "outcomes": []
           },
           {
@@ -79,7 +78,7 @@
             ],
             "title": "Old Light",
             "description": "Starlight is thousands of years old by the time it arrives. You start to wonder how old the light from your friends is.",
-            "text": "You trust only what you can touch. You have disadvantage on attack rolls against any target more than 5 feet from you, and you cannot target a creature with a spell unless you are touching it.",
+            "text": "For 10 minutes, you trust only what you can touch. You have disadvantage on attack rolls against any target more than 5 feet from you, and you cannot target a creature with a spell unless you are touching it.",
             "outcomes": []
           },
           {
@@ -90,7 +89,7 @@
             ],
             "title": "The Quiet Is Listening",
             "description": "It has gone very quiet, the way a room does when someone has stopped to listen at the door.",
-            "text": "You will not speak above a whisper, so you cannot cast spells that have a verbal component. You have advantage on Dexterity (Stealth) checks.",
+            "text": "For 1 hour, you will not speak above a whisper, so you cannot cast spells that have a verbal component. You have advantage on Dexterity (Stealth) checks.",
             "outcomes": []
           },
           {
@@ -101,7 +100,7 @@
             ],
             "title": "Sums",
             "description": "Distances, orbits and the weight of the sea go through your head faster than you can write them down. A few of the answers are about the fight you are in.",
-            "text": "Once on each of your turns you can add 1d4 to an attack roll, ability check or saving throw you make. You take 1d4 psychic damage each time.",
+            "text": "For 1 minute, once on each of your turns you can add 1d4 to an attack roll, ability check or saving throw you make. You take 1d4 psychic damage each time.",
             "outcomes": []
           },
           {
@@ -112,7 +111,7 @@
             ],
             "title": "The Thin Place",
             "description": "The world here is worn like the elbow of a coat, and you can see what it was covering.",
-            "text": "You can see 30 feet into the Ethereal Plane. Everything on your own plane is lightly obscured for you.",
+            "text": "For 10 minutes, you can see 30 feet into the Ethereal Plane. Everything on your own plane is lightly obscured for you.",
             "outcomes": []
           },
           {
@@ -123,7 +122,7 @@
             ],
             "title": "It Looked Back",
             "description": "You always assumed that whatever is out there had never heard of you.",
-            "text": "You have vulnerability to psychic damage. You cannot hide, and creatures within 60 feet of you know where you are even when you are invisible.",
+            "text": "For 1 hour, you have vulnerability to psychic damage. You cannot hide, and creatures within 60 feet of you know where you are even when you are invisible.",
             "outcomes": []
           }
         ]
@@ -139,9 +138,8 @@
         "label": "Waking Dreams",
         "blurb": "You woke up, and the dream carried on.",
         "duration": {
-          "kind": "dice",
-          "die": 10,
-          "unit": "minutes"
+          "kind": "fixed",
+          "text": ""
         },
         "die": 100,
         "subRoll": false,
@@ -155,7 +153,7 @@
             ],
             "title": "The Way Out",
             "description": "The way out of here is through a jar, a boot or a teacup. You only have to find the right one.",
-            "text": "At the start of each of your turns, roll a d6. On a 1 or 2, you spend your action trying to climb into the nearest container, whatever its size.",
+            "text": "For 1 minute, roll a d6 at the start of each of your turns. On a 1 or 2, you spend your action trying to climb into the nearest container, whatever its size. The effect ends early if you get all the way into one.",
             "outcomes": []
           },
           {
@@ -166,7 +164,7 @@
             ],
             "title": "Borrowed Gravity",
             "description": "The floor has started to feel like a wall you are leaning against.",
-            "text": "You can walk on walls and ceilings at your normal speed with your hands free. If you end your turn on the floor, you fall prone.",
+            "text": "For 10 minutes, you can walk on walls and ceilings at your normal speed with your hands free. If you end your turn on the floor, you fall prone.",
             "outcomes": []
           },
           {
@@ -177,7 +175,7 @@
             ],
             "title": "The Clocks Disagree",
             "description": "Your pulse is running ahead of your footsteps, and the candle flames are a little behind both.",
-            "text": "At the start of each of your turns, roll a d6. On a 1 or 2 your speed is halved and you can take an action or a bonus action this turn, but not both. On a 5 or 6 your speed is doubled until the turn ends.",
+            "text": "For 1 minute, roll a d6 at the start of each of your turns. On a 1 or 2 your speed is halved and you can take an action or a bonus action this turn, but not both. On a 5 or 6 your speed is doubled until the turn ends.",
             "outcomes": []
           },
           {
@@ -188,7 +186,7 @@
             ],
             "title": "Wrong Faces",
             "description": "Your friends have been swapped for people who look just like them. Whoever did it got the ears slightly wrong.",
-            "text": "You are never a willing target for another creature's spells or effects. You cannot take the Help action, and nobody can use it on you.",
+            "text": "For 1 hour, you are never a willing target for another creature's spells or effects. You cannot take the Help action, and nobody can use it on you.",
             "outcomes": []
           },
           {
@@ -199,7 +197,7 @@
             ],
             "title": "Birdsong",
             "description": "People are opening their mouths and making noise. The sparrows are the ones talking sense.",
-            "text": "You cannot speak, read or understand any language. You can talk with beasts as if you had cast speak with animals.",
+            "text": "For 10 minutes, you cannot speak, read or understand any language. You can talk with beasts as if you had cast speak with animals.",
             "outcomes": []
           },
           {
@@ -210,7 +208,7 @@
             ],
             "title": "Near and Far",
             "description": "The far wall is against your shoulder, and your own hand takes a minute's walk to reach.",
-            "text": "You have disadvantage on attack rolls against targets within 10 feet of you. Long range does not give you disadvantage on ranged attack rolls.",
+            "text": "For 1 minute, you have disadvantage on attack rolls against targets within 10 feet of you. Long range does not give you disadvantage on ranged attack rolls.",
             "outcomes": []
           },
           {
@@ -221,7 +219,7 @@
             ],
             "title": "Unpainted",
             "description": "Whoever made this place ran out of paint near the walls, and you would rather not step on the bare patches.",
-            "text": "Any space within 5 feet of a wall is difficult terrain for you. You have advantage on saving throws against illusion spells.",
+            "text": "For 1 hour, any space within 5 feet of a wall is difficult terrain for you. You have advantage on saving throws against illusion spells.",
             "outcomes": []
           },
           {
@@ -232,7 +230,7 @@
             ],
             "title": "The Joke",
             "description": "You have just understood the joke. It is about the moon, and you cannot explain it.",
-            "text": "Whenever you take damage, roll a d6. On a 1 or 2, you fall prone laughing and cannot stand up until the end of your next turn.",
+            "text": "For 1 minute, whenever you take damage, roll a d6. On a 1 or 2, you fall prone laughing and cannot stand up until the end of your next turn.",
             "outcomes": []
           },
           {
@@ -243,7 +241,7 @@
             ],
             "title": "Your Shadow Goes First",
             "description": "Your shadow has stopped waiting for you. It walks ahead, looks round the corner and comes back.",
-            "text": "You cannot be surprised and you have advantage on initiative rolls. You have disadvantage on Dexterity (Stealth) checks.",
+            "text": "For 8 hours, you cannot be surprised and you have advantage on initiative rolls. You have disadvantage on Dexterity (Stealth) checks.",
             "outcomes": []
           },
           {
@@ -254,7 +252,7 @@
             ],
             "title": "Only a Dream",
             "description": "You have realised you are asleep, which is a relief, because it means none of this can hurt you.",
-            "text": "You are immune to the frightened condition and have advantage on saving throws against being charmed. You cannot take the Dodge or Disengage action.",
+            "text": "Until you finish a long rest, you are immune to the frightened condition and have advantage on saving throws against being charmed. You cannot take the Dodge or Disengage action. The effect ends early if you drop to 0 hit points.",
             "outcomes": []
           }
         ]
@@ -271,7 +269,7 @@
         "blurb": "You opened the book you were told to leave shut.",
         "duration": {
           "kind": "fixed",
-          "text": "Until the next dawn:"
+          "text": ""
         },
         "die": 100,
         "subRoll": false,
@@ -285,7 +283,7 @@
             ],
             "title": "The Name",
             "description": "You know a name you were never taught. It is on your tongue every time you open your mouth.",
-            "text": "Whenever you cast a spell that has a verbal component, roll a d6. On a 1 or 2 you say the name instead. The spell fails, the spell slot is not used, and you take 1d6 psychic damage.",
+            "text": "Until the next dawn, whenever you cast a spell that has a verbal component, roll a d6. On a 1 or 2 you say the name instead. The spell fails, the spell slot is not used, and you take 1d6 psychic damage.",
             "outcomes": []
           },
           {
@@ -296,7 +294,7 @@
             ],
             "title": "Marked",
             "description": "A sign came up on your forearm overnight, like a bruise in the shape of writing. It is warm.",
-            "text": "Fiends and undead within 60 feet of you know where you are and have advantage on attack rolls against you. You have resistance to necrotic damage.",
+            "text": "Until the next dawn, fiends and undead within 60 feet of you know where you are and have advantage on attack rolls against you. You have resistance to necrotic damage.",
             "outcomes": []
           },
           {
@@ -307,7 +305,7 @@
             ],
             "title": "The Debt",
             "description": "Years ago something helped you without being asked. It has been keeping count since then.",
-            "text": "Whenever you regain hit points, you regain half as many.",
+            "text": "Until you finish a long rest, whenever you regain hit points, you regain half as many.",
             "outcomes": []
           },
           {
@@ -318,7 +316,7 @@
             ],
             "title": "Candle Sight",
             "description": "You can read in a dark room now. Daylight hurts.",
-            "text": "You have darkvision out to 60 feet and can see invisible creatures within 10 feet of you. In sunlight you have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight.",
+            "text": "For 24 hours, you have darkvision out to 60 feet and can see invisible creatures within 10 feet of you. In sunlight you have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight.",
             "outcomes": []
           },
           {
@@ -329,7 +327,7 @@
             ],
             "title": "The Old Tongue",
             "description": "You meant to say good morning. What came out was older and a good deal ruder.",
-            "text": "Infernal is the only language you can speak, read or write. You have advantage on Charisma (Intimidation) checks.",
+            "text": "For 1d4 hours, Infernal is the only language you can speak, read or write. You have advantage on Charisma (Intimidation) checks.",
             "outcomes": []
           },
           {
@@ -340,7 +338,7 @@
             ],
             "title": "The Circle",
             "description": "You cannot sleep until you have drawn the circle, and you already know every mark that goes in it.",
-            "text": "You must spend 10 minutes drawing a circle around yourself before you can take a short or long rest. Inside a circle you drew, you have advantage on saving throws against being charmed or frightened.",
+            "text": "Until you finish a long rest, you must spend 10 minutes drawing a circle around yourself before you can take a short or long rest. Inside a circle you drew, you have advantage on saving throws against being charmed or frightened.",
             "outcomes": []
           },
           {
@@ -351,7 +349,7 @@
             ],
             "title": "A Second Voice",
             "description": "When you pray, another voice says the words with you, half a beat late.",
-            "text": "Whenever you cast a spell of 1st level or higher, roll a d6. On a 1 the GM picks its targets from those in range. On a 6 the spell is cast as if from a slot one level higher.",
+            "text": "Until the next dawn, whenever you cast a spell of 1st level or higher, roll a d6. On a 1 the GM picks its targets from those in range. On a 6 the spell is cast as if from a slot one level higher.",
             "outcomes": []
           },
           {
@@ -362,7 +360,7 @@
             ],
             "title": "The Hungry Page",
             "description": "You read one page of it. Since then every scrap of writing looks like it might be the next one.",
-            "text": "The first time you see a piece of writing within 30 feet of you, you must use your next action to read it. You have advantage on Intelligence (Arcana) and Intelligence (Religion) checks.",
+            "text": "Until the next dawn, the first time you see a piece of writing within 30 feet of you, you must use your next action to read it. You have advantage on Intelligence (Arcana) and Intelligence (Religion) checks.",
             "outcomes": []
           },
           {
@@ -373,7 +371,7 @@
             ],
             "title": "Salt and Iron",
             "description": "Your grandmother was right about doorways.",
-            "text": "You will not go through a doorway unless there is salt across it or iron in your hand. While you are holding iron, you have advantage on saving throws against being charmed.",
+            "text": "Until the next dawn, you will not go through a doorway unless there is salt across it or iron in your hand. While you are holding iron, you have advantage on saving throws against being charmed.",
             "outcomes": []
           },
           {
@@ -384,7 +382,7 @@
             ],
             "title": "The Offer",
             "description": "A polite voice offers you help, once, at a price it calls small.",
-            "text": "Once, after you roll a d20, you can treat the roll as a 20. If you do, your hit point maximum drops by 2d6 until you finish a long rest.",
+            "text": "Once before the next dawn, after you roll a d20, you can treat the roll as a 20. If you do, your hit point maximum drops by 2d6 until you finish a long rest.",
             "outcomes": []
           }
         ]
@@ -400,9 +398,8 @@
         "label": "Under Review",
         "blurb": "Your case is being processed. Please wait.",
         "duration": {
-          "kind": "dice",
-          "die": 4,
-          "unit": "days"
+          "kind": "fixed",
+          "text": ""
         },
         "die": 100,
         "subRoll": false,
@@ -416,7 +413,7 @@
             ],
             "title": "The Missing Form",
             "description": "You were meant to hand in a form before today. Nobody at the desk can tell you which form, or which desk.",
-            "text": "You have disadvantage on initiative rolls and you cannot take the Ready action.",
+            "text": "For 1d4 days, you have disadvantage on initiative rolls and you cannot take the Ready action.",
             "outcomes": []
           },
           {
@@ -427,7 +424,7 @@
             ],
             "title": "The Number",
             "description": "They gave you a number at the door. You turn round faster for it now than for your own name.",
-            "text": "You cannot say or write your name. You have disadvantage on Charisma saving throws.",
+            "text": "For 1d4 days, you cannot say or write your name. You have disadvantage on Charisma saving throws.",
             "outcomes": []
           },
           {
@@ -438,7 +435,7 @@
             ],
             "title": "Watched",
             "description": "Somebody is at every window: the neighbours, the baker, and a pigeon you have seen three times today.",
-            "text": "You have advantage on Wisdom (Perception) checks to notice hidden creatures. A short rest does nothing for you if anyone could have seen you taking it.",
+            "text": "For 1d4 days, you have advantage on Wisdom (Perception) checks to notice hidden creatures. A short rest does nothing for you if anyone could have seen you taking it.",
             "outcomes": []
           },
           {
@@ -449,7 +446,7 @@
             ],
             "title": "Guilty",
             "description": "The court has found you guilty and will let you know the charge in due course.",
-            "text": "You cannot knowingly lie to a guard, an official, a priest or anyone else who speaks with authority. You have disadvantage on saving throws against being charmed or frightened by them.",
+            "text": "For 1d4 days, you cannot knowingly lie to a guard, an official, a priest or anyone else who speaks with authority. You have disadvantage on saving throws against being charmed or frightened by them.",
             "outcomes": []
           },
           {
@@ -460,7 +457,7 @@
             ],
             "title": "The Queue",
             "description": "There is a queue. You are in it, and people who push in make you feel ill.",
-            "text": "You take your turn last in every round of combat. You have advantage on Constitution saving throws to maintain concentration.",
+            "text": "For 24 hours, you take your turn last in every round of combat. You have advantage on Constitution saving throws to maintain concentration.",
             "outcomes": []
           },
           {
@@ -471,7 +468,7 @@
             ],
             "title": "Loyal Citizen",
             "description": "You read the slogan on the wall this morning and found nothing in it to argue with.",
-            "text": "When a creature gives you a spoken order of one or two words, roll a d6. On a 1, 2 or 3 you follow it on your next turn, as if under the command spell. While you are following an order you are immune to the frightened condition.",
+            "text": "For 1 hour, when a creature gives you a spoken order of one or two words, roll a d6. On a 1, 2 or 3 you follow it on your next turn, as if under the command spell. While you are following an order you are immune to the frightened condition. The effect ends early if you take damage while following one.",
             "outcomes": []
           },
           {
@@ -482,7 +479,7 @@
             ],
             "title": "Spare Part",
             "description": "You have seen the list of people who could do your job, and it is long.",
-            "text": "You can take the Help action as a bonus action. You do not add your proficiency bonus to Charisma checks.",
+            "text": "For 1d4 days, you can take the Help action as a bonus action. You do not add your proficiency bonus to Charisma checks.",
             "outcomes": []
           },
           {
@@ -493,7 +490,7 @@
             ],
             "title": "Two Truths",
             "description": "You believe two things that cannot both be true, and it has stopped bothering you.",
-            "text": "Magic cannot tell whether you are lying, and you have advantage on Charisma (Deception) checks. You have disadvantage on Wisdom (Insight) checks.",
+            "text": "For 1d4 days, magic cannot tell whether you are lying, and you have advantage on Charisma (Deception) checks. You have disadvantage on Wisdom (Insight) checks.",
             "outcomes": []
           },
           {
@@ -504,7 +501,7 @@
             ],
             "title": "Awaiting Instructions",
             "description": "Somewhere a machine is working out what you should do next. It is usually right, so you wait.",
-            "text": "When you roll initiative, also roll a d4. On a 1 you must take the Dodge action on your first turn. On a 4 you have advantage on the first attack roll or ability check you make in that combat.",
+            "text": "For 1d4 days, when you roll initiative, also roll a d4. On a 1 you must take the Dodge action on your first turn. On a 4 you have advantage on the first attack roll or ability check you make in that combat.",
             "outcomes": []
           },
           {
@@ -515,7 +512,7 @@
             ],
             "title": "The Crowd",
             "description": "Everyone is walking the same way and you are walking with them. You could not say where.",
-            "text": "While two or more of your allies are within 10 feet of you, you are immune to the frightened condition. While none are, you have disadvantage on Wisdom saving throws.",
+            "text": "For 24 hours, while two or more of your allies are within 10 feet of you, you are immune to the frightened condition. While none are, you have disadvantage on Wisdom saving throws.",
             "outcomes": []
           }
         ]
