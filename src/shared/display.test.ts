@@ -70,6 +70,16 @@ describe('previews from Settings', () => {
     expect(s).toMatchObject({ theme: 'cosmic', step: 'verdict', second: null })
     expect(s.verdict).toMatchObject({ kind: null, text: cosmic.categories[0].entries[0].text })
   })
+
+  it('sends the banner of the theme, or the one the table has of its own', () => {
+    const cosmic = defaultFor('cosmic')
+    const preview = { part: 'verdict', at: 5000 } as const
+    expect(toDisplayState({ ...idle, tables: cosmic, preview }).verdict?.banner).toBe('Mind Shattered')
+    const own = { ...cosmic, categories: [{ ...cosmic.categories[0], banner: { plain: 'The Stars Are Right' } }] }
+    expect(toDisplayState({ ...idle, tables: own, preview }).verdict?.banner).toBe('The Stars Are Right')
+    const blank = { ...cosmic, categories: [{ ...cosmic.categories[0], banner: { plain: '  ' } }] }
+    expect(toDisplayState({ ...idle, tables: blank, preview }).verdict?.banner).toBe('Mind Shattered')
+  })
 })
 
 describe('parseSettings', () => {

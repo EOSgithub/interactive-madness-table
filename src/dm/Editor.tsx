@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { BANNER, type BannerKind } from '../shared/banner'
 import * as E from '../shared/edit'
 import { checkCategory, type Problem } from '../shared/tables'
 import { THEMES, themeOf } from '../shared/themes'
@@ -138,6 +139,7 @@ function CategoryForm({ category, canRemove }: { category: Category; canRemove: 
           </label>
         )}
         <DurationFields duration={category.duration} onChange={(duration) => patch({ duration })} />
+        <BannerFields category={category} onChange={(banner) => patch({ banner })} />
       </div>
 
       <div className="rows-head">
@@ -214,6 +216,35 @@ function DurationFields({ duration, onChange }: { duration: Duration; onChange: 
           />
         </>
       )}
+    </fieldset>
+  )
+}
+
+const BANNER_LABEL: Record<BannerKind, string> = {
+  boon: 'On a boon',
+  neutral: 'On a neutral outcome',
+  bane: 'On a bane',
+  plain: 'When the madness is named'
+}
+
+/** The words that cross the player screen at the verdict. An empty box uses the words of the theme, shown in grey. */
+function BannerFields({ category, onChange }: { category: Category; onChange: (b: Category['banner']) => void }) {
+  const theme = useStore((s) => themeOf(s.tables))
+  const kinds: BannerKind[] = category.subRoll ? ['boon', 'neutral', 'bane'] : ['plain']
+  const set = (kind: BannerKind, word: string) => {
+    const next = { ...category.banner, [kind]: word }
+    if (word === '') delete next[kind]
+    onChange(Object.keys(next).length > 0 ? next : undefined)
+  }
+  return (
+    <fieldset className="field wide banner-words">
+      <legend>Banner across the player screen</legend>
+      {kinds.map((kind) => (
+        <label key={kind} className="field">
+          <span>{BANNER_LABEL[kind]}</span>
+          <input value={category.banner?.[kind] ?? ''} placeholder={BANNER[theme][kind]} onChange={(e) => set(kind, e.target.value)} />
+        </label>
+      ))}
     </fieldset>
   )
 }

@@ -31,6 +31,14 @@ describe('export and import', () => {
     expect(c.id).toBeTruthy()
     expect(c.entries[0]).toMatchObject({ title: 'One', description: '', outcomes: [] })
   })
+
+  it("keeps a table's own banner words and drops the empty ones", () => {
+    const entries = [{ range: [1, 100], title: 'One' }]
+    const r = parseTableSet({ categories: [{ label: 'Mine', banner: { plain: 'Doomed', bane: '', odd: 'x' }, entries }, { label: 'Other', banner: {}, entries }] })
+    if (!r.ok) throw new Error(r.error)
+    expect(r.tables.categories[0].banner).toEqual({ plain: 'Doomed' })
+    expect(r.tables.categories[1].banner).toBeUndefined()
+  })
 })
 
 describe('faults in an imported file', () => {

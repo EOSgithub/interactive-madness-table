@@ -52,6 +52,8 @@ export interface Category {
   label: string
   blurb: string
   duration: Duration
+  /** This table's own words for the verdict banner. A kind left out uses the words of the theme. */
+  banner?: Partial<Record<OutcomeKind | 'plain', string>>
   /** Sides of the first die. */
   die: number
   /** Whether a second roll picks one of the entry's outcomes. */

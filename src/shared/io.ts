@@ -1,3 +1,4 @@
+import { BANNER_KINDS } from './banner'
 import { parseTheme } from './themes'
 import type { Category, Duration, Entry, Outcome, OutcomeKind, Range, Staging, TableSet } from './types'
 
@@ -67,6 +68,18 @@ function duration(v: unknown, at: string): Duration {
   throw new Fault(`${at}.kind should be "fixed" or "dice".`)
 }
 
+/** A table's own banner words. Anything that is not text, or is empty, is dropped. */
+function banner(v: unknown, at: string): Category['banner'] {
+  if (v === undefined || v === null) return undefined
+  const o = obj(v, at)
+  const out: NonNullable<Category['banner']> = {}
+  for (const key of BANNER_KINDS) {
+    const word = o[key]
+    if (typeof word === 'string' && word.trim() !== '') out[key] = word
+  }
+  return Object.keys(out).length > 0 ? out : undefined
+}
+
 function outcome(v: unknown, at: string): Outcome {
   const o = obj(v, at)
   if (!KINDS.includes(o.kind as OutcomeKind)) throw new Fault(`${at}.kind should be boon, neutral or bane.`)
@@ -99,6 +112,7 @@ function category(v: unknown, at: string): Category {
     label: str(o.label, `${at}.label`),
     blurb: str(o.blurb, `${at}.blurb`, ''),
     duration: duration(o.duration, `${at}.duration`),
+    banner: banner(o.banner, `${at}.banner`),
     die: int(o.die, `${at}.die`, 2, 1000, 100),
     subRoll: typeof o.subRoll === 'boolean' ? o.subRoll : false,
     subDie: int(o.subDie, `${at}.subDie`, 2, 1000, 10),

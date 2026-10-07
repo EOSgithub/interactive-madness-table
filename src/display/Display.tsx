@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { DisplayState } from '../shared/display'
 import { SPEED_FACTOR } from '../shared/settings'
-import { DEFAULT_THEME, type ThemeId } from '../shared/themes'
+import { DEFAULT_THEME } from '../shared/themes'
 import type { OutcomeKind } from '../shared/types'
 import { urlFor } from '../state/media'
 import { listen } from '../state/sync'
@@ -16,17 +16,6 @@ import { advance, bannerLevel, clamp, faceAt, firstRollBeats, glitchValue, jolt,
 // the view itself, also used by the monitor and by table mode in the DM window.
 
 const KIND_LABEL = { boon: 'A boon', neutral: 'It shows itself', bane: 'A bane' } as const
-/** The banner that crosses the screen when the verdict is named, in the words of each theme. `plain` is for a table with no second roll. */
-const BANNER: Record<ThemeId, Record<OutcomeKind | 'plain', string>> = {
-  gothic: { boon: 'Boon Granted', neutral: 'Madness Manifest', bane: 'Bane Inflicted', plain: 'Madness Takes Hold' },
-  cosmic: { boon: 'A Star Aligns', neutral: 'It Has Noticed You', bane: 'The Void Answers', plain: 'Beyond Comprehension' },
-  surreal: { boon: 'A Kind Dream', neutral: 'Logic Slips', bane: 'The Dream Turns', plain: 'Nothing Is As It Was' },
-  occult: { boon: 'The Pact Rewards', neutral: 'The Sign Appears', bane: 'The Price Is Paid', plain: 'The Seal Is Broken' },
-  societal: { boon: 'Appeal Granted', neutral: 'Noted On File', bane: 'Sentence Passed', plain: 'Case Opened' },
-  hellenic: { boon: 'Favour of the Gods', neutral: 'The Gods Take Notice', bane: 'Wrath of the Gods', plain: 'Cursed by the Gods' },
-  dnd: { boon: 'Inspiration', neutral: 'Roll for Madness', bane: 'Critical Failure', plain: 'Saving Throw Failed' }
-}
-
 /** A step time this far in the past was set by Skip: the show is over. */
 const LONG_AGO = 1e6
 
@@ -393,7 +382,7 @@ function Roll({ state, els: e }: { state: DisplayState; els: Els }) {
     return () => watch.disconnect()
   }, [e, state.entry, state.step, state.stepAt, state.settings.animations, text])
 
-  const word = verdict ? BANNER[state.theme][verdict.kind ?? 'plain'] : ''
+  const word = verdict?.banner ?? ''
   // A table with no second roll never showed its description on the way here, so the verdict carries it.
   const lead = verdict?.text && !second ? state.entry?.description : ''
   return (

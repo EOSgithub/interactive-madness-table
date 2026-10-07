@@ -1,3 +1,4 @@
+import { bannerWord } from './banner'
 import type { Settings } from './settings'
 import { resolveStaging } from './staging'
 import { findEntry } from './tables'
@@ -26,7 +27,8 @@ export interface DisplayState {
   first: number | null
   entry: { title: string; description: string } | null
   second: number | null
-  verdict: { kind: OutcomeKind | null; text: string; duration: string } | null
+  /** `banner` is what crosses the screen as the verdict is named. */
+  verdict: { kind: OutcomeKind | null; text: string; duration: string; banner: string } | null
   /** Files this verdict shows, by id. Sound is not here: it plays from the DM window. */
   media: { image?: string; video?: string } | null
 }
@@ -89,7 +91,12 @@ function previewState(s: DisplaySource, preview: Preview): { state: DisplayState
       entry: { title: entry.title, description: entry.description },
       second: verdict ? (outcome?.range[0] ?? null) : null,
       verdict: verdict
-        ? { kind: outcome?.kind ?? null, text: outcome?.text ?? entry.text ?? entry.description, duration: 'For the next 3 minutes:' }
+        ? {
+            kind: outcome?.kind ?? null,
+            text: outcome?.text ?? entry.text ?? entry.description,
+            duration: 'For the next 3 minutes:',
+            banner: bannerWord(themeOf(s.tables), category, outcome?.kind ?? null)
+          }
         : null,
       media: verdict ? mediaOf(staging) : null
     }
@@ -128,7 +135,12 @@ export function toDisplayState(s: DisplaySource): DisplayState {
     first: s.first,
     entry: entry && { title: entry.title, description: entry.description },
     second: s.second,
-    verdict: s.verdict && { kind: s.verdict.kind, text: s.verdict.text, duration: s.verdict.duration },
+    verdict: s.verdict && {
+      kind: s.verdict.kind,
+      text: s.verdict.text,
+      duration: s.verdict.duration,
+      banner: bannerWord(themeOf(s.tables), category, s.verdict.kind)
+    },
     media: s.step === 'verdict' ? mediaOf(s.verdict?.staging) : null
   }
 }

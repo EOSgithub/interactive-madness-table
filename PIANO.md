@@ -259,3 +259,8 @@ The first pass read as a home project: a page with a header and a legal footer, 
 - The emblem is the dragon ampersand (`src/assets/dnd-ampersand.webp`), cut from the fifth edition logo on English Wikipedia. It is a trademark of Wizards of the Coast and is not free: the credits say so. If that becomes a problem, the theme needs another emblem.
 - Headings are Libre Baskerville. Storage is unchanged: someone who already has a library gets the new set from "start from one of the defaults".
 - "D&D Madness" is the set open on a first visit, in place of the Hellenic one.
+
+## Banner words (2026-10-07)
+
+- The words of the verdict banner are in `src/shared/banner.ts`, one set for each theme. A table can replace them with its own (`banner` on `Category`: boon, neutral, bane, and `plain` for a table with no second roll). They are edited in Edit, under "How long it lasts"; an empty box uses the words of the theme.
+- The DM window resolves the words and sends them with the verdict, so the player screen no longer looks them up.

@@ -118,7 +118,8 @@
   grid-column: span 1;
 }
 
-.form-grid .duration {
+.form-grid .duration,
+.form-grid .banner-words {
   grid-column: 1 / -1;
 }
 
@@ -174,6 +175,20 @@ input.number {
 }
 
 .duration legend {
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+/* The words of the verdict banner: one box for each kind of outcome, side by side. */
+.banner-words {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.banner-words legend {
   padding: 0;
   margin-bottom: 6px;
 }
