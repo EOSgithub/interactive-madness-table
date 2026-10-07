@@ -1,0 +1,1 @@
+html,body,#root{height:100%}body{margin:0;background:var(--ink-0);overflow:hidden}@supports (height: 100dvh){html,body,#root{height:100dvh}}
