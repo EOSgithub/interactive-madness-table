@@ -7,6 +7,8 @@ description, and one text per outcome in the order of the source.
 
 src/content/themed.en.json holds the sets of the other themes. Each is one
 table on a d100 with no second roll, so every entry carries its own effect.
+The last of them, "D&D Madness", is the three madness tables of the fifth
+edition, with the effects as the SRD 5.1 words them.
 
     python scripts/build-defaults.py
 """
@@ -349,6 +351,107 @@ THEMED = [
 ]
 
 
+# The madness tables of the fifth edition (SRD 5.1, under CC BY 4.0). The effects
+# are the official text, so this is the one set that names a DC. The titles and
+# the lines read aloud are ours. A table is (id, name, line under it, duration,
+# entries), and an entry is (first, last, title, description, effect).
+FLAW = 'The character gains this flaw: "{}"'
+DND = [
+    ("short-term", "Short-Term Madness", "The mind buckles, and in a few minutes it rights itself.", {"kind": "dice", "die": 10, "unit": "minutes"}, [
+        (1, 20, "Catatonia", "You retreat somewhere inside yourself, and the door shuts behind you.",
+         "The character retreats into his or her mind and becomes paralyzed. The effect ends if the character takes any damage."),
+        (21, 30, "Hysteria", "Something in you gives way, and the noise that comes out is not a word.",
+         "The character becomes incapacitated and spends the duration screaming, laughing, or weeping."),
+        (31, 40, "Terror", "Every instinct you have says the same thing: run.",
+         "The character becomes frightened and must use his or her action and movement each round to flee from the source of the fear."),
+        (41, 50, "Babbling", "The words are all there. They come out in the wrong order.",
+         "The character begins babbling and is incapable of normal speech or spellcasting."),
+        (51, 60, "Frenzy", "Whatever is nearest to you has to be struck down, now.",
+         "The character must use his or her action each round to attack the nearest creature."),
+        (61, 70, "Hallucinations", "The room fills with things that only you can see.",
+         "The character experiences vivid hallucinations and has disadvantage on ability checks."),
+        (71, 75, "Suggestible", "Any voice that speaks to you sounds like your own good sense.",
+         "The character does whatever anyone tells him or her to do that isn't obviously self-destructive."),
+        (76, 80, "Strange Hunger", "You are hungry, and not for food.",
+         "The character experiences an overpowering urge to eat something strange such as dirt, slime, or offal."),
+        (81, 90, "Stunned", "Your thoughts stop where they stand.",
+         "The character is stunned."),
+        (91, 100, "Collapse", "The world tilts, goes grey and is gone.",
+         "The character falls unconscious."),
+    ]),
+    ("long-term", "Long-Term Madness", "The mind takes days to find its way back.", {"kind": "fixed", "text": "For 1d10 x 10 hours:"}, [
+        (1, 10, "Compulsion", "There is one thing you have to do again, and then once more.",
+         "The character feels compelled to repeat a specific activity over and over, such as washing hands, touching things, praying, or counting coins."),
+        (11, 20, "Lasting Visions", "The things only you can see have come to stay.",
+         "The character experiences vivid hallucinations and has disadvantage on ability checks."),
+        (21, 30, "Paranoia", "Everyone here wants something from you, and nobody will say what.",
+         "The character suffers extreme paranoia. The character has disadvantage on Wisdom and Charisma checks."),
+        (31, 40, "Revulsion", "The sight of it turns your stomach, and you cannot go near.",
+         "The character regards something (usually the source of madness) with intense revulsion, as if affected by the antipathy effect of the antipathy/sympathy spell."),
+        (41, 45, "Delusion", "You feel the potion working in you. You never drank one.",
+         "The character experiences a powerful delusion. Choose a potion. The character imagines that he or she is under its effects."),
+        (46, 55, "Lucky Charm", "You are safe as long as it stays close to you.",
+         'The character becomes attached to a "lucky charm," such as a person or an object, and has disadvantage on attack rolls, ability checks, and saving throws while more than 30 feet from it.'),
+        (56, 65, "A Sense Lost", "One of your senses shuts, like a door in a draught.",
+         "The character is blinded (25%) or deafened (75%)."),
+        (66, 75, "Tremors", "Your hands no longer keep still when you ask them to.",
+         "The character experiences uncontrollable tremors or tics, which impose disadvantage on attack rolls, ability checks, and saving throws that involve Strength or Dexterity."),
+        (76, 85, "Amnesia", "You know your own name. The faces around you are strangers.",
+         "The character suffers from partial amnesia. The character knows who he or she is and retains racial traits and class features, but doesn't recognize other people or remember anything that happened before the madness took effect."),
+        (86, 90, "Confusion", "Pain knocks your thoughts loose, and they scatter.",
+         "Whenever the character takes damage, he or she must succeed on a DC 15 Wisdom saving throw or be affected as though he or she failed a saving throw against the confusion spell. The confusion effect lasts for 1 minute."),
+        (91, 95, "Struck Mute", "You open your mouth and nothing comes out of it.",
+         "The character loses the ability to speak."),
+        (96, 100, "Deep Sleep", "You fall asleep, and nothing they do wakes you.",
+         "The character falls unconscious. No amount of jostling or damage can wake the character."),
+    ]),
+    ("indefinite", "Indefinite Madness", "It lasts until magic cures it.", {"kind": "fixed", "text": "Until cured:"}, [
+        (1, 15, "The Bottle", "The world is easier to look at through the bottom of a glass.",
+         FLAW.format("Being drunk keeps me sane.")),
+        (16, 25, "Hoarding", "Nothing you find can be left where it lies.",
+         FLAW.format("I keep whatever I find.")),
+        (26, 30, "Borrowed Self", "Someone you know wears a life that would fit you better.",
+         FLAW.format("I try to become more like someone else I know, adopting his or her style of dress, mannerisms, and name.")),
+        (31, 35, "Tall Tales", "The plain truth about you would bore anyone.",
+         FLAW.format("I must bend the truth, exaggerate, or outright lie to be interesting to other people.")),
+        (36, 45, "Obsession", "One goal is left to you, and everything else has gone quiet.",
+         FLAW.format("Achieving my goal is the only thing of interest to me, and I'll ignore everything else to pursue it.")),
+        (46, 50, "Apathy", "Things go on happening around you. They do not reach you.",
+         FLAW.format("I find it hard to care about anything that goes on around me.")),
+        (51, 55, "Judged", "Every pair of eyes in the room is weighing you up.",
+         FLAW.format("I don't like the way people judge me all the time.")),
+        (56, 70, "Grandeur", "You see it at last: there is nobody here to match you.",
+         FLAW.format("I am the smartest, wisest, strongest, fastest, and most beautiful person I know.")),
+        (71, 80, "Hunted", "They have found you again. They always find you.",
+         FLAW.format("I am convinced that powerful enemies are hunting me, and their agents are everywhere I go. I am sure they're watching me all the time.")),
+        (81, 85, "The Special Friend", "A friend is standing at your shoulder. Nobody else looks their way.",
+         FLAW.format("There's only one person I can trust. And only I can see this special friend.")),
+        (86, 95, "Gallows Humour", "The worse things get, the harder it is to keep a straight face.",
+         FLAW.format("I can't take anything seriously. The more serious the situation, the funnier I find it.")),
+        (96, 100, "Bloodlust", "You have killed before. This time you noticed how it felt.",
+         FLAW.format("I've discovered that I really like killing people.")),
+    ]),
+]
+
+
+def dnd():
+    categories = []
+    for cid, label, blurb, duration, rows in DND:
+        entries = [{
+            "id": f"dnd-{cid}-{i + 1}",
+            "range": [first, last],
+            "title": title,
+            "description": description,
+            "text": text,
+            "outcomes": [],
+        } for i, (first, last, title, description, text) in enumerate(rows)]
+        categories.append({
+            "id": cid, "label": label, "blurb": blurb, "duration": duration,
+            "die": 100, "subRoll": False, "subDie": 10, "entries": entries,
+        })
+    return {"name": "D&D Madness", "theme": "dnd", "categories": categories}
+
+
 def themed():
     sets = []
     for name, theme, label, blurb, duration, rows in THEMED:
@@ -374,7 +477,8 @@ def write(name, data):
     os.makedirs(os.path.dirname(target), exist_ok=True)
     text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
     assert "—" not in text and "–" not in text, "dash in the default text"
-    assert not re.search(r"\bDC \d", text), "a DC in the default text: the GM sets it"
+    ours = json.dumps([s for s in (data if isinstance(data, list) else [data]) if s["theme"] != "dnd"])
+    assert not re.search(r"\bDC \d", ours), "a DC in the default text: the GM sets it"
     open(target, "w", encoding="utf-8", newline="\n").write(text)
     return target
 
@@ -402,8 +506,8 @@ def main():
     target = write("defaults.en.json", out)
     entries = sum(len(c["entries"]) for c in out["categories"])
     print(f"{target}: {len(out['categories'])} categories, {entries} entries")
-    others = themed()
-    print(f"{write('themed.en.json', others)}: {len(others)} sets, {sum(len(x['categories'][0]['entries']) for x in others)} entries")
+    others = themed() + [dnd()]
+    print(f"{write('themed.en.json', others)}: {len(others)} sets, {sum(len(c['entries']) for x in others for c in x['categories'])} entries")
 
 
 if __name__ == "__main__":

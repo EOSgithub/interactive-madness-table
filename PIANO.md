@@ -250,3 +250,12 @@ The first pass read as a home project: a page with a header and a legal footer, 
 ### Fourth pass, same day
 
 - The Gothic default set is "Gothic Madness". "Bloodborne Madness" carried someone else's trademark, so it is gone from the tool. Storage version 5 renames a saved set that still has the old name.
+
+## D&D theme (2026-10-07)
+
+- A seventh theme, D&D (`dnd`), with its own default set, "D&D Madness": the short-term, long-term and indefinite madness tables of the fifth edition, 34 entries on a d100 with no second roll. The effects are the text of the SRD 5.1 (CC BY 4.0); the titles and the lines read aloud are ours.
+- It is the one default set that names a DC (DC 15, on long-term 86-90), because the text is the official one. `build-defaults.py` and the test leave it out of the DC check.
+- Long-term madness lasts 1d10 x 10 hours, which the duration die cannot roll, so it is a fixed line.
+- The emblem is the dragon ampersand (`src/assets/dnd-ampersand.webp`), cut from the fifth edition logo on English Wikipedia. It is a trademark of Wizards of the Coast and is not free: the credits say so. If that becomes a problem, the theme needs another emblem.
+- Headings are Libre Baskerville. Storage is unchanged: someone who already has a library gets the new set from "start from one of the defaults".
+- "D&D Madness" is the set open on a first visit, in place of the Hellenic one.

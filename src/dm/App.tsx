@@ -137,11 +137,16 @@ function AboutDialog({ open, onClose }: { open: boolean; onClose: () => void }) 
         International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
       </p>
       <p className="legal">
-        The fonts are Bodoni Moda, Geist, EB Garamond, Josefin Sans, Fraunces, IM Fell English, Special Elite and Cinzel, under the SIL
+        The fonts are Bodoni Moda, Geist, EB Garamond, Josefin Sans, Fraunces, IM Fell English, Special Elite, Cinzel and Libre Baskerville, under the SIL
         Open Font License 1.1. The icons are Phosphor Icons, under the MIT
         License. The face of the moon is a photograph by NASA/GSFC/Arizona State University and the eclipse is one by NASA/Carla Thomas, both in the
         public domain. The eye in the Surreal theme is a lithograph by Odilon Redon, from 1882, and the gorgon in the Hellenic theme is a photograph by Bibi Saint-Pol of an Attic cup
         in Paris, both in the public domain.
+      </p>
+      <p className="legal">
+        The dragon ampersand in the D&amp;D theme is part of the Dungeons &amp; Dragons logo. Dungeons &amp; Dragons, D&amp;D and the dragon
+        ampersand are trademarks of Wizards of the Coast LLC. This tool is not affiliated with, endorsed or sponsored by Wizards of the
+        Coast.
       </p>
     </Dialog>
   )

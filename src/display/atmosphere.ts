@@ -12,6 +12,7 @@ import { clamp, rand, smooth } from './show'
 //   Occult    embers, and fire along the bottom edge
 //   Societal  paper dust falling under a scan line, and bars of redaction
 //   Hellenic  gold dust settling, and wine running down the glass
+//   D&D       sparks of a dragon's breath, and acid running down the glass
 //
 // Like show.ts it keeps no state between frames. Every mote and every drip is
 // worked out from the time and a seed, so the DM's monitor and the player screen
@@ -332,6 +333,21 @@ const DUST: Motes = {
   sway: 0.03
 }
 
+const SPARKS: Motes = {
+  count: [22, 54],
+  colours: [
+    [240, 96, 80],
+    [214, 184, 112]
+  ],
+  bane: [150, 214, 96],
+  rise: 1,
+  period: [7000, 8000],
+  size: [0.5, 1.5],
+  alpha: [0.16, 0.4],
+  sway: 0.04,
+  flicker: true
+}
+
 /** The colour of the light on a boon. */
 const BOON: Record<ThemeId, Rgb> = {
   gothic: [232, 204, 150],
@@ -339,7 +355,8 @@ const BOON: Record<ThemeId, Rgb> = {
   surreal: [255, 220, 174],
   occult: [207, 188, 255],
   societal: [150, 214, 166],
-  hellenic: [217, 197, 106]
+  hellenic: [217, 197, 106],
+  dnd: [214, 184, 112]
 }
 
 /** Paints one frame. `now` is any steady clock in ms; `w` and `h` are in CSS px. */
@@ -370,6 +387,10 @@ export function paint(ctx: Ctx, w: number, h: number, now: number, air: Air): vo
     case 'hellenic':
       motes(ctx, w, h, now, air, unit, DUST)
       if (bane) drips(ctx, w, h, air, unit, [90, 24, 68], [142, 42, 107])
+      break
+    case 'dnd':
+      motes(ctx, w, h, now, air, unit, SPARKS)
+      if (bane) drips(ctx, w, h, air, unit, [38, 84, 26], [112, 178, 62])
       break
     default:
       motes(ctx, w, h, now, air, unit, ASH)

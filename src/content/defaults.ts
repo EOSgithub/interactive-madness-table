@@ -8,8 +8,8 @@ import themed from './themed.en.json'
 
 const all = [gothic, ...themed] as TableSet[]
 
-/** The Hellenic set first: it is the one open on a first visit. */
-export const DEFAULT_SETS = [...all.filter((s) => s.theme === 'hellenic'), ...all.filter((s) => s.theme !== 'hellenic')]
+/** The D&D set first: it is the one open on a first visit. */
+export const DEFAULT_SETS = [...all.filter((s) => s.theme === 'dnd'), ...all.filter((s) => s.theme !== 'dnd')]
 
 /** The default set of a theme. */
 export function defaultFor(theme: ThemeId): TableSet {

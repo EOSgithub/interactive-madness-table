@@ -2,7 +2,7 @@
 // how the DM window looks and what the player screen shows (see styles/themes.css
 // and display/atmosphere.ts). The words on the tables stay the DM's own.
 
-export type ThemeId = 'cosmic' | 'gothic' | 'surreal' | 'occult' | 'societal' | 'hellenic'
+export type ThemeId = 'cosmic' | 'gothic' | 'surreal' | 'occult' | 'societal' | 'hellenic' | 'dnd'
 
 export interface Theme {
   id: ThemeId
@@ -17,7 +17,8 @@ export const THEMES: Theme[] = [
   { id: 'surreal', label: 'Surreal', principle: 'Reality itself stops obeying ordinary logic.' },
   { id: 'occult', label: 'Occult', principle: 'Forbidden forces, knowledge or beliefs corrupt the mind.' },
   { id: 'societal', label: 'Societal', principle: 'The individual goes mad because the world around them already is.' },
-  { id: 'hellenic', label: 'Hellenic', principle: 'A god sends the madness, as a punishment or for sport.' }
+  { id: 'hellenic', label: 'Hellenic', principle: 'A god sends the madness, as a punishment or for sport.' },
+  { id: 'dnd', label: 'D&D', principle: 'Horrors and alien planes wear the mind down, by the rules of the fifth edition.' }
 ]
 
 /** The look the tool had before themes, and the one a set without a theme gets. */

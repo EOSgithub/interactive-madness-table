@@ -10,6 +10,8 @@ their own terms:
 - Phosphor Icons, under the MIT License.
 - The photographs and artworks named in the Credits section of README.md,
   which are in the public domain.
+- The dragon ampersand of the Dungeons & Dragons logo (src/assets/dnd-ampersand.webp),
+  a trademark of Wizards of the Coast LLC. No licence is granted for it.
 - Material taken from the System Reference Document 5.1 by Wizards of the
   Coast LLC, under the Creative Commons Attribution 4.0 International License.
 

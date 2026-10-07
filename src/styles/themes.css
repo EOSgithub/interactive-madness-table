@@ -500,6 +500,99 @@
   font-size: calc(var(--size) * 0.74);
 }
 
+/* ------------------------------------------------------------------- D&D
+   The madness of the fifth edition, by the book. The colours of its covers: a
+   warm black, the red of the lettering for the accent, the gold of a stat block
+   for the boon and the green of acid for the bane. Headings are a Baskerville,
+   close to the face the rulebooks are set in, and the die sits on the dragon
+   ampersand. */
+
+[data-theme='dnd'] {
+  --ink-0: #0a0707;
+  --ink-1: #100b0b;
+  --ink-2: #191111;
+  --ink-3: #231818;
+  --ink-4: #312222;
+  --line: rgba(245, 228, 205, 0.1);
+  --line-strong: rgba(245, 228, 205, 0.22);
+
+  --bone: #f1e7d6;
+  --bone-dim: #b5a691;
+  --bone-faint: #8b7d6b;
+
+  --accent: #d9262c;
+  --accent-bright: #ff6a62;
+  --accent-deep: #96141a;
+  --boon: #d6b870;
+
+  --bane: #5e9a34;
+  --bane-deep: #33591a;
+  --bane-bright: #a3e06a;
+
+  --on-accent: #fff4ec;
+  --haze-1: rgba(217, 38, 44, 0.16);
+  --haze-2: rgba(214, 184, 112, 0.08);
+  --stage-glow: #2e0f10;
+  --fog-1: rgba(217, 38, 44, 0.1);
+  --fog-2: rgba(120, 30, 30, 0.09);
+  --fog-3: rgba(214, 184, 112, 0.06);
+
+  --font-display: 'Libre Baskerville', Baskerville, 'Mrs Eaves', Georgia, serif;
+  --r-card: 8px;
+  --r-ctl: 5px;
+}
+
+[data-theme='dnd'] :is(h1, h2, h3) {
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+[data-theme='dnd'] .moon-halo {
+  background: radial-gradient(circle, rgba(255, 106, 98, 0.3) 0%, rgba(217, 38, 44, 0.1) 38%, transparent 68%);
+}
+
+[data-theme='dnd'] .moon,
+[data-theme='dnd'] .moon-disc,
+[data-theme='dnd'] .moon-blood {
+  border-radius: 0;
+}
+
+/* The emblem is the dragon ampersand of the Dungeons & Dragons logo, cut out of the
+   logo of the fifth edition. It is a trademark of Wizards of the Coast. A shadow over
+   its middle keeps the number readable. */
+[data-theme='dnd'] .moon-disc {
+  background:
+    radial-gradient(circle, rgba(10, 7, 7, 0.7) 0%, rgba(10, 7, 7, 0.35) 40%, transparent 66%),
+    url('../assets/dnd-ampersand.webp') center / contain no-repeat;
+  box-shadow: none;
+  filter: drop-shadow(0 0 0.5em rgba(217, 38, 44, 0.3));
+}
+
+/* On a bane the silver dragon turns green. The same picture is the mask, so the colour stays on the metal. */
+[data-theme='dnd'] .moon-blood {
+  background: var(--bane);
+  box-shadow: none;
+  mix-blend-mode: color;
+  mask: url('../assets/dnd-ampersand.webp') center / contain no-repeat;
+}
+
+[data-theme='dnd'] .moon-face {
+  display: none;
+}
+
+[data-theme='dnd'] .die .number {
+  color: #fff6e6;
+  font-weight: 700;
+  text-shadow:
+    0 0 0.06em #000,
+    0 0 0.18em #000,
+    0 0 0.45em #000;
+}
+
+[data-theme='dnd'] .die .number:not(.waiting-die) {
+  font-size: calc(var(--size) * 0.74);
+}
+
 /* The square themes also square the pieces of the DM window that set their own radius. */
 :is([data-theme='occult'], [data-theme='societal'], [data-theme='hellenic'])
   :is(.verdict, .table-row, .table-main, .tab-mark, .tabs button, .rail-about, .dialog, .set-list li, .set-open, .icon, .monitor-frame, .row, kbd) {

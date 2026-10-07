@@ -166,7 +166,13 @@ describe('the default sets of the themes', () => {
     expect(JSON.stringify(defaultFor('hellenic'))).not.toMatch(/Athena|Hera\b|Apollo|Zeus|Dionysus|Lyssa|Poseidon|Artemis|Aphrodite|Hermes|Ares\b|Hades/)
   })
 
-  it('never fixes a DC: the GM sets it', () => {
-    expect(JSON.stringify(DEFAULT_SETS)).not.toMatch(/\bDC \d/)
+  it('never fixes a DC: the GM sets it. The D&D set keeps the official text, DC included', () => {
+    expect(JSON.stringify(DEFAULT_SETS.filter((s) => s.theme !== 'dnd'))).not.toMatch(/\bDC \d/)
+  })
+
+  it('gives the D&D set the three official tables', () => {
+    const set = defaultFor('dnd')
+    expect(set.categories.map((c) => c.entries.length)).toEqual([10, 12, 12])
+    expect(JSON.stringify(set)).toContain('DC 15 Wisdom saving throw')
   })
 })
